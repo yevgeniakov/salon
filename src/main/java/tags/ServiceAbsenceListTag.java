@@ -6,6 +6,9 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import entity.Service;
 import service.ServiceManager;
 
@@ -15,37 +18,28 @@ public class ServiceAbsenceListTag extends TagSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LogManager.getLogger(ServiceAbsenceListTag.class);
 	private int master_id;
-	
 
 	public void setMaster_id(int master_id) {
 		this.master_id = master_id;
 	}
 
-	
-
 	@Override
 	public int doStartTag() throws JspException {
-		
-		System.out.println("hello from tag 2");
+		logger.info("enter");
+
 		ServiceManager manager = ServiceManager.getInstance();
-		
-			System.out.println(master_id);
-			
-			
-			if (master_id != 0) {
+
+		if (master_id != 0) {
 			List<Service> serviceList = new ArrayList<>();
 			try {
 				serviceList = manager.findAllServicesAbsentByMaster(master_id);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
-			System.out.println(serviceList);
 			pageContext.setAttribute("serviceabsentlist", serviceList);
 		}
-		
 		return SKIP_BODY;
 	}
-
 }
