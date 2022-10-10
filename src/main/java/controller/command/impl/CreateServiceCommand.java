@@ -1,5 +1,8 @@
 package controller.command.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,17 +17,23 @@ import service.ServiceManager;
 
 public class CreateServiceCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateServiceCommand.class);
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
+	        List.of(Role.ADMIN));
+	public static final boolean IS_GUEST_ALLOWED = false;
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("execute");
 		
 		User loggedUser = (User) request.getSession().getAttribute("user");
-
-		if (loggedUser == null) {
-			logger.info("unauthorized access. Redirecting to index page");
+		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
+			logger.info("Access denied. returning to index page", loggedUser,
+					loggedUser == null ? "GUEST" : loggedUser.getRole());
+			
 			return "/index.jsp";
 		}
+
+		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 		
 		try {
 			String name = request.getParameter("name");

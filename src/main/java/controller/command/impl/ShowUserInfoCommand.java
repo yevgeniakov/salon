@@ -1,11 +1,11 @@
 package controller.command.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,23 +18,31 @@ import service.UserManager;
 
 public class ShowUserInfoCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowUserInfoCommand.class);
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
+	        List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
+	public static final boolean IS_GUEST_ALLOWED = true;
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("execute");
+		
+		User loggedUser = (User) request.getSession().getAttribute("user");
+		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
+			logger.info("Access denied. returning to index page", loggedUser,
+					loggedUser == null ? "GUEST" : loggedUser.getRole());
+			
+			return "/index.jsp";
+		}
+
+		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 
 		int id = 0;
 
 		if (!(request.getParameter("id") == null)) {
 			id = Integer.parseInt(request.getParameter("id"));
 		} else {
-			HttpSession session = request.getSession(false);
-			User loggedUser = null;
-			if (session != null) {
-				loggedUser = (User) session.getAttribute("user");
-			}
+				
 			if (!(loggedUser == null)) {
-
 				id = loggedUser.getId();
 			}
 		}
@@ -54,6 +62,15 @@ public class ShowUserInfoCommand implements Command {
 			request.setAttribute("error", "unable to find user!");
 			return "/error.jsp";
 		}
+		
+		if (!(user.getRole() == Role.HAIRDRESSER 
+				|| (loggedUser != null
+						&& (loggedUser.getId() == user.getId() || loggedUser.getRole() != Role.CLIENT)))) {
+			logger.error("Access denied", loggedUser, user.getId());
+			request.setAttribute("error", "You are not allowed to see this user info!");
+			return "/error.jsp";
+		}
+		
 
 		ServiceManager serviceManager = ServiceManager.getInstance();
 		TreeMap<Service, Integer> services = new TreeMap<>();
@@ -67,7 +84,7 @@ public class ShowUserInfoCommand implements Command {
 				request.setAttribute("error", e.getMessage());
 				return "/error.jsp";
 			}
-		}
+		} 
 
 		request.setAttribute("services", services);
 		request.setAttribute("showuser", user);

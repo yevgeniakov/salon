@@ -36,11 +36,22 @@
 	</form>
 	<strong>Master:</strong>
 	<br>
-<a href="Controller?command=show_user_info&id=${appointment.master.id}">${appointment.master.name} ${appointment.master.surname}</a>
+	<c:if test="${sessionScope.user.id == appointment.master.id}">
+	<a href="my_info.jsp" >${appointment.master.name} ${appointment.master.surname}</a>
+	</c:if>
+	<c:if test="${sessionScope.user.id != appointment.master.id}">
+	<a href="Controller?command=show_user_info&id=${appointment.master.id}">${appointment.master.name} ${appointment.master.surname}</a>
+	</c:if>
+
 <br><br>
 	<strong>User:</strong>
 	<br>
+	<c:if test="${sessionScope.user.id == appointment.user.id}">
+	<a href="my_info.jsp" >${appointment.user.name} ${appointment.user.surname}</a>
+	</c:if>
+	<c:if test="${sessionScope.user.id != appointment.user.id}">
 	<a href="Controller?command=show_user_info&id=${appointment.user.id}">${appointment.user.name} ${appointment.user.surname} </a>
+	</c:if>
 <br><br>
 	<strong>Service:</strong>
 	<br>

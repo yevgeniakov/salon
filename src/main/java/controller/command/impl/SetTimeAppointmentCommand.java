@@ -1,6 +1,9 @@
 package controller.command.impl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,17 +18,23 @@ import service.AppointmentManager;
 
 public class SetTimeAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetTimeAppointmentCommand.class);
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
+	        List.of(Role.ADMIN));
+	public static final boolean IS_GUEST_ALLOWED = false;
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("execute");
-
+		
 		User loggedUser = (User) request.getSession().getAttribute("user");
-
-		if (loggedUser == null) {
-			logger.info("unauthorized access. Redirecting to index page");
+		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
+			logger.info("Access denied. returning to index page", loggedUser,
+					loggedUser == null ? "GUEST" : loggedUser.getRole());
+			
 			return "/index.jsp";
 		}
+
+		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 
 		try {
 			LocalDate date = (request.getParameter("date") == null || request.getParameter("date").equals("null"))
@@ -44,11 +53,7 @@ public class SetTimeAppointmentCommand implements Command {
 					|| request.getParameter("newtimeslot").equals("null")) ? null
 							: Integer.parseInt(request.getParameter("newtimeslot"));
 
-			if (loggedUser.getRole() != Role.ADMIN) {
-				logger.info("unauthorized access. Redirecting to index page");
-				return "/index.jsp";
-			}
-
+		
 			// TODO Validator
 
 			Appointment appointment = null;

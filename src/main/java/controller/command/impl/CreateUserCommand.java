@@ -1,6 +1,8 @@
 package controller.command.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +19,23 @@ import service.UserManager;
 
 public class CreateUserCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateUserCommand.class);
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
+	        List.of(Role.ADMIN));
+	public static final boolean IS_GUEST_ALLOWED = true;
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("execute");
+		
+		User loggedUser = (User) request.getSession().getAttribute("user");
+		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
+			logger.info("Access denied. returning to index page", loggedUser,
+					loggedUser == null ? "GUEST" : loggedUser.getRole());
+			
+			return "/index.jsp";
+		}
+
+		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 		
 		Map<String, String[]> parameters = request.getParameterMap();
 		for (String parameter : parameters.keySet()) {
@@ -62,7 +77,7 @@ public class CreateUserCommand implements Command {
 			}
 
 			if (user.getId() != 0) {
-				User loggedUser = (User) request.getSession().getAttribute("user");
+				
 				if (loggedUser == null) {
 					request.getSession().setAttribute("user", user);
 					return "client_page.jsp";

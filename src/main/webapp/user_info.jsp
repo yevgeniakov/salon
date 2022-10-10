@@ -143,8 +143,8 @@
 
 	
 <c:if
-	test="${sessionScope.user != null && showuser.role == 'CLIENT'}">
-	<br>	
+	test="${sessionScope.user != null &&sessionScope.user.role == 'ADMIN' && showuser.role == 'CLIENT'}">
+	<br>
 <a href = "appointments_list.jsp?user_id=${showuser.id}"> User appointments </a>
 </c:if>
 </body>

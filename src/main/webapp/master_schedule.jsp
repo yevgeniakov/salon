@@ -15,8 +15,6 @@
     <title>Master Schedule </title>
 </head>
 
-<a href = "index.jsp"> Home page </a>
-<hr>
 <h3>Master Schedule - ${master.name} ${master.surname}</h3>
 <br>
 <form method=get name="dateForm">
