@@ -1,0 +1,47 @@
+<%@page contentType="text/html; charset=UTF-8"%>
+<%@ page isELIgnored="false"%>
+
+<html>
+      <style>
+         table, th, td {
+            border: 1px solid black;
+         }
+      </style>
+<body>
+<jsp:include page="header.jsp" />
+<head>
+<title>Leave feedback</title>
+</head>
+
+<h3>Please, leave feedback for your appointment:</h3>
+<br>
+<form action="Controller" method=post>
+
+	<strong>Your rating: </strong> <br>
+		<input type="radio" name="rating" value=1 />1 <br> 
+		<input type="radio" name="rating" value=2 />2 <br>
+		<input type="radio"	name="rating" value=3 />3 <br>
+		<input type="radio"	name="rating" value=4 />4 <br>
+		<input type="radio"	name="rating" value=5 />5 <br>	
+			
+		<br> <input type="hidden" name="master_id" value="${param.master_id}">
+		<br> <input type="hidden" name="date" value="${param.date}">
+		<br> <input type="hidden" name="timeslot" value="${param.timeslot}">
+		<input type="hidden" name="command" value="leave_feedback">
+	
+
+		<strong>Your feedback: </strong> <br>
+		<textarea rows="10" cols="60" name="feedback">
+
+    </textarea>
+    
+	<p>
+	<p>
+		<input type="submit" value="Leave feedback"> <input type="reset"
+			value="Reset">
+</form>
+
+
+
+</body>
+</html>

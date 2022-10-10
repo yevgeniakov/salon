@@ -1,0 +1,63 @@
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+    version="2.1">
+    
+  <tlib-version>1.1</tlib-version>
+  <short-name>mylib</short-name>
+  <uri>http://com.my/mylib</uri>
+
+  <tag>
+    <name>getservices</name>
+    <tag-class>tags.ServiceListTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>master_id</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>java.lang.Integer</type>
+    </attribute>
+   
+  </tag>
+  <tag>
+    <name>getabsentservices</name>
+    <tag-class>tags.ServiceAbsenceListTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>master_id</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>java.lang.Integer</type>
+    </attribute>
+   
+  </tag>
+  
+   <tag>
+    <name>getmasters</name>
+    <tag-class>tags.MasterListTag</tag-class>
+    <body-content>empty</body-content>
+     
+  </tag>
+  
+<tag>
+    <name>getfreeslots</name>
+    <tag-class>tags.FreeSlotsListTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>master_id</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>java.lang.Integer</type>
+    </attribute>
+     <attribute>
+        <name>date</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>java.lang.String</type>
+    </attribute>
+   
+  </tag>
+
+  
+  
+</taglib>

@@ -1,0 +1,105 @@
+<%@page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="WEB-INF/mylib.tld" prefix="my"%>
+<%@page import="java.time.LocalDate"%>
+<%@ page isELIgnored="false"%>
+<html>
+      <style>
+         table, th, td {
+            border: 1px solid black;
+         }
+      </style>
+<body>
+<jsp:include page="header.jsp" />
+<head>
+<title>User info</title>
+</head>
+
+<h3>Appointment info </h3>
+<br>
+<form action="change_appointment.jsp" method="get">
+	<strong>Date:</strong>
+	<br> <input type="date" name="date" value="${appointment.date}"
+		readonly />
+	<br><br>
+	<strong>Time:</strong>
+	<br> <input name="timeslot" value="${appointment.timeslot}"
+		readonly />
+	<br><br>
+	
+	
+	<input type="hidden" name="master_id" value="${appointment.master.id}">
+	<c:if test="${sessionScope.user.role == 'ADMIN' && !appointment.isDone}">
+	<input type="submit" name="submit" value="Change time">
+	</c:if>
+	
+	</form>
+	<strong>Master:</strong>
+	<br>
+<a href="Controller?command=show_user_info&id=${appointment.master.id}">${appointment.master.name} ${appointment.master.surname}</a>
+<br><br>
+	<strong>User:</strong>
+	<br>
+	<a href="Controller?command=show_user_info&id=${appointment.user.id}">${appointment.user.name} ${appointment.user.surname} </a>
+<br><br>
+	<strong>Service:</strong>
+	<br>
+<c:out value="${appointment.service.name}"></c:out>
+<br><br>
+
+	<strong>Sum:</strong>
+	<br>
+	<c:out value="${appointment.sum} hrn."></c:out>
+<br><br>
+	
+	<c:out value="${appointment.isDone? 'Complete' : 'Incomplete'}"></c:out>
+	<br>
+	
+	<c:if test="${sessionScope.user.id == appointment.master.id}">
+	<form action = "Controller" method = "post">
+	<input type="hidden" name="master_id" value="${appointment.master.id}">
+	<input type="hidden" name="date" value="${appointment.date}">
+	<input type="hidden" name="timeslot" value="${appointment.timeslot}">
+	<input type="hidden" name="command" value="set_complete_appointment">
+	<input type="submit" name="submit" value="${appointment.isDone? 'Set incomplete' : 'Set complete'}">
+	</form>
+	<br><br>
+	</c:if>
+	
+	
+	<c:out value="${appointment.isPaid? 'Paid' : 'Unpaid'}"></c:out>
+	<br>
+	<c:if test="${sessionScope.user.role == 'ADMIN'}">
+	<form action = "Controller" method = "post">
+	<input type="hidden" name="master_id" value="${appointment.master.id}">
+	<input type="hidden" name="date" value="${appointment.date}">
+	<input type="hidden" name="timeslot" value="${appointment.timeslot}">
+	<input type="hidden" name="command" value="set_pay_appointment">
+	<input type="submit" name="submit" value="${appointment.isPaid? 'Set unpaid' : 'Set paid'}">
+	</form>
+	<br><br>
+	</c:if>
+	
+	
+	
+	<c:if test="${appointment.rating != 0}">
+	<strong>Rating: </strong>
+	<c:out value="${appointment.rating}"></c:out>
+	<br><br>
+	<strong>Feedback:</strong>
+	<c:out value="${appointment.feedback}"></c:out>
+	</c:if>
+	<br><br>
+	<c:if test="${sessionScope.user.id == appointment.user.id && appointment.isDone}">
+	<form action = "leave_feedback.jsp" method = "get">
+	<input type="hidden" name="master_id" value="${appointment.master.id}">
+	<input type="hidden" name="date" value="${appointment.date}">
+	<input type="hidden" name="timeslot" value="${appointment.timeslot}">
+	<input type="submit" name="submit" value="${appointment.rating == 0 ? 'Leave feedback' : 'Change feedback' }">
+	</form>
+	</c:if>
+	
+
+
+</body>
+</html>
