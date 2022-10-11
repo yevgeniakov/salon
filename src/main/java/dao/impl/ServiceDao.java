@@ -152,11 +152,9 @@ public class ServiceDao implements Dao<Service> {
 			stmt = con.prepareStatement(INSERT_SERVICE, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, t.getName());
 			stmt.setString(2, t.getInfo());
-
 			rows = stmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("save service failed");
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage(), e, t.getId());
 			throw new RuntimeException(e.getMessage(), e);
 		}
 		if (rows == 1) {

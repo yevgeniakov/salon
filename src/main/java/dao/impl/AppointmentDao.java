@@ -508,14 +508,9 @@ public class AppointmentDao implements Dao<Appointment> {
 		
 		try {
 			stmt = con.prepareStatement(sql);
-			
-			System.out.println(sql);
-
-			stmt.setDate(1, Date.valueOf(dateFrom));
-			stmt.setDate(2, Date.valueOf(dateTo));
-
-			int i = 2;
-			
+			int i = 0;
+			stmt.setDate(++i, Date.valueOf(dateFrom));
+			stmt.setDate(++i, Date.valueOf(dateTo));
 			stmt.setInt(++i, (master_id == null) ? 0 : master_id);
 			stmt.setBoolean(++i, (master_id == null));
 			stmt.setInt(++i, (user_id == null) ? 0 : user_id);

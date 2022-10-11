@@ -261,9 +261,7 @@ public class UserDao implements Dao<User> {
 	public User setUserBlock(Connection con, User t, boolean isBlocked) {
 		logger.trace("enter");
 
-		System.out.println("dao#usersave");
 		PreparedStatement stmt = null;
-
 		try {
 			stmt = con.prepareStatement(SET_USER_BLOCK);
 			stmt.setBoolean(1, isBlocked);
@@ -296,7 +294,6 @@ public class UserDao implements Dao<User> {
 	public void deleteServiceFromMaster(Connection con, User master, Service service) {
 		logger.trace("enter");
 
-		System.out.println("dao#userdeleteservice");
 		PreparedStatement stmt = null;
 
 		try {
@@ -314,7 +311,6 @@ public class UserDao implements Dao<User> {
 	public List<User> findAllByConditions(Connection con, Boolean isBlocked, String searchValue) {
 		logger.trace("enter");
 
-		System.out.println("dao#usersByConditions");
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		List<User> users = new ArrayList<>();

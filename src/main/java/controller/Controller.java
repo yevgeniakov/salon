@@ -42,7 +42,7 @@ public class Controller extends HttpServlet {
 		Command command = CommandContainer.getCommand(commandName);
 		try {
 			address = command.execute(request, response);
-			System.out.println("have received address" + address + " from command " + commandName);
+			logger.trace("have received address" + address + " from command " + commandName);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", "Unable to do action. Try again.");
@@ -65,7 +65,7 @@ public class Controller extends HttpServlet {
 		Command command = CommandContainer.getCommand(commandName);
 		try {
 			address = command.execute(request, response);
-			System.out.println("have received address" + address + " from command " + commandName);
+			logger.trace("have received address" + address + " from command " + commandName);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", "Unable to do action. Try again.");

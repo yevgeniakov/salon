@@ -37,17 +37,8 @@ public class CreateUserCommand implements Command {
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 		
-		Map<String, String[]> parameters = request.getParameterMap();
-		for (String parameter : parameters.keySet()) {
-
-			String[] values = parameters.get(parameter);
-			System.out.println(parameter + " - " + values);
-
-		}
-
 		try {
 			String name = request.getParameter("name");
-			System.out.println("name = " + name);
 			String surname = request.getParameter("surname");
 			String email = request.getParameter("email");
 			String tel = request.getParameter("tel");
@@ -61,7 +52,6 @@ public class CreateUserCommand implements Command {
 			while (request.getParameter("service" + i) != null) {
 				String sumParam = request.getParameter("sum" + i);
 				int sum = (sumParam == "") ? 0 : Integer.parseInt(request.getParameter("sum" + i));
-				System.out.println("sum = " + sum);
 				if (sum != 0) {
 					serviceMap.put(serviceManager.findServiceByName(request.getParameter("service" + i)).getId(), sum);
 				}

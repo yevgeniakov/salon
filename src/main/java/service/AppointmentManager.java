@@ -39,7 +39,6 @@ public class AppointmentManager {
 		try {
 			con = dao.getConnection();
 			appointment = dao.findByKey(con, master_id, date, timeslot);
-			System.out.println("app in manager: " + appointment);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			// TODO throw new custom Exception
@@ -70,7 +69,6 @@ public class AppointmentManager {
 	public List<Appointment> getMasterSchedule(LocalDate date, User master) throws Exception {
 		logger.trace("enter");
 
-		System.out.println("#Manager#getMasterSchedule");
 		Connection con = null;
 		List<Appointment> appointments = new ArrayList<>();
 		try {
@@ -82,7 +80,7 @@ public class AppointmentManager {
 		} finally {
 			DBConnection.close(con);
 		}
-		System.out.println(appointments);
+
 		return appointments;
 	}
 
@@ -205,10 +203,9 @@ public class AppointmentManager {
 
 		try {
 			con = dao.getConnection();
-			System.out.println("con obtain");
 			appointments = dao.findByConditions(con, dateFrom, dateTo, master_id, user_id, service_id, isDone, isPaid,
 					isRating);
-			System.out.println("service: app size is " + appointments.size());
+			
 			return appointments;
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
