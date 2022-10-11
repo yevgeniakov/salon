@@ -36,7 +36,7 @@ public class LoginCommand implements Command {
 		if (request.getSession().getAttribute("user") == null) {
 
 			request.getSession().setAttribute("user", user);
-
+			logger.info("user logged in", user.getId(), user.getName(), user.getSurname());
 			if (user.getRole() == Role.ADMIN)
 				return "admin_page.jsp";
 			if (user.getRole() == Role.CLIENT)

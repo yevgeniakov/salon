@@ -43,6 +43,7 @@ public class SetUserBlockCommand implements Command {
 			user = manager.setUserBlock(id, isBlocked);
 
 			if (user.getId() != 0) {
+				logger.info("user set blocked = " + isBlocked, id);
 				return "Controller?command=show_user_info&id=" + user.getId();
 			}
 			logger.error("Can't set user block");

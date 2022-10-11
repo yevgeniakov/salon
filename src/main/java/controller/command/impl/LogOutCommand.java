@@ -19,7 +19,8 @@ public class LogOutCommand implements Command {
 			request.getSession().removeAttribute("user");
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			e.printStackTrace();
+			request.setAttribute("error", "failed to logout");
+			return "/error.jsp";
 		}
 		logger.info("user logged out successfully");
 		return "/index.jsp";

@@ -45,6 +45,7 @@ public class SetCompleteAppointmentCommand implements Command {
 			Appointment appointment = manager.findAppointmentByKey(master_id, date, timeslot);
 			manager.setDoneAppointment(appointment, !appointment.getIsDone());
 			appointment.setIsDone(!appointment.getIsDone());
+			logger.info("set appointment complete", appointment.getIsDone(), appointment.getMaster().getId(), appointment.getDate(), appointment.getTimeslot());
 			return "Controller?command=show_master_schedule&id=" + appointment.getMaster().getId() + "&date="
 					+ appointment.getDate();
 		} catch (Exception e) {

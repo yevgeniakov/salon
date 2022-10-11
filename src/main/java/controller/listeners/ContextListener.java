@@ -21,16 +21,18 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
-    	logger.info("contextInitialized");
+    	logger.trace("contextInitialized");
     	
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new EmailSender(), 0, 1, TimeUnit.DAYS);
+        
+        logger.info("set sheduler for email reminders");
         
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {
-    	logger.info("contextDestroyed");
+    	logger.trace("contextDestroyed");
         scheduler.shutdownNow();
     }
 

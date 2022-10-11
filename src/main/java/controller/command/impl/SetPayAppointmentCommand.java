@@ -46,6 +46,7 @@ public class SetPayAppointmentCommand implements Command {
 			manager.setPayAppointment(appointment, !appointment.getIsPaid());
 			appointment.setIsPaid(!appointment.getIsPaid());
 
+			logger.info("set appointment payment", appointment.getIsPaid(), appointment.getMaster().getId(), appointment.getDate(), appointment.getTimeslot());
 			return "Controller?command=show_master_schedule&id=" + appointment.getMaster().getId() + "&date="
 					+ appointment.getDate();
 		} catch (Exception e) {

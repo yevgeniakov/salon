@@ -42,17 +42,13 @@ public class CreateServiceCommand implements Command {
 			ServiceManager manager = ServiceManager.getInstance();
 			service = manager.createService(service);
 
-			if (service.getId() != 0) {
-				
-				if (loggedUser.getRole() == Role.ADMIN) {
-					return "Controller?command=show_service_list";
-				}
-				return "index.jsp";
+			if (service.getId() == 0) {
+				logger.error("Service is not created");
+				request.setAttribute("error", "Can't create service");
+				return "/error.jsp";	
 			}
-			
-			logger.error("Service is not created");
-			request.setAttribute("error", "Can't create service");
-			return "/error.jsp";
+			logger.info("new service created", service.getId(), name);
+			return "Controller?command=show_service_list";
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", "Can't create service");

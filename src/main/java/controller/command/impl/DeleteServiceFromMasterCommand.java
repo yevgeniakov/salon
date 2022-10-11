@@ -49,6 +49,7 @@ public class DeleteServiceFromMasterCommand implements Command {
 			manager.deleteServiceFromMaster(master, service);
 
 			request.setAttribute("message", "appointment deleted");
+			logger.info("service deleted from master", service.getId(), master.getId());
 			return "Controller?command=show_user_info&id=" + master_id;
 			
 		} catch (Exception e) {

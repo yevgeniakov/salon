@@ -82,8 +82,10 @@ public class UpdateUserCommand implements Command {
 				}
 
 				if (loggedUser.getRole() != Role.ADMIN) {
+					logger.info("user updated his info", id);
 					return "my_info.jsp";
 				} else {
+					logger.info("admin updated user info", id);
 					return "Controller?command=show_user_info&id=" + user.getId();
 				}
 			}

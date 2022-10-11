@@ -3,8 +3,6 @@ package controller.command.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -69,10 +67,12 @@ public class CreateUserCommand implements Command {
 			if (user.getId() != 0) {
 				
 				if (loggedUser == null) {
+					logger.info("new registration", user.getId(), name, surname);
 					request.getSession().setAttribute("user", user);
 					return "client_page.jsp";
 				}
 				if (loggedUser.getRole() == Role.ADMIN) {
+					logger.info("new user created by Admin", user.getId(), name, surname);
 					return "Controller?command=show_user_info&id=" + user.getId();
 				}
 
