@@ -18,12 +18,13 @@ public class User implements Serializable{
 	private String info; 
 	private boolean isBlocked;
 	private double rating;
+	private String currentLang;
 	
 	public User() {
 	}
 	
 	
-	public User(int id, String email, String password, String name, String surname, String tel, Role role, String info, boolean isBlocked, double rating) {
+	public User(int id, String email, String password, String name, String surname, String tel, Role role, String info, boolean isBlocked, double rating, String currentLang) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
@@ -34,7 +35,7 @@ public class User implements Serializable{
 		this.info = info;
 		this.isBlocked = isBlocked;
 		this.rating = rating;
-		
+		this.currentLang = currentLang;
 	}
 	public int getId() {
 		return id;
@@ -105,6 +106,16 @@ public class User implements Serializable{
 
 	public void setRating(double rating) {
 		this.rating = rating;
+	}
+
+
+	public String getCurrentLang() {
+		return currentLang;
+	}
+
+
+	public void setCurrentLang(String currentLang) {
+		this.currentLang = currentLang;
 	}
 
 

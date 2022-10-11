@@ -16,7 +16,7 @@ public class LoginCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
-		logger.info("execute");
+		logger.trace("execute");
 		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");

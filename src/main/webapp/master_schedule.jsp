@@ -1,5 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="WEB-INF/mylib.tld" prefix="my"%>
 <%@ page isELIgnored="false" %> 
 <html>
       <style>
@@ -32,7 +33,7 @@
 </tr>
   <c:forEach items="${schedule}" var="item">
     <tr>
-      <td><c:out value="${item.timeslot}" /></td>
+      <td><my:timeslotdisp timeslot = "${item.timeslot}" currentLang="${sessionScope.user.currentLang}"/></td>
       <td><c:if test="${item.master != null}"><c:out value="${item.master.name} ${item.master.surname}" /></c:if></td>
       <td><c:if test="${item.user != null}"><c:out value="${item.user.name} ${item.user.surname}" /></c:if></td>
       <td><c:if test="${item.service != null}"><c:out value="${item.service.name}" /></c:if></td>
@@ -49,8 +50,8 @@
       <c:out value = "Time is occupied"></c:out>
       </c:if>
       </td>
-   	  <td><c:out value="${item.isDone? 'Complete' : 'Incomplete'}"></c:out></td>
-      <td><c:out value="${item.isPaid? 'Paid' : 'Unpaid'}"></c:out></td>
+   	  <td><c:if test="${item.user != null}"><c:out value="${item.isDone? 'Complete' : 'Incomplete'}"></c:out></c:if></td>
+      <td><c:if test="${item.user != null}"><c:out value="${item.isPaid? 'Paid' : 'Unpaid'}"></c:out></c:if></td>
       <td><c:out value="${item.rating == 0? ' ' : item.rating}"></c:out></td>
       <td><c:if test="${item.user != null && sessionScope.user.role == 'ADMIN' && !(item.isDone)}">
 					<form action="Controller" method="post">

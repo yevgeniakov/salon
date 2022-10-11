@@ -115,14 +115,14 @@ table, th, td {
   <c:forEach items="${appointmentsList}" var="item">
     <tr>
    	  <td><c:out value="${item.date}" /></td>
-      <td><c:out value="${item.timeslot}" /></td>
+      <td><my:timeslotdisp timeslot = "${item.timeslot}" currentLang="${sessionScope.user.currentLang}"/></td>
       <td><c:out value="${item.master.name} ${item.master.surname}" /></td>
       <td><c:out value="${item.user.name} ${item.user.surname}" /></td>
       <td><c:out value="${item.service.name}" /></td>
       <td><c:out value="${item.sum} hrn." /></td>
       
-      <td><c:out value="${item.isDone? 'Complete' : 'Incomplete'}"></c:out></td>
-      <td><c:out value="${item.isPaid? 'Paid' : 'Unpaid'}"></c:out></td>
+      <td><c:if test="${item.user != null}"><c:out value="${item.isDone? 'Complete' : 'Incomplete'}"></c:out></c:if></td>
+      <td><c:if test="${item.user != null}"><c:out value="${item.isPaid? 'Paid' : 'Unpaid'}"></c:out></c:if></td>
       <td><c:out value="${item.rating == 0? ' ' : item.rating}"></c:out></td>
       <td><a href = "Controller?command=show_appointment_info&master_id=${item.master.id}&date=${item.date}&timeslot=${item.timeslot}">Appointment info</a></td>
        <td><c:if test="${item.user != null && sessionScope.user.role == 'ADMIN' && !(item.isDone)}">

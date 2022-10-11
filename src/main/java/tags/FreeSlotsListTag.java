@@ -32,7 +32,7 @@ public class FreeSlotsListTag extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
-		logger.info("enter");
+		logger.trace("enter");
 
 		UserManager userManager = UserManager.getInstance();
 		AppointmentManager appointmentManager = AppointmentManager.getInstance();

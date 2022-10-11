@@ -30,7 +30,7 @@ public class ServiceManager {
 	}
 
 	public Service findServiceByID(int id) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		Service service = null;
@@ -48,7 +48,7 @@ public class ServiceManager {
 	}
 
 	public Service findServiceByName(String name) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		Service service = null;
@@ -65,7 +65,7 @@ public class ServiceManager {
 	}
 
 	public List<Service> findAllservices() throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		List<Service> services = new ArrayList<>();
@@ -82,7 +82,7 @@ public class ServiceManager {
 	}
 
 	public TreeMap<Service, Integer> findAllServicesByMaster(int master_id) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		TreeMap<Service, Integer> services = new TreeMap<>();
@@ -99,7 +99,7 @@ public class ServiceManager {
 	}
 
 	public Service createService(Service service) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 
@@ -117,7 +117,7 @@ public class ServiceManager {
 	}
 
 	public List<Service> findAllServicesAbsentByMaster(int master_id) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		List<Service> services = new ArrayList<>();

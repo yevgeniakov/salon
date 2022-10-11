@@ -39,13 +39,13 @@ public class AccessCheckFilter implements Filter{
     };
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		logger.info("init");
+		logger.trace("init");
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		logger.info("doFilter");
+		logger.trace("doFilter enter");
 
 		httpRequest = (HttpServletRequest) request;
 		String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
@@ -61,6 +61,7 @@ public class AccessCheckFilter implements Filter{
         boolean isMaster = (session != null && loggedUser != null && loggedUser.getRole() == Role.HAIRDRESSER);
         boolean isGuest = (!isAdmin && !isClient && !isMaster);
        
+        logger.trace("isAdmin = " + isAdmin + ", isClient = " + isClient + ", isMaster = " + isMaster + ", isGuest = " + isGuest);
         String destinationPage = path;
         
         if (isAdmin) destinationPage = "admin_page.jsp";
@@ -69,20 +70,20 @@ public class AccessCheckFilter implements Filter{
         if (isGuest) destinationPage = "index.jsp";
         
         if (isAdmin && !isAdminAllowed() || isClient && !isClientAllowed() || isMaster && !isMasterAllowed() || isGuest && !isGuestAllowed() ) {
-        	logger.info("don't allowed, redirecting to " + destinationPage);
+        	logger.trace("don't allowed " + httpRequest.getRequestURI() + ", redirecting to " + destinationPage);
          	HttpServletResponse httpResponse = (HttpServletResponse) response;
         	httpResponse.sendRedirect(destinationPage);
         	
         } else {
         
-        logger.info("allowed");
+        logger.trace("allowed");
         chain.doFilter(request, response);
 	}
         }
 
 	@Override
 	public void destroy() {
-		logger.info("destroy");
+		logger.trace("destroy");
 	}
 	
 	private boolean isClientAllowed() {

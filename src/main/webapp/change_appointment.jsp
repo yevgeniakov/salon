@@ -39,17 +39,20 @@
 	
 	<my:getfreeslots master_id="${param.master_id}" date="${newDate}"/>
 	
-	<strong>Time: </strong> <select name="newtimeslot">
+	<strong>Time: </strong> 
+	<br>
+	
+	<select name="newtimeslot">
 		
 		<c:forEach items="${freetimeslots}" var="item">
-			<option value="${item}">${item}</option>
+			<option value="${item}"><my:timeslotdisp timeslot = "${item}" currentLang="${sessionScope.user.currentLang}"/></option>
 		</c:forEach>
 	</select> 
 	<input type="hidden" name="master_id" value="${param.master_id}">
 	<input type="hidden" name="date" value="${param.date}">
 	<input type="hidden" name="timeslot" value="${param.timeslot}">
 	<input type="hidden" name=command value="set_time_appointment">
-	
+	<br><br>
 	<input type="submit" name="submit" value="Set new time">
 </form>
 

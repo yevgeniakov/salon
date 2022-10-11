@@ -19,11 +19,16 @@
 <br>
 <form action="change_appointment.jsp" method="get">
 	<strong>Date:</strong>
-	<br> <input type="date" name="date" value="${appointment.date}"
+	
+	<c:out value="${appointment.date}"></c:out>
+	<br> <input type="hidden" name="date" value="${appointment.date}"
 		readonly />
 	<br><br>
 	<strong>Time:</strong>
-	<br> <input name="timeslot" value="${appointment.timeslot}"
+	<br>
+	
+	<my:timeslotdisp timeslot="${appointment.timeslot}" currentLang="${sessionScope.user.currentLang}"/>
+	<br> <input type="hidden" name="timeslot" value="${appointment.timeslot}"
 		readonly />
 	<br><br>
 	

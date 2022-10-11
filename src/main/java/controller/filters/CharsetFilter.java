@@ -19,7 +19,7 @@ public class CharsetFilter implements Filter {
     
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		logger.info("init");
+		logger.trace("init");
 	}
 
     public void doFilter(ServletRequest request,

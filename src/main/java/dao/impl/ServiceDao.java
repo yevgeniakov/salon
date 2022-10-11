@@ -51,7 +51,7 @@ public class ServiceDao implements Dao<Service> {
 
 	@Override
 	public Service findById(Connection con, int id) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -75,7 +75,7 @@ public class ServiceDao implements Dao<Service> {
 
 	@Override
 	public List<Service> findAll(Connection con) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		List<Service> services = new ArrayList<>();
 		Statement stmt = null;
@@ -97,7 +97,7 @@ public class ServiceDao implements Dao<Service> {
 	}
 
 	public TreeMap<Service, Integer> findAllbyMaster(Connection con, int master_id) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		TreeMap<Service, Integer> services = new TreeMap<>();
 		PreparedStatement stmt = null;
@@ -120,7 +120,7 @@ public class ServiceDao implements Dao<Service> {
 	}
 
 	public Service findByName(Connection con, String name) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -144,7 +144,7 @@ public class ServiceDao implements Dao<Service> {
 
 	@Override
 	public Service save(Connection con, Service t) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		PreparedStatement stmt = null;
 		int rows = 0;
@@ -182,7 +182,7 @@ public class ServiceDao implements Dao<Service> {
 	}
 
 	public List<Service> findAllAbsentByMaster(Connection con, int master_id) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		List<Service> services = new ArrayList<>();
 		PreparedStatement stmt = null;
@@ -205,7 +205,7 @@ public class ServiceDao implements Dao<Service> {
 	}
 	
 	private Service exstractService(ResultSet rs) throws SQLException {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Service service = new Service();
 		service.setId(rs.getInt("id"));

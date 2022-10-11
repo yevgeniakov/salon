@@ -53,7 +53,7 @@ public class AppointmentDao implements Dao<Appointment> {
 	
 	private static final String GET_PRICE_FOR_APPOINTMENT = "select master_services.price from master_services where master_id=? and service_id=?";
 
-	private static final String INSERT_APPOINTMENT = "insert into appointments values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_APPOINTMENT = "insert into appointments values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	private static final String DELETE_APPOINTMENT = "delete from appointments where date=? and timeslot=? and master_id=?";
 
@@ -139,7 +139,7 @@ public class AppointmentDao implements Dao<Appointment> {
 	}
 
 	public Appointment findByKey(Connection con, int master_id, LocalDate date, int timeslot) throws SQLException {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -172,7 +172,7 @@ public class AppointmentDao implements Dao<Appointment> {
 
 	@Override
 	public List<Appointment> findAll(Connection con) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		List<Appointment> appointments = new ArrayList<>();
 		Statement stmt = null;
@@ -195,7 +195,7 @@ public class AppointmentDao implements Dao<Appointment> {
 
 	@Override
 	public Appointment save(Connection con, Appointment t) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		PreparedStatement stmt = null;
 		try {
@@ -210,7 +210,6 @@ public class AppointmentDao implements Dao<Appointment> {
 			stmt.setInt(8, t.getSum());
 			stmt.setString(9, t.getFeedback());
 			stmt.setDouble(10, t.getRating());
-			stmt.setString(11, t.getDate().toString() + t.getTimeslot() + t.getMaster().getId());
 			stmt.executeUpdate();
 
 			return t;
@@ -222,7 +221,7 @@ public class AppointmentDao implements Dao<Appointment> {
 
 	@Override
 	public void delete(Connection con, Appointment t) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		PreparedStatement stmt = null;
 
@@ -241,7 +240,7 @@ public class AppointmentDao implements Dao<Appointment> {
 	}
 
 	private Appointment exstractAppointment(ResultSet rs) throws SQLException {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		Appointment appointment = new Appointment();
 		
@@ -261,8 +260,9 @@ public class AppointmentDao implements Dao<Appointment> {
 			Role master_role = Role.HAIRDRESSER;
 			String master_info = rs.getString("master_info");
 			boolean master_isblocked = rs.getBoolean("master_isblocked");
+			String master_currentLang = rs.getString("master_currentlang");
 			User master = new User(master_id, master_email, master_password, master_name, master_surname, master_tel,
-					master_role, master_info, master_isblocked, master_rating);
+					master_role, master_info, master_isblocked, master_rating, master_currentLang);
 			appointment.setMaster(master);
 			
 			int user_id = rs.getInt("user_id");
@@ -279,8 +279,9 @@ public class AppointmentDao implements Dao<Appointment> {
 			Role user_role = Role.CLIENT;
 			String user_info = rs.getString("user_info");
 			boolean user_isblocked = rs.getBoolean("user_isblocked");
+			String user_currentLang = rs.getString("user_currentlang");
 			User user = new User(user_id, user_email, user_password, user_name, user_surname, user_tel, user_role,
-					user_info, user_isblocked, 0);
+					user_info, user_isblocked, 0, user_currentLang);
 			appointment.setUser(user);
 
 			int service_id = rs.getInt("service_id");
@@ -307,7 +308,7 @@ public class AppointmentDao implements Dao<Appointment> {
 	}
 
 	public List<Appointment> getMasterSchedule(Connection con, LocalDate date, User master) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		List<Appointment> appointments = new ArrayList<>();
 		PreparedStatement stmt = null;
@@ -356,13 +357,13 @@ public class AppointmentDao implements Dao<Appointment> {
 
 	@Override
 	public Appointment findById(Connection con, int id) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		throw new UnsupportedOperationException();
 	}
 
 	public int getPrice(Connection con, User master, Service service) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		int price = 0;
 		PreparedStatement stmt = null;
@@ -390,7 +391,7 @@ public class AppointmentDao implements Dao<Appointment> {
 	}
 
 	public void setIsPaid(Connection con, Appointment appointment, boolean isPaid) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		PreparedStatement stmt = null;
 
@@ -410,7 +411,7 @@ public class AppointmentDao implements Dao<Appointment> {
 	}
 
 	public void setIsDone(Connection con, Appointment appointment, boolean isDone) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		PreparedStatement stmt = null;
 
@@ -430,7 +431,7 @@ public class AppointmentDao implements Dao<Appointment> {
 	}
 
 	public void setFeedback(Connection con, Appointment appointment, String feedback, double rating) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		PreparedStatement stmt = null;
 
@@ -452,7 +453,7 @@ public class AppointmentDao implements Dao<Appointment> {
 	}
 
 	public void setMasterRating(Connection con, User master, double rating) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		PreparedStatement stmt = null;
 
@@ -471,7 +472,7 @@ public class AppointmentDao implements Dao<Appointment> {
 	}
 
 	public double calculateMasterRating(Connection con, User master) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -496,7 +497,7 @@ public class AppointmentDao implements Dao<Appointment> {
 
 	public List<Appointment> findByConditions(Connection con, LocalDate dateFrom, LocalDate dateTo, Integer master_id, Integer user_id,
 			Integer service_id, Boolean isDone, Boolean isPaid, Boolean isRating) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -543,7 +544,7 @@ public class AppointmentDao implements Dao<Appointment> {
 	}
 
 	private String addConditionsToSQL(String sql) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		StringBuilder str = new StringBuilder(sql);
 		
@@ -561,7 +562,7 @@ public class AppointmentDao implements Dao<Appointment> {
 	}
 
 	public List<Integer> getMasterFreeSlots(Connection con, LocalDate date, User master) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		List<Integer> freeSlots = new ArrayList<>();
 		PreparedStatement stmt = null;
@@ -599,7 +600,7 @@ public class AppointmentDao implements Dao<Appointment> {
 	}
 
 	public void setTime(Connection con, Appointment appointment, LocalDate newDate, Integer newTimeslot) {
-		logger.info("enter");
+		logger.trace("enter");
 		
 		PreparedStatement stmt = null;
 

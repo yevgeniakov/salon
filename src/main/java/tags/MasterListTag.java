@@ -21,7 +21,7 @@ public class MasterListTag extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
-		logger.info("enter");
+		logger.trace("enter");
 
 		UserManager manager = UserManager.getInstance();
 		List<User> masterList = new ArrayList<>();

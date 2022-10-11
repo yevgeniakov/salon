@@ -36,7 +36,7 @@ public class UserManager {
 	}
 
 	public User findUserbyID(int id) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		User user = null;
@@ -53,7 +53,7 @@ public class UserManager {
 	}
 
 	public List<User> findAllUsers() throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		List<User> users = new ArrayList<>();
@@ -71,7 +71,7 @@ public class UserManager {
 	}
 
 	public List<User> findAllMasters() throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		List<User> masters = new ArrayList<>();
@@ -88,7 +88,7 @@ public class UserManager {
 	}
 
 	public SortedMap<User, Integer> findAllMastersByService(int service_id, String sort) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		SortedMap<User, Integer> masters = null;
@@ -105,7 +105,7 @@ public class UserManager {
 	}
 
 	public User checkCredentials(String email, String password) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		User user;
@@ -139,7 +139,7 @@ public class UserManager {
 	}
 
 	public User createUser(User user) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		try {
@@ -164,7 +164,7 @@ public class UserManager {
 	}
 
 	public User updateUser(User user) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		try {
@@ -182,7 +182,7 @@ public class UserManager {
 	}
 
 	public User setUserBlock(int id, boolean isBlocked) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		User user = new User();
@@ -203,7 +203,7 @@ public class UserManager {
 	}
 
 	private void encodePassword(User user) throws NoSuchAlgorithmException, InvalidKeySpecException {
-		logger.info("enter");
+		logger.trace("enter");
 
 		logger.trace("password is", user.getPassword());
 		user.setPassword(PasswordEncodingService.generateStorngPasswordHash(user.getPassword()));
@@ -211,7 +211,7 @@ public class UserManager {
 	}
 
 	public User createUserWithServices(User user, HashMap<Integer, Integer> serviceMap) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		try {
@@ -241,7 +241,7 @@ public class UserManager {
 	}
 
 	public User addServicesToUser(User user, HashMap<Integer, Integer> serviceMap) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		try {
@@ -260,7 +260,7 @@ public class UserManager {
 	}
 
 	public void deleteServiceFromMaster(User master, Service service) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		try {
@@ -279,7 +279,7 @@ public class UserManager {
 	}
 
 	public List<User> findUsersByConditions(Boolean isBlocked, String searchValue) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		List<User> users = new ArrayList<>();

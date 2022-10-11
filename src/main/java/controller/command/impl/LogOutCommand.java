@@ -13,7 +13,7 @@ public class LogOutCommand implements Command {
 	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
-		logger.info("execute");
+		logger.trace("execute");
 		
 		try {
 			request.getSession().removeAttribute("user");

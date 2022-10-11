@@ -27,7 +27,7 @@ public class ServiceAbsenceListTag extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
-		logger.info("enter");
+		logger.trace("enter");
 
 		ServiceManager manager = ServiceManager.getInstance();
 

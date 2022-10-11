@@ -24,7 +24,7 @@ public class UpdateUserCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
-		logger.info("execute");
+		logger.trace("execute");
 		
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
@@ -61,7 +61,7 @@ public class UpdateUserCommand implements Command {
 				}
 				i++;
 			}
-			User user = new User(id, email, "", name, surname, tel, null, info, isBlocked, 0);
+			User user = new User(id, email, "", name, surname, tel, null, info, isBlocked, 0, "");
 
 			UserManager userManager = UserManager.getInstance();
 			user = userManager.updateUser(user);

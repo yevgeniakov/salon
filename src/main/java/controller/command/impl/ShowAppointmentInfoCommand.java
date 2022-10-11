@@ -24,7 +24,7 @@ public class ShowAppointmentInfoCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
-		logger.info("execute");
+		logger.trace("execute");
 		
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
@@ -45,7 +45,7 @@ public class ShowAppointmentInfoCommand implements Command {
 			Appointment appointment = new Appointment();
 			appointment = manager.findAppointmentByKey(master_id, date, timeslot);
 			
-			if (appointment == null || (!appointment.getUser().equals(loggedUser) && !appointment.getMaster().equals(loggedUser))) {
+			if (appointment == null || (!appointment.getUser().equals(loggedUser) && !appointment.getMaster().equals(loggedUser) && loggedUser.getRole() != Role.ADMIN)) {
 				logger.error("access denied", loggedUser, appointment);
 				request.setAttribute("error", "You are not allowed to see view this appointment info!");
 				return "/error.jsp";	

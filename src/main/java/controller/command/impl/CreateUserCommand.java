@@ -25,7 +25,7 @@ public class CreateUserCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
-		logger.info("execute");
+		logger.trace("execute");
 		
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
@@ -68,7 +68,7 @@ public class CreateUserCommand implements Command {
 				i++;
 			}
 
-			User user = new User(0, email, password, name, surname, tel, role, info, false, 0);
+			User user = new User(0, email, password, name, surname, tel, role, info, false, 0, "en");
 			UserManager userManager = UserManager.getInstance();
 			if (serviceMap.isEmpty()) {
 				user = userManager.createUser(user);

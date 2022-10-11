@@ -64,7 +64,7 @@ public class UserDao implements Dao<User> {
 
 	@Override
 	public User findById(Connection con, int id) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -87,7 +87,7 @@ public class UserDao implements Dao<User> {
 
 	@Override
 	public List<User> findAll(Connection con) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		List<User> users = new ArrayList<>();
 		Statement stmt = null;
@@ -111,7 +111,7 @@ public class UserDao implements Dao<User> {
 
 	@Override
 	public User save(Connection con, User t) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		PreparedStatement stmt = null;
 		int rows = 0;
@@ -157,7 +157,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	public List<User> findAllMasters(Connection con) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		List<User> masters = new ArrayList<>();
 		Statement stmt = null;
@@ -180,7 +180,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	public SortedMap<User, Integer> findAllMastersByService(Connection con, int service_id, String sort) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		SortedMap<User, Integer> masters;
 
@@ -212,7 +212,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	public User findByEmail(Connection con, String email) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -236,7 +236,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	public User update(Connection con, User t) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		PreparedStatement stmt = null;
 
@@ -259,7 +259,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	public User setUserBlock(Connection con, User t, boolean isBlocked) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		System.out.println("dao#usersave");
 		PreparedStatement stmt = null;
@@ -279,7 +279,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	public void setServicesForMaster(Connection con, int id, HashMap<Integer, Integer> serviceMap) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Statement stmt = null;
 		String sql = getSqlForMasterServices(id, serviceMap);
@@ -294,7 +294,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	public void deleteServiceFromMaster(Connection con, User master, Service service) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		System.out.println("dao#userdeleteservice");
 		PreparedStatement stmt = null;
@@ -312,7 +312,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	public List<User> findAllByConditions(Connection con, Boolean isBlocked, String searchValue) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		System.out.println("dao#usersByConditions");
 		PreparedStatement stmt = null;
@@ -347,7 +347,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	private String addConditionsToSQL(String sql) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		StringBuilder str = new StringBuilder(sql);
 
@@ -358,7 +358,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	private String getSqlForMasterServices(int id, HashMap<Integer, Integer> serviceMap) {
-		logger.info("enter");
+		logger.trace("enter");
 
 		StringBuilder sql = new StringBuilder("INSERT INTO master_services VALUES ");
 		int i = 0;
@@ -376,7 +376,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	private User exstractUser(ResultSet rs) throws SQLException {
-		logger.info("enter");
+		logger.trace("enter");
 
 		User user = new User();
 		user.setId(rs.getInt("id"));

@@ -32,7 +32,7 @@ public class AppointmentManager {
 	}
 
 	public Appointment findAppointmentByKey(int master_id, LocalDate date, int timeslot) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		Appointment appointment = null;
@@ -50,7 +50,7 @@ public class AppointmentManager {
 	}
 
 	public List<Appointment> findAllAppointments() throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		List<Appointment> services = new ArrayList<>();
@@ -68,7 +68,7 @@ public class AppointmentManager {
 	}
 
 	public List<Appointment> getMasterSchedule(LocalDate date, User master) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		System.out.println("#Manager#getMasterSchedule");
 		Connection con = null;
@@ -87,7 +87,7 @@ public class AppointmentManager {
 	}
 
 	public Appointment createAppointment(Appointment appointment) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		try {
@@ -105,7 +105,7 @@ public class AppointmentManager {
 	}
 
 	public int getPriceByMasterAndService(User master, Service service) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		int price = 0;
@@ -124,7 +124,7 @@ public class AppointmentManager {
 	}
 
 	public void deleteAppointment(Appointment appointment) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		try {
@@ -141,7 +141,7 @@ public class AppointmentManager {
 	}
 
 	public void setPayAppointment(Appointment appointment, boolean isPaid) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		try {
@@ -158,7 +158,7 @@ public class AppointmentManager {
 	}
 
 	public void setDoneAppointment(Appointment appointment, boolean isDone) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		try {
@@ -175,7 +175,7 @@ public class AppointmentManager {
 
 	public void setFeedbackForAppointmentandUpdateMaster(Appointment appointment, double rating, String feedback)
 			throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		try {
@@ -198,7 +198,7 @@ public class AppointmentManager {
 
 	public List<Appointment> findAppointmentsByConditions(LocalDate dateFrom, LocalDate dateTo, Integer master_id,
 			Integer user_id, Integer service_id, Boolean isDone, Boolean isPaid, Boolean isRating) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		List<Appointment> appointments = new ArrayList<>();
@@ -221,7 +221,7 @@ public class AppointmentManager {
 	}
 
 	public List<Integer> getMasterFreeSlots(LocalDate date, User master) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		List<Integer> freeSlots = new ArrayList<>();
@@ -240,7 +240,7 @@ public class AppointmentManager {
 	}
 
 	public void setTimeAppointment(Appointment appointment, LocalDate newDate, Integer newTimeslot) throws Exception {
-		logger.info("enter");
+		logger.trace("enter");
 
 		Connection con = null;
 		try {

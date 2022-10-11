@@ -39,6 +39,25 @@
      
   </tag>
   
+  <tag>
+    <name>timeslotdisp</name>
+    <tag-class>tags.DisplayTimeTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>timeslot</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>java.lang.Integer</type>
+    </attribute>
+    <attribute>
+        <name>currentLang</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>java.lang.String</type>
+    </attribute>
+     
+  </tag>
+  
 <tag>
     <name>getfreeslots</name>
     <tag-class>tags.FreeSlotsListTag</tag-class>
