@@ -1,4 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 
 <html>
@@ -15,15 +16,13 @@
 
 <h3>Please, leave feedback for your appointment:</h3>
 <br>
+
 <form action="Controller" method=post>
 
 	<strong>Your rating: </strong> <br>
-		<input type="radio" name="rating" value=1 />1 <br> 
-		<input type="radio" name="rating" value=2 />2 <br>
-		<input type="radio"	name="rating" value=3 />3 <br>
-		<input type="radio"	name="rating" value=4 />4 <br>
-		<input type="radio"	name="rating" value=5 />5 <br>	
-			
+	<c:forEach var="i" begin="1" end="5">
+		<input type="radio" name="rating" value="${i}" />${i} <br> 
+		</c:forEach>
 		<br> <input type="hidden" name="master_id" value="${param.master_id}">
 		<br> <input type="hidden" name="date" value="${param.date}">
 		<br> <input type="hidden" name="timeslot" value="${param.timeslot}">

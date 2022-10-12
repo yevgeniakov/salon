@@ -91,12 +91,12 @@
 		<c:if test="${sessionScope.user.role == 'ADMIN'}">
 			<input type="submit" value="Update data">
 		</c:if>
+		
 </form>
 
 <c:if test="${services != null && showuser.role == 'HAIRDRESSER'}">
 		
 			<strong> Master Services: </strong>
-		
 
 		<table>
 			<c:forEach items="${services}" var="entry">

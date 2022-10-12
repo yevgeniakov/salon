@@ -11,7 +11,7 @@
 </head>
 
 <h3>Hello, please log in:</h3>
-<br>
+
 <form action="Controller" method=post>
     <p><strong>Login (e-mail): </strong>
     <br>

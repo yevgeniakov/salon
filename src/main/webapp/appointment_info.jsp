@@ -18,22 +18,19 @@
 <h3>Appointment info </h3>
 <br>
 <form action="change_appointment.jsp" method="get">
-	<strong>Date:</strong>
+	<strong>Date:</strong><br>
 	
 	<c:out value="${appointment.date}"></c:out>
-	<br> <input type="hidden" name="date" value="${appointment.date}"
-		readonly />
-	<br><br>
-	<strong>Time:</strong>
-	<br>
+	<br> <br>
+
+	<strong>Time:</strong><br>
 	
 	<my:timeslotdisp timeslot="${appointment.timeslot}" currentLang="${sessionScope.user.currentLang}"/>
-	<br> <input type="hidden" name="timeslot" value="${appointment.timeslot}"
-		readonly />
-	<br><br>
 	
-	
+	<br>
+	<input type="hidden" name="date" value="${appointment.date}" />
 	<input type="hidden" name="master_id" value="${appointment.master.id}">
+	<input type="hidden" name="timeslot" value="${appointment.timeslot}" />
 	<c:if test="${sessionScope.user.role == 'ADMIN' && !appointment.isDone}">
 	<input type="submit" name="submit" value="Change time">
 	</c:if>
@@ -114,8 +111,14 @@
 	<input type="submit" name="submit" value="${appointment.rating == 0 ? 'Leave feedback' : 'Change feedback' }">
 	</form>
 	</c:if>
-	
-
-
+	<c:if test="${sessionScope.user.role == 'ADMIN' && !(appointment.isDone)}">
+					<form action="Controller" method="post">
+						<input type="hidden" name=master_id value="${appointment.master.id}" />
+						<input type="hidden" name=date value="${appointment.date}" /> 
+						<input type="hidden" name=timeslot value="${appointment.timeslot}" /> 
+						<input type="hidden" name=command value="delete_appointment" /> 
+						<input type="submit" name="submit" value="Delete appiontment" />
+					</form>
+				</c:if>
 </body>
 </html>

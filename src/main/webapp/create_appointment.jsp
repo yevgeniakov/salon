@@ -42,8 +42,7 @@
 			<input type="hidden" name="command" value="create_appointment">
 	<p>
 	<p>
-		<input type="submit" value="Submit"> <input type="reset"
-			value="Reset">
+		<input type="submit" value="Submit"> 
 </form>
 
 

@@ -28,10 +28,11 @@ public class UpdateUserCommand implements Command {
 		
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
-			logger.info("Access denied. returning to index page", loggedUser,
+			logger.info("Access denied.", loggedUser,
 					loggedUser == null ? "GUEST" : loggedUser.getRole());
 			
-			return "/index.jsp";
+			request.setAttribute("error", "Access denied");
+			return "/error.jsp";
 		}
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
@@ -86,6 +87,7 @@ public class UpdateUserCommand implements Command {
 					return "my_info.jsp";
 				} else {
 					logger.info("admin updated user info", id);
+					request.setAttribute("message", "User data updated successfully!");
 					return "Controller?command=show_user_info&id=" + user.getId();
 				}
 			}

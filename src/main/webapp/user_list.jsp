@@ -49,10 +49,10 @@
 <strong>Items per page: </strong>
 <input name="itemsperpage" value="${itemsPerPage == null ? 10 : itemsPerPage }" size=2>
 <br>		
-<input type="hidden" name="page" value="${page == null ? 1 : page }">			
+<input type="hidden" name="page" value="1">			
 	
 	
-	<input type="hidden" name="command" value="user_list">
+	<input type="hidden" name="command" value="show_user_list">
 	
 </form>
 <table>
@@ -83,19 +83,19 @@
                         ${i}
                     </c:when>
                     <c:otherwise>
-                        <a href="Controller?command=user_list&sort=${sort}&sortorder=${sortOrder}&isblocked=${isBlocked}&searchvalue=${searchValue}&itemsperpage=${itemsPerPage}&page=${i}"> ${i} </a>
+                        <a href="Controller?command=show_user_list&sort=${sort}&sortorder=${sortOrder}&isblocked=${isBlocked}&searchvalue=${searchValue}&itemsperpage=${itemsPerPage}&page=${i}"> ${i} </a>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
         </tr>
     </table>
   <c:if test="${page != 1}">
- <a href="Controller?command=user_list&sort=${sort}&sortorder=${sortOrder}&isblocked=${isBlocked}&searchvalue=${searchValue}&itemsperpage=${itemsPerPage}&page=${page - 1}">prev</a>
+ <a href="Controller?command=show_user_list&sort=${sort}&sortorder=${sortOrder}&isblocked=${isBlocked}&searchvalue=${searchValue}&itemsperpage=${itemsPerPage}&page=${page - 1}">prev</a>
   
        
     </c:if>  
     <c:if test="${page lt pagesTotal}">
-        <a href="Controller?command=user_list&sort=${sort}&sortorder=${sortOrder}&isblocked=${isBlocked}&searchvalue=${searchValue}&itemsperpage=${itemsPerPage}&page=${page + 1}">next></a>
+        <a href="Controller?command=show_user_list&sort=${sort}&sortorder=${sortOrder}&isblocked=${isBlocked}&searchvalue=${searchValue}&itemsperpage=${itemsPerPage}&page=${page + 1}">next></a>
     </c:if>
 
 

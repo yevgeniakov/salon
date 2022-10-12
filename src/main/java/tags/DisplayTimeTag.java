@@ -33,7 +33,12 @@ public class DisplayTimeTag extends TagSupport {
 			if ("ua".equals(currentLang)) {
 				pageContext.getOut().write(timeslot + ": 00");
 			} else {
-				pageContext.getOut().write(timeslot <= 12 ? timeslot + " AM" : (timeslot - 12) + " PM");
+				
+				if (timeslot == 0) pageContext.getOut().write("12 a.m.");
+				if (timeslot == 12) pageContext.getOut().write("12 p.m.");
+				if (timeslot > 0 && timeslot < 12) pageContext.getOut().write(timeslot + " a.m.");
+				if (timeslot > 12 && timeslot < 23) pageContext.getOut().write(timeslot - 12  + " p.m.");
+			
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
