@@ -1,0 +1,76 @@
+package service.utils;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
+import controller.exceptions.IncorrectParamException;
+
+public class ValidatorUtil {
+	
+
+    private static final String NAME_REGEX = "^[\\D ,.'-]+$";
+	private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
+	private static final String EMAIL_REGEX = "/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i";
+	private static final String TIMESLOT_REGEX = "2[0-3]|[0-1]?[0-9]";
+	private static final String ID_REGEX = "[:digit:] ";
+	private static final String RATING_REGEX = "[0-5]";
+
+	private ValidatorUtil() {}
+
+    public static boolean isValidName(String name) {
+        return name != null && name.matches(NAME_REGEX);
+    }
+
+    public static boolean isValidPassword(String password) {
+        return password != null && password.matches(PASSWORD_REGEX);
+    }
+
+    public static boolean isValidEmail(String email) {
+        return email != null && email.matches(EMAIL_REGEX);
+    }
+
+    public static boolean isValidTimeslot(String timeslot) {
+        return timeslot != null && timeslot.matches(TIMESLOT_REGEX);
+    }
+
+    public static boolean isValidInt(String intParam) {
+        return intParam != null && intParam.matches(ID_REGEX);
+    }
+
+    public static boolean isValidRating(String rating) {
+        return rating != null && rating.matches(RATING_REGEX);
+    }
+    
+    public static boolean isValidText(String text) {
+        return text != null && text != "";
+    }
+
+    public static int parseIntParameter(String intParam) throws IncorrectParamException {
+        if(isValidInt(intParam)) {
+            return Integer.parseInt(intParam);
+        }
+        throw new IncorrectParamException("unable to parse id");
+    }
+
+    public static int parseRatingParameter(String ratingParam) {
+        if(isValidRating(ratingParam)) {
+            return Integer.parseInt(ratingParam);
+        }
+        return 0;
+    }
+
+    public static int parseTimeslotParameter(String timeslotParam) throws IncorrectParamException {
+        if(isValidTimeslot(timeslotParam)) {
+            return Integer.parseInt(timeslotParam);
+        }
+        throw new IncorrectParamException("unable to parse timeslot");
+    }
+    public static LocalDate parseDateParameter(String dateParam) throws IncorrectParamException {
+            try {
+                return LocalDate.parse(dateParam);
+            } catch(DateTimeParseException e) {
+                throw new IncorrectParamException("unable to parse date");
+            }
+        
+    }
+}

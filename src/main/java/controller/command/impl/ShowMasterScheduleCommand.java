@@ -11,6 +11,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.FindingAppointmentException;
+import controller.exceptions.FindingUserException;
 import entity.Appointment;
 import entity.Role;
 import entity.User;
@@ -53,7 +55,7 @@ public class ShowMasterScheduleCommand implements Command {
 			request.setAttribute("date", date);
 			return "/master_schedule.jsp";
 
-		} catch (Exception e) {
+		} catch (FindingUserException | FindingAppointmentException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";

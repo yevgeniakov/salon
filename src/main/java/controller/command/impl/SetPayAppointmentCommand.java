@@ -11,6 +11,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.FindingAppointmentException;
+import controller.exceptions.UpdatingAppointmentException;
 import entity.Appointment;
 import entity.Role;
 import entity.User;
@@ -50,7 +52,7 @@ public class SetPayAppointmentCommand implements Command {
 			logger.info("set appointment payment", appointment.getIsPaid(), appointment.getMaster().getId(), appointment.getDate(), appointment.getTimeslot());
 			return "Controller?command=show_master_schedule&id=" + appointment.getMaster().getId() + "&date="
 					+ appointment.getDate();
-		} catch (Exception e) {
+		} catch (FindingAppointmentException | UpdatingAppointmentException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";

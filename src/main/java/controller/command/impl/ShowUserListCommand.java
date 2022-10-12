@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.FindingUserException;
 import entity.Role;
 import entity.User;
 import service.UserManager;
@@ -53,7 +54,7 @@ public class ShowUserListCommand implements Command {
 
 		try {
 			users = manager.findUsersByConditions(isBlocked, searchValue);
-		} catch (Exception e) {
+		} catch (FindingUserException e) {
 			logger.info(e.getMessage(), e);
 			request.setAttribute("error", "unable to get user list");
 			return "/error.jsp";

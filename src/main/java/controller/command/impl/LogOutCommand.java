@@ -22,13 +22,7 @@ public class LogOutCommand implements Command {
 			return "/index.jsp";
 		}
 		
-		try {
-			request.getSession().removeAttribute("user");
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			request.setAttribute("error", "failed to logout");
-			return "/error.jsp";
-		}
+		request.getSession().removeAttribute("user");
 		logger.info("user logged out successfully", loggedUser.getId());
 		return "/index.jsp";
 	}

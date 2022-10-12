@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.UpdatingUserException;
 import entity.Role;
 import entity.Service;
 import entity.User;
@@ -53,7 +54,7 @@ public class DeleteServiceFromMasterCommand implements Command {
 			logger.info("service deleted from master", service.getId(), master.getId());
 			return "Controller?command=show_user_info&id=" + master_id;
 			
-		} catch (Exception e) {
+		} catch (UpdatingUserException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";

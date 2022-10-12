@@ -14,6 +14,7 @@ import entity.Role;
 import entity.Service;
 import entity.User;
 import service.ServiceManager;
+import service.utils.ValidatorUtil;
 
 public class CreateServiceCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateServiceCommand.class);
@@ -39,6 +40,12 @@ public class CreateServiceCommand implements Command {
 		try {
 			String name = request.getParameter("name");
 			String info = request.getParameter("info");
+			
+			if (!ValidatorUtil.isValidText(name) || ValidatorUtil.isValidText(info)) {
+				logger.error("Service is not created. Invalid params", name, info);
+				request.setAttribute("error", "Can't create service. Invalid input data.");
+				return "/error.jsp";
+			}
 			Service service = new Service(0, name, info);
 			ServiceManager manager = ServiceManager.getInstance();
 			service = manager.createService(service);

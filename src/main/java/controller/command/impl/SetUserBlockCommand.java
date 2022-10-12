@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.UpdatingUserException;
 import entity.Role;
 import entity.User;
 import service.UserManager;
@@ -50,7 +51,7 @@ public class SetUserBlockCommand implements Command {
 			logger.error("Can't set user block");
 			request.setAttribute("error", "Can't set user block");
 			return "/error.jsp";
-		} catch (Exception e) {
+		} catch (UpdatingUserException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.FindingAppointmentException;
 import entity.Appointment;
 import entity.Role;
 import entity.User;
@@ -104,7 +105,7 @@ public class ShowAppointmentsListCommand implements Command {
 			request.setAttribute("dateto", dateTo);
 
 			return "/appointments_list.jsp";
-		} catch (Exception e) {
+		} catch (FindingAppointmentException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";

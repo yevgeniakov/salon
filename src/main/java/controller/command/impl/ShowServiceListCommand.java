@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.FindingServiceException;
 import entity.Role;
 import entity.Service;
 import entity.User;
@@ -41,7 +42,7 @@ public class ShowServiceListCommand implements Command {
 
 		try {
 			services = manager.findAllservices();
-		} catch (Exception e) {
+		} catch (FindingServiceException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", "unable to get service list");
 			return "/error.jsp";

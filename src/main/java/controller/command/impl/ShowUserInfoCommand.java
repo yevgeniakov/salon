@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.FindingUserException;
 import entity.Role;
 import entity.Service;
 import entity.User;
@@ -58,7 +59,7 @@ public class ShowUserInfoCommand implements Command {
 		User user = new User();
 		try {
 			user = userManager.findUserbyID(id);
-		} catch (Exception e) {
+		} catch (FindingUserException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", "unable to find user!");
 			return "/error.jsp";

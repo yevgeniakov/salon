@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.FindingUserException;
 import entity.Role;
 import entity.Service;
 import entity.User;
@@ -47,7 +48,7 @@ public class ShowMasterOfServiceCommand implements Command {
 		try {
 			masters = userManager.findAllMastersByService(service_id, sort);
 
-		} catch (Exception e) {
+		} catch (FindingUserException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", "unable to get master list");
 			return "/error.jsp";

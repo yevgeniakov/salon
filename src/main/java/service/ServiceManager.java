@@ -9,6 +9,8 @@ import java.util.TreeMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import controller.exceptions.CreatingServiceException;
+import controller.exceptions.FindingServiceException;
 import dao.DBConnection;
 import dao.impl.ServiceDao;
 import entity.Service;
@@ -37,9 +39,9 @@ public class ServiceManager {
 		try {
 			con = dao.getConnection();
 			service = dao.findById(con, id);
-		} catch (Exception e) {
+		} catch (SQLException |ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
-			// TODO throw new custom Exception
+			throw new FindingServiceException("Cannot find service by id: " + e.getMessage());
 		} finally {
 			DBConnection.close(con);
 		}
@@ -47,7 +49,7 @@ public class ServiceManager {
 		return service;
 	}
 
-	public Service findServiceByName(String name) {
+	public Service findServiceByName(String name) throws FindingServiceException {
 		logger.trace("enter");
 
 		Connection con = null;
@@ -55,16 +57,16 @@ public class ServiceManager {
 		try {
 			con = dao.getConnection();
 			service = dao.findByName(con, name);
-		} catch (Exception e) {
+		} catch (SQLException |ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
-			// TODO throw new custom Exception
+			throw new FindingServiceException("Cannot find service by name: " + e.getMessage());
 		} finally {
 			DBConnection.close(con);
 		}
 		return service;
 	}
 
-	public List<Service> findAllservices() throws Exception {
+	public List<Service> findAllservices() throws FindingServiceException {
 		logger.trace("enter");
 
 		Connection con = null;
@@ -72,9 +74,9 @@ public class ServiceManager {
 		try {
 			con = dao.getConnection();
 			services = dao.findAll(con);
-		} catch (Exception e) {
-			// TODO throw new custom Exception
+		} catch (SQLException |ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
+			throw new FindingServiceException("Cannot find all services: " + e.getMessage());
 		} finally {
 			DBConnection.close(con);
 		}
@@ -89,16 +91,16 @@ public class ServiceManager {
 		try {
 			con = dao.getConnection();
 			services = dao.findAllbyMaster(con, master_id);
-		} catch (Exception e) {
-			// TODO throw new custom Exception
+		} catch (SQLException |ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
+			throw new FindingServiceException("Cannot find all services by master: " + e.getMessage());
 		} finally {
 			DBConnection.close(con);
 		}
 		return services;
 	}
 
-	public Service createService(Service service) throws Exception {
+	public Service createService(Service service) throws CreatingServiceException {
 		logger.trace("enter");
 
 		Connection con = null;
@@ -106,17 +108,16 @@ public class ServiceManager {
 		try {
 			con = dao.getConnection();
 			service = dao.save(con, service);
-		} catch (SQLException e) {
+		} catch (SQLException |ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
-			// TODO (2) throw your own exception
-			throw new Exception("Cannot create service", e);
+			throw new CreatingServiceException("Cannot create service: " + e.getMessage());
 		} finally {
 			DBConnection.close(con);
 		}
 		return service;
 	}
 
-	public List<Service> findAllServicesAbsentByMaster(int master_id) {
+	public List<Service> findAllServicesAbsentByMaster(int master_id) throws FindingServiceException {
 		logger.trace("enter");
 
 		Connection con = null;
@@ -124,8 +125,9 @@ public class ServiceManager {
 		try {
 			con = dao.getConnection();
 			services = dao.findAllAbsentByMaster(con, master_id);
-		} catch (Exception e) {
+		} catch (SQLException |ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
+			throw new FindingServiceException("Cannot find all services absent by master: " + e.getMessage());
 		} finally {
 			DBConnection.close(con);
 		}

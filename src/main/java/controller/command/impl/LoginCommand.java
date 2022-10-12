@@ -7,6 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.CheckCredentialsException;
+import controller.exceptions.FindingUserException;
 import entity.Role;
 import entity.User;
 import service.UserManager;
@@ -27,7 +29,7 @@ public class LoginCommand implements Command {
 		try {
 			user = manager.checkCredentials(email, password);
 
-		} catch (Exception e) {
+		} catch (CheckCredentialsException | FindingUserException e) {
 			logger.info("Check credentials failed. " + e.getMessage());
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";

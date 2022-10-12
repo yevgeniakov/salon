@@ -10,10 +10,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.CreatingUserException;
+import controller.exceptions.FindingServiceException;
+import controller.exceptions.IncorrectParamException;
 import entity.Role;
 import entity.User;
 import service.ServiceManager;
 import service.UserManager;
+import static service.utils.ValidatorUtil.*;
 
 public class CreateUserCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateUserCommand.class);
@@ -44,13 +48,23 @@ public class CreateUserCommand implements Command {
 			Role role = Role.valueOf(request.getParameter("role").toUpperCase());
 			String password = request.getParameter("password");
 			String info = request.getParameter("info");
-
+			
+			if (!isValidName(name) 
+					|| !isValidName(surname) 
+					|| !isValidEmail(email) 
+					|| !isValidPassword(password) 
+					|| !isValidText(info)) {
+				logger.error("Invalid parameters");
+				request.setAttribute("error", "Can't create user. Invalid input data.");
+				return "/error.jsp";
+			}
+			
 			int i = 1;
 			ServiceManager serviceManager = ServiceManager.getInstance();
 			HashMap<Integer, Integer> serviceMap = new HashMap<>();
 			while (request.getParameter("service" + i) != null) {
 				String sumParam = request.getParameter("sum" + i);
-				int sum = (sumParam == "") ? 0 : Integer.parseInt(request.getParameter("sum" + i));
+				int sum = (sumParam == "") ? 0 : parseIntParameter(request.getParameter("sum" + i));
 				if (sum != 0) {
 					serviceMap.put(serviceManager.findServiceByName(request.getParameter("service" + i)).getId(), sum);
 				}
@@ -83,7 +97,7 @@ public class CreateUserCommand implements Command {
 			logger.error("Can't create user");
 			request.setAttribute("error", "Can't create user");
 			return "/error.jsp";
-		} catch (Exception e) {
+		}  catch (CreatingUserException | FindingServiceException | IncorrectParamException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";

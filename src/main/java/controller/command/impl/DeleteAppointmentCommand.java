@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.DeletingAppointmentException;
 import entity.Appointment;
 import entity.Role;
 import entity.User;
@@ -51,7 +52,7 @@ public class DeleteAppointmentCommand implements Command {
 			request.setAttribute("message", "appointment deleted");
 			logger.info("appointment deleted", master_id, date, timeslot);
 			return "Controller?command=show_master_schedule&id=" + master_id + "&date=" + date;
-		} catch (Exception e) {
+		} catch (DeletingAppointmentException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";

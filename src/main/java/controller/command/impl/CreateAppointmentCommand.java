@@ -1,6 +1,5 @@
 package controller.command.impl;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +11,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.CreatingAppointmentException;
+import controller.exceptions.FindingAppointmentException;
+import controller.exceptions.IncorrectParamException;
 import entity.Appointment;
 import entity.Role;
 import entity.Service;
 import entity.User;
 import service.AppointmentManager;
+import service.utils.ValidatorUtil;
 
 public class CreateAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateAppointmentCommand.class);
@@ -38,15 +41,24 @@ public class CreateAppointmentCommand implements Command {
 		}
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-		
-
-		try {
-			int service_id = Integer.parseInt(request.getParameter("service_id"));
-			int master_id = Integer.parseInt(request.getParameter("master_id"));
-			int user_id = Integer.parseInt(request.getParameter("user_id"));
-			int timeslot = Integer.parseInt(request.getParameter("timeslot"));
-			LocalDate date = LocalDate.parse(request.getParameter("date"));
-
+			int service_id = 0;
+			int master_id = 0;
+			int user_id = 0;
+			int timeslot = 0;
+			LocalDate date = null;
+			try {
+				service_id = ValidatorUtil.parseIntParameter(request.getParameter("service_id"));
+				master_id = ValidatorUtil.parseIntParameter(request.getParameter("master_id"));
+				user_id = ValidatorUtil.parseIntParameter(request.getParameter("user_id"));
+				timeslot = ValidatorUtil.parseTimeslotParameter(request.getParameter("timeslot"));
+				date = ValidatorUtil.parseDateParameter(request.getParameter("date"));
+			} catch (IncorrectParamException e) {
+				logger.error(e.getMessage(), e);
+				request.setAttribute("error", e.getMessage());
+				return "/error.jsp";
+			}
+			
+			try {
 			User user = new User();
 			user.setId(user_id);
 			User master = new User();
@@ -61,11 +73,8 @@ public class CreateAppointmentCommand implements Command {
 			logger.info("new appointment created", master_id, user_id, service_id, date, timeslot);
 			return "Controller?command=show_master_schedule&id=" + appointment.getMaster().getId() + "&date="
 					+ appointment.getDate();
-		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
-			request.setAttribute("error", "Something wrong. try once more.");
-			return "/error.jsp";
-		} catch (Exception e) {
+
+		} catch (FindingAppointmentException | CreatingAppointmentException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", "Something wrong. try once more.");
 			return "/error.jsp";
