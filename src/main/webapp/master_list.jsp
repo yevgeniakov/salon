@@ -18,22 +18,32 @@
 </c:if>
 
 <br>
+<div class="sort-controller">
 <strong>Sort by: </strong>
 <form action="Controller" method="get">
-<select name="sort">
+<div id="bl1">
+<select name="sort" class="form-select">
 		<option value="surname" <c:if test="${sort == 'surname' || sort == null}"> selected </c:if>>surname</option>
 		<option value="rating" <c:if test="${sort == 'rating'}"> selected </c:if>>rating</option>
 		
 	</select>
+</div>
+<div id="bl2" class="btn-appl">
 	<input type="hidden" name="service_id" value="${service_id}">
 	<input type="hidden" name="command" value="${service_id == null? 'show_master_list' : 'show_masters_of_service' }">
-	<input type = "submit" value="Apply"> 
+	<input type = "submit" class="btn btn-primary" value="Apply"> 
+</div>
 </form>
 
+</div>
+
 <br>
+<div class="list-masters">
 <c:if test="${service == null}">
 <strong>List of masters </strong>
-	<table>
+
+<div class="table-list">
+	<table class=" table table-striped">
 <tr>
 <th>Name</th><th>Tel</th><th>Short info</th><th>Rating</th><th>Info</th><c:if test="${sessionScope.user != null}"><th>View schedule</th></c:if>
 </tr>
@@ -85,8 +95,8 @@
 		</c:forEach>
 	</table>
 </c:if>
-
-
+</div>
+</div>
 
 
 </body>

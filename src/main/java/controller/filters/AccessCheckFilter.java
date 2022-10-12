@@ -27,15 +27,15 @@ public class AccessCheckFilter implements Filter{
     private static final String[] ClientAllowedURLs = {
             "/header.jsp", "/client_page.jsp", "/error.jsp", "/my_info.jsp", "/master_list.jsp", 
             "/master_schedule.jsp", "/create_appointment.jsp", "/leave_feedback.jsp", 
-            "/appointments_list.jsp", "/appointment_info.jsp", "/Controller"
+            "/appointments_list.jsp", "/appointment_info.jsp", "/Controller", "css", "js"
     };
     private static final String[] MasterAllowedURLs = {
     		"/header.jsp", "/master_page.jsp", "/error.jsp", "/my_info.jsp", "/master_schedule", 
-            "/appointments_list.jsp", "/appointment_info.jsp", "/Controller"
+            "/appointments_list.jsp", "/appointment_info.jsp", "/Controller", "css", "js"
     };
     private static final String[] GuestAllowedURLs = {
     		"/header.jsp", "/index.jsp", "/registration.jsp", "/login.jsp", "/error.jsp", 
-            "/master_list.jsp", "/master_info.jsp", "/Controller"
+            "/master_list.jsp", "/master_info.jsp", "/Controller", "css", "js"
     };
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {

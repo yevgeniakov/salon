@@ -3,14 +3,14 @@
 <%@ taglib uri="WEB-INF/mylib.tld" prefix="my"%>
 <%@ page isELIgnored="false"%>
 <html>
-<style>
-table, th, td {
-	border: 1px solid black;
-}
-</style>
-<body>
 
-		<a href="index.jsp">Home page</a> |
+<link rel="stylesheet" href="css/my.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+<body>
+	<div id="header">
+		<a href="index.jsp" class="home" >Home page</a>
+	<div id="enter">
 		<c:if test="${sessionScope.user != null}">
 
 			<a href="my_info.jsp">${sessionScope.user.name}
@@ -23,8 +23,9 @@ table, th, td {
 			<a href="login.jsp">Login</a> | 
     		<a href="registration.jsp">Registration</a>
 		</c:if>
-
-
+	</div>
+		
+	</div>
 
 	<hr>
 </body>
