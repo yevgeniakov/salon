@@ -1,7 +1,5 @@
-<%@page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="WEB-INF/mylib.tld" prefix="my" %> 
-<%@ page isELIgnored="false"%>
+<%@ include file="/WEB-INF/include/head.jspf"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <html>
       <style>
@@ -12,27 +10,27 @@
 <body>
 <jsp:include page="header.jsp" />
 <head>
-<title>Create Appointment</title>
+<title><fmt:message key="label.create_appointment"/></title>
 </head>
 
 <hr>
-<h3>Please, check you data and select the service:</h3>
+<h3><fmt:message key="label.create_appointment_provide"/></h3>
 
 <br>
 <form action="Controller" method=post>
 	<p>
-		<strong>Name: </strong> <br> <input name="name"
+		<strong><fmt:message key="label.name"/></strong> <br> <input name="name"
 			value="${sessionScope.user.name}" size="50" disabled>
 	<p>
-		<strong>Surname: </strong> <br> <input size="50" name="surname"
+		<strong><fmt:message key="label.surname"/></strong> <br> <input size="50" name="surname"
 			value="${sessionScope.user.surname}" disabled> <br>
 	<p>
 	
 	<my:getservices master_id = "${param.master_id }" />
-		<strong>Service: </strong> <br> 
+		<strong><fmt:message key="label.service"/></strong> <br> 
 		<select name="service_id">
 			<c:forEach items="${servicemap}" var="entry">
-				<option value="${entry.key.id}">${entry.key.name} - ${entry.value} hrn.</option>
+				<option value="${entry.key.id}">${entry.key.name} - ${entry.value} <fmt:message key="label.hrn"/></option>
 			</c:forEach>
 		</select> <br> 
 		<input type="hidden" name="user_id" value="${sessionScope.user.id}">
@@ -42,7 +40,7 @@
 			<input type="hidden" name="command" value="create_appointment">
 	<p>
 	<p>
-		<input type="submit" value="Submit"> 
+		<input type="submit" value=<fmt:message key="button.create_appointment"/>> 
 </form>
 
 

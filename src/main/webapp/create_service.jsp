@@ -1,5 +1,5 @@
-<%@page contentType="text/html; charset=UTF-8"%>
-<%@ page isELIgnored="false"%>
+<%@ include file="/WEB-INF/include/head.jspf"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <html>
       <style>
@@ -13,16 +13,16 @@
 <title>Create Service Page</title>
 </head>
 
-<h3>Please, provide the information below:</h3>
+<h3><fmt:message key="label.appointments_list"/></h3>
 <br>
 <form action="Controller" method=post>
 
 
-	<strong>Name of service: </strong> <br> <input size="100"
+	<strong><fmt:message key="label.name_of_service"/></strong> <br> <input size="100"
 		name="name"> <br>
 	<p>
 
-		<strong>Service info: </strong> <br>
+		<strong><fmt:message key="label.service_info"/></strong> <br>
 		<textarea rows="10" cols="60" name="info">
 
     </textarea>
@@ -31,8 +31,8 @@
 		<input type="hidden" name="command" value="create_service">
 	<p>
 	<p>
-		<input type="submit" value="Submit"> <input type="reset"
-			value="Reset">
+		<input type="submit" value=<fmt:message key="button.create_service"/>> <input type="reset"
+			value=<fmt:message key="button.reset"/>>
 </form>
 
 

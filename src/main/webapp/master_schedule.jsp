@@ -1,7 +1,5 @@
-<%@page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="WEB-INF/mylib.tld" prefix="my"%>
-<%@ page isELIgnored="false" %> 
+<%@ include file="/WEB-INF/include/head.jspf"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <html>
       <style>
          table, th, td {
@@ -14,10 +12,10 @@
 
 
 <head>
-    <title>Master Schedule </title>
+    <title><fmt:message key="label.master_schedule"/></title>
 </head>
 
-<h3>Master Schedule - ${master.name} ${master.surname}</h3>
+<h3><fmt:message key="label.master_schedule"/> - ${master.name} ${master.surname}</h3>
 <br>
 <form method=get name="dateForm">
 <input type="hidden" name="command" value="show_master_schedule">
@@ -30,7 +28,7 @@
 
 <table>
 <tr>
-<th>Time</th><th>Master</th><th>Info</th><th>User</th><th>Service</th><th>Sum</th><th>isDone</th><th>isPaid</th><th>Rating</th>
+<th><fmt:message key="label.time"/></th><th><fmt:message key="label.master"/></th><th><fmt:message key="label.info"/></th><th><fmt:message key="label.client"/></th><th><fmt:message key="label.service"/></th><th><fmt:message key="label.sum"/></th><th><fmt:message key="label.isdone"/></th><th><fmt:message key="label.ispaid"/></th><th><fmt:message key="label.rating"/></th>
 </tr>
   <c:forEach items="${schedule}" var="item">
     <tr>
@@ -38,25 +36,28 @@
       <td><c:if test="${item.master != null}"><c:out value="${item.master.name} ${item.master.surname}" /></c:if></td>
       <td colspan="${item.user != null ? 0 :7 }" align="center">
       <c:if test="${item.user == null && sessionScope.user.role == 'CLIENT'}">
-      <a href = "create_appointment.jsp?master_id=${item.master.id}&date=${date}&timeslot=${item.timeslot}">Create appointment</a>
+      <a href = "create_appointment.jsp?master_id=${item.master.id}&date=${date}&timeslot=${item.timeslot}"><fmt:message key="link.create_appointment"/></a>
       </c:if>
       <c:if test="${item.user != null && (sessionScope.user.role == 'ADMIN' || sessionScope.user.id == item.user.id || sessionScope.user.id == item.master.id)}">
-      <a href = "Controller?command=show_appointment_info&master_id=${item.master.id}&date=${date}&timeslot=${item.timeslot}">Appointment info</a>
+      <a href = "Controller?command=show_appointment_info&master_id=${item.master.id}&date=${date}&timeslot=${item.timeslot}"><fmt:message key="link.appointment_info"/></a>
       </c:if>
       <c:if test="${item.user != null && sessionScope.user.role != 'ADMIN' && sessionScope.user.id != item.user.id && sessionScope.user.id != item.master.id}">
-      <c:out value = "Time is occupied"></c:out>
+      <fmt:message key="label.time_is_occupied"/>
       </c:if>
       </td>
       <c:if test="${item.user != null}">
       <td ><c:if test="${item.user != null}"><c:out value="${item.user.name} ${item.user.surname}" /></c:if></td>
       
       <td ><c:if test="${item.service != null}"><c:out value="${item.service.name}" /></c:if></td>
-      <td><c:if test="${item.sum != null && item.sum != 0}"><c:out value="${item.sum} hrn." /></c:if></td>
+      <td><c:if test="${item.sum != null && item.sum != 0}"><c:out value="${item.sum}"/><fmt:message key="label.hrn"/></c:if></td>
       
-     
+     <fmt:message key="label.complete" var="lcomplete" />
+		<fmt:message key="label.incomplete" var="lincomplete" />
+		<fmt:message key="label.paid" var="lpaid" />
+		<fmt:message key="label.unpaid" var="lunpaid" />
       
-   	  <td><c:if test="${item.user != null}"><c:out value="${item.isDone? 'Complete' : 'Incomplete'}"></c:out></c:if></td>
-      <td><c:if test="${item.user != null}"><c:out value="${item.isPaid? 'Paid' : 'Unpaid'}"></c:out></c:if></td>
+   	  <td><c:if test="${item.user != null}"><c:out value="${item.isDone? lcomplete : lincomplete}"></c:out></c:if></td>
+      <td><c:if test="${item.user != null}"><c:out value="${item.isPaid? lpaid : lunpaid}"></c:out></c:if></td>
       <td align="center"><c:out value="${item.rating == 0? '-' : item.rating}"></c:out></td>
 </c:if>
       

@@ -70,8 +70,7 @@ public class LeaveFeedbackCommand implements Command {
 
 			manager.setFeedbackForAppointmentandUpdateMaster(appointment, rating, feedback);
 			logger.info("added feedback for appointment", appointment.getMaster().getId(), appointment.getDate(), appointment.getTimeslot());
-			return "Controller?command=show_master_schedule&id=" + appointment.getMaster().getId() + "&date="
-					+ appointment.getDate();
+			return "Controller?command=show_appointment_info&master_id=" + appointment.getMaster().getId() + "&date=" + appointment.getDate() + "&timeslot=" + appointment.getTimeslot();
 		} catch (FindingAppointmentException | UpdatingAppointmentException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());

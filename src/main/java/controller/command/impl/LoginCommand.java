@@ -35,7 +35,7 @@ public class LoginCommand implements Command {
 			return "/error.jsp";
 		}
 
-		if (request.getSession().getAttribute("user") == null) {
+		if (request.getSession(true).getAttribute("user") == null) {
 
 			request.getSession().setAttribute("user", user);
 			logger.info("user logged in", user.getId(), user.getName(), user.getSurname());

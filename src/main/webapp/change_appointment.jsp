@@ -1,7 +1,5 @@
-<%@page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="WEB-INF/mylib.tld" prefix="my" %> 
-<%@ page isELIgnored="false"%>
+<%@ include file="/WEB-INF/include/head.jspf"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <html>
       <style>
@@ -23,15 +21,15 @@
             }
          
     </script>
-<title>Change Appointment Time</title>
+<title><fmt:message key="label.change_appointment_time"/></title>
 </head>
 
 <hr>
-<h3>Please, select free date and time:</h3>
+<h3><fmt:message key="label.select_date_time"/></h3>
 
 <br>
 <form action="Controller" method="post">
-<strong>Date:</strong>
+<strong><fmt:message key="label.date"/></strong>
 
 	<br> <input onchange='Redirect(this.value)' type="date" name="newdate" value="${newDate == null ? appointment.date : newDate}" />
 	<br><br>
@@ -39,7 +37,7 @@
 	
 	<my:getfreeslots master_id="${param.master_id}" date="${newDate}"/>
 	
-	<strong>Time: </strong> 
+	<strong><fmt:message key="label.time"/></strong> 
 	<br>
 	
 	<select name="newtimeslot">
@@ -53,7 +51,7 @@
 	<input type="hidden" name="timeslot" value="${param.timeslot}">
 	<input type="hidden" name=command value="set_time_appointment">
 	<br><br>
-	<input type="submit" name="submit" value="Set new time">
+	<input type="submit" name="submit" value=<fmt:message key="button.set_new_time"/>>
 </form>
 
 

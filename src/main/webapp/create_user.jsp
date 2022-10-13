@@ -1,7 +1,5 @@
-<%@page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page isELIgnored="false"%>
-<%@ taglib uri="WEB-INF/mylib.tld" prefix="my" %> 
+<%@ include file="/WEB-INF/include/head.jspf"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <html>
       <style>
@@ -15,41 +13,41 @@
 <title>Create User Page</title>
 </head>
 
-<h3>Please, provide the information below:</h3>
+<h3><fmt:message key="label.provide_user_data"/></h3>
 <br>
 <form action="Controller" method=post>
 	<p>
-		<strong>Login (e-mail): </strong> <br> <input type="email"
+		<strong><fmt:message key="label.login"/></strong> <br> <input type="email"
 			name="email" size="50">
 	<p>
 	<p>
-		<strong>Password: </strong> <br> <input type="password" size="20"
+		<strong><fmt:message key="label.password"/></strong> <br> <input type="password" size="20"
 			name="password"> <br>
 	<p>
 	<p>
-		<strong>Repeat password: </strong> <br> <input type="password"
+		<strong><fmt:message key="label.repeat_password"/></strong> <br> <input type="password"
 			size="20" name="repeat_password"> <br>
 	<p>
 	<p>
-		<strong>Name: </strong> <br> <input size="50" name="name">
+		<strong><fmt:message key="label.name"/></strong> <br> <input size="50" name="name">
 		<br>
 	<p>
 	<p>
-		<strong>Surname: </strong> <br> <input size="50" name="surname">
+		<strong><fmt:message key="label.surname"/></strong> <br> <input size="50" name="surname">
 		<br>
 	<p>
 	<p>
-		<strong>Tel: </strong> <br> <input size="15" name="tel">
+		<strong><fmt:message key="label.tel"/></strong> <br> <input size="15" name="tel">
 		<br>
 	<p>
 	<p>
-		<strong>Role: </strong> <br> <input type="radio" name="role"
-			value="CLIENT" />Client <br> <input type="radio" name="role"
-			value="HAIRDRESSER" />Hairdresser <br> <input type="radio"
-			name="role" value="ADMIN" />Admin <br>
+		<strong><fmt:message key="label.role"/></strong> <br> <input type="radio" name="role"
+			value="CLIENT" checked /><fmt:message key="option.roleclient"/> <br> <input type="radio" name="role"
+			value="HAIRDRESSER" /><fmt:message key="option.rolehairdresser"/> <br> <input type="radio"
+			name="role" value="ADMIN" /><fmt:message key="option.roleadmin"/> <br>
 	<p>
 	<p>
-		<strong>Master info: </strong> <br>
+		<strong><fmt:message key="label.master_info"/></strong> <br>
 		<textarea rows="10" cols="60" name="info"></textarea>
 		
 		
@@ -57,19 +55,19 @@
 <my:getservices master_id = "0" />
 
 <br>
-<strong>Service: </strong> <br> 
+<strong><fmt:message key="label.service"/></strong> <br> 
 <c:set var="count" value="0" scope="page" />
 	<c:forEach items="${servicelist}" var="item">
 	<c:set var="count" value="${count + 1}" scope="page"/>
-    	<input name="${'service'}${count}" value="${item.name}">  <input name="sum${count}" size="5"> <br>
+    	<input name="${'service'}${count}" value="${item.name}" size="40">  <input name="sum${count}" size="5"> <fmt:message key="label.hrn"/> <br>
   </c:forEach>
 
 		<br> <input type="hidden" name="current_lang" value="en">
 		<input type="hidden" name="command" value="create_user">
 	<p>
 	<p>
-		<input type="submit" value="Submit"> <input type="reset"
-			value="Reset">
+		<input type="submit" value=<fmt:message key="button.create_user"/>> <input type="reset"
+			value=<fmt:message key="button.reset"/>>
 </form>
 
 
