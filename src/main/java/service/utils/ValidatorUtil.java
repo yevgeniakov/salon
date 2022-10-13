@@ -41,15 +41,15 @@ public class ValidatorUtil {
     }
     
     public static boolean isValidText(String text) {
-        return text != null && text != "";
+        return text != null && !"".equals(text);
     }
     
     public static boolean isValidBoolean(String booleanParam) {
-        return booleanParam == "true" || booleanParam == "false";
+        return "true".equals(booleanParam) || "false".equals(booleanParam);
     }
     
     public static boolean isValidSortOrder(String sortOrder) {
-        return sortOrder == "asc" || sortOrder == "desc";
+        return "asc".equals(sortOrder) || "desc".equals(sortOrder);
     }
 
     public static int parseIntParameter(String intParam) throws IncorrectParamException {

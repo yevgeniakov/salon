@@ -1,6 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="WEB-INF/mylib.tld" prefix="my"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 <%@page import="java.time.LocalDate"%>
 <%@ page isELIgnored="false"%>
 <html>
@@ -97,7 +98,7 @@ table, th, td {
 		<strong>Items per page: </strong>
 <input name="itemsperpage" value="${itemsPerPage == null ? 10 : itemsPerPage }" size=2>
 <br>		
-<input type="hidden" name="page" value="${page == null ? 1 : page }">			
+<input type="hidden" name="page" value="1">			
 	
 </form>
 
@@ -142,27 +143,9 @@ table, th, td {
 <br>
  <c:if test="${page != 1}">
  <form action="Controller" method="get">
-<input type="hidden" name="command" value="show_appointments_list">
-<input type="hidden" name= "datefrom" value="${datefrom}">
-<input type="hidden" name= "dateto" value="${dateto}">	
-<c:if test="${sessionScope.user.role != 'HAIRDRESSER'}">	
-<input type="hidden" name= "master_id" value="${master_id == null? 'null' : master_id}">
-</c:if>	
-<input type="hidden" name= "service_id" value="${service_id == null? 'null' : service_id}"> 	
-<input type="hidden" name= "isdone" value="${isDone == null? 'null' : isDone}"> 
-<input type="hidden" name= "ispaid" value="${isPaid == null? 'null' : isPaid}"> 	
-<input type="hidden" name= "israting" value="${isRating == null? 'null' : isRating}">
-
-<c:if test="${sessionScope.user.role == 'CLIENT'}">
-<input type="hidden" name="user_id" value="${sessionScope.user.id}">
-</c:if>
-<c:if test="${sessionScope.user.role == 'ADMIN' && user_id != null}">
-<input type="hidden" name="user_id" value="${user_id}">
-</c:if>
-<input type="hidden" name="itemsperpage" value="${itemsPerPage}">
+ <h:applistpageparam/>
 <input type="hidden" name="page" value="${page - 1}">
-
-		<input type="submit" value="<<">
+<input type="submit" value="<<">
 		
 </form>
          
@@ -178,27 +161,9 @@ table, th, td {
                     </c:when>
                     <c:otherwise>
 <form action="Controller" method="get">
-<input type="hidden" name="command" value="show_appointments_list">
-<input type="hidden" name= "datefrom" value="${datefrom}">
-<input type="hidden" name= "dateto" value="${dateto}">	
-<c:if test="${sessionScope.user.role != 'HAIRDRESSER'}">	
-<input type="hidden" name= "master_id" value="${master_id == null? 'null' : master_id}">
-</c:if>	
-<input type="hidden" name= "service_id" value="${service_id == null? 'null' : service_id}"> 	
-<input type="hidden" name= "isdone" value="${isDone == null? 'null' : isDone}"> 
-<input type="hidden" name= "ispaid" value="${isPaid == null? 'null' : isPaid}"> 	
-<input type="hidden" name= "israting" value="${isRating == null? 'null' : isRating}">
-
-<c:if test="${sessionScope.user.role == 'CLIENT'}">
-<input type="hidden" name="user_id" value="${sessionScope.user.id}">
-</c:if>
-<c:if test="${sessionScope.user.role == 'ADMIN' && user_id != null}">
-<input type="hidden" name="user_id" value="${user_id}">
-</c:if>
-<input type="hidden" name="itemsperpage" value="${itemsPerPage}">
+ <h:applistpageparam/>
 <input type="hidden" name="page" value="${i}">
-
-		<input type="submit" value="${i}">
+<input type="submit" value="${i}">
 		
 </form>
                     </c:otherwise>
@@ -211,24 +176,7 @@ table, th, td {
     <c:if test="${page lt pagesTotal}">
     <br>
 <form action="Controller" method="get">
-<input type="hidden" name="command" value="show_appointments_list">
-<input type="hidden" name= "datefrom" value="${datefrom}">
-<input type="hidden" name= "dateto" value="${dateto}">	
-<c:if test="${sessionScope.user.role != 'HAIRDRESSER'}">	
-<input type="hidden" name= "master_id" value="${master_id == null? 'null' : master_id}">
-</c:if>	
-<input type="hidden" name= "service_id" value="${service_id == null? 'null' : service_id}"> 	
-<input type="hidden" name= "isdone" value="${isDone == null? 'null' : isDone}"> 
-<input type="hidden" name= "ispaid" value="${isPaid == null? 'null' : isPaid}"> 	
-<input type="hidden" name= "israting" value="${isRating == null? 'null' : isRating}">
-
-<c:if test="${sessionScope.user.role == 'CLIENT'}">
-<input type="hidden" name="user_id" value="${sessionScope.user.id}">
-</c:if>
-<c:if test="${sessionScope.user.role == 'ADMIN' && user_id != null}">
-<input type="hidden" name="user_id" value="${user_id}">
-</c:if>
-<input type="hidden" name="itemsperpage" value="${itemsPerPage}">
+ <h:applistpageparam/>
 <input type="hidden" name="page" value="${page + 1}">
 
 		<input type="submit" value=">>">

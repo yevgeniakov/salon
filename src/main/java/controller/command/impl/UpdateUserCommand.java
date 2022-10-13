@@ -57,14 +57,14 @@ public class UpdateUserCommand implements Command {
 			String tel = request.getParameter("tel");
 			String info = request.getParameter("info");
 			
-			logger.info(isValidName(name));
-			logger.info(isValidName(surname));
-			logger.info(isValidEmail(email));
+			logger.trace(isValidName(name));
+			logger.trace(isValidName(surname));
+			logger.trace(isValidEmail(email));
 			
 			if (!isValidName(name)
 					||!isValidName(surname) 
 					|| !isValidEmail(email)) {
-				logger.error("Invalid parameters");
+				logger.error("Invalid parameters", name, surname, email);
 				request.setAttribute("error", "Can't update user. Invalid input data.");
 				return "/error.jsp";
 			}
