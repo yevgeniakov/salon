@@ -12,16 +12,17 @@ import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
 import controller.exceptions.FindingAppointmentException;
+import controller.exceptions.IncorrectParamException;
 import controller.exceptions.UpdatingAppointmentException;
 import entity.Appointment;
 import entity.Role;
 import entity.User;
 import service.AppointmentManager;
+import service.utils.ValidatorUtil;
 
 public class SetPayAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetPayAppointmentCommand.class);
-	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
-	        List.of(Role.ADMIN));
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
 
 	@Override
@@ -30,26 +31,34 @@ public class SetPayAppointmentCommand implements Command {
 
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
-			logger.info("Access denied.", loggedUser,
-					loggedUser == null ? "GUEST" : loggedUser.getRole());
-			
+			logger.info("Access denied.", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
+
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-		
-		try {
-			int master_id = Integer.parseInt(request.getParameter("master_id"));
-			int timeslot = Integer.parseInt(request.getParameter("timeslot"));
-			LocalDate date = LocalDate.parse(request.getParameter("date"));
 
+		int master_id = 0;
+		int timeslot = 0;
+		LocalDate date = null;
+		try {
+			master_id = ValidatorUtil.parseIntParameter(request.getParameter("master_id"));
+			timeslot = ValidatorUtil.parseTimeslotParameter(request.getParameter("timeslot"));
+			date = ValidatorUtil.parseDateParameter(request.getParameter("date"));
+		} catch (IncorrectParamException e) {
+			logger.error(e.getMessage(), e);
+			request.setAttribute("error", e.getMessage());
+			return "/error.jsp";
+		}
+		try {
 			AppointmentManager manager = AppointmentManager.getInstance();
 			Appointment appointment = manager.findAppointmentByKey(master_id, date, timeslot);
 			manager.setPayAppointment(appointment, !appointment.getIsPaid());
 			appointment.setIsPaid(!appointment.getIsPaid());
 
-			logger.info("set appointment payment", appointment.getIsPaid(), appointment.getMaster().getId(), appointment.getDate(), appointment.getTimeslot());
+			logger.info("set appointment payment", appointment.getIsPaid(), appointment.getMaster().getId(),
+					appointment.getDate(), appointment.getTimeslot());
 			return "Controller?command=show_master_schedule&id=" + appointment.getMaster().getId() + "&date="
 					+ appointment.getDate();
 		} catch (FindingAppointmentException | UpdatingAppointmentException e) {

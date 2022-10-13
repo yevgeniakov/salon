@@ -13,11 +13,13 @@ import org.apache.logging.log4j.Logger;
 import controller.command.Command;
 import controller.exceptions.FindingAppointmentException;
 import controller.exceptions.FindingUserException;
+import controller.exceptions.IncorrectParamException;
 import entity.Appointment;
 import entity.Role;
 import entity.User;
 import service.AppointmentManager;
 import service.UserManager;
+import service.utils.ValidatorUtil;
 
 public class ShowMasterScheduleCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowMasterScheduleCommand.class);
@@ -40,10 +42,18 @@ public class ShowMasterScheduleCommand implements Command {
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 
-		try {
-			int id = Integer.parseInt(request.getParameter("id"));
-			LocalDate date = LocalDate.parse(request.getParameter("date"));
-
+		
+			int id = 0;
+			LocalDate date = null;
+			try {
+				id = ValidatorUtil.parseIntParameter(request.getParameter("id"));
+				date = ValidatorUtil.parseDateParameter(request.getParameter("date"));
+			} catch (IncorrectParamException e) {
+				logger.error(e.getMessage(), e);
+				request.setAttribute("error", e.getMessage());
+				return "/error.jsp";
+			}
+			try {
 			UserManager userManager = UserManager.getInstance();
 			User master = userManager.findUserbyID(id);
 

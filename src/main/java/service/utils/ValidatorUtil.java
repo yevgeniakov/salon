@@ -2,7 +2,6 @@ package service.utils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-
 import controller.exceptions.IncorrectParamException;
 
 public class ValidatorUtil {
@@ -10,9 +9,9 @@ public class ValidatorUtil {
 
     private static final String NAME_REGEX = "^[\\D ,.'-]+$";
 	private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
-	private static final String EMAIL_REGEX = "/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i";
+	private static final String EMAIL_REGEX = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-zA-Z]{2,})$";
 	private static final String TIMESLOT_REGEX = "2[0-3]|[0-1]?[0-9]";
-	private static final String ID_REGEX = "[:digit:] ";
+	private static final String ID_REGEX = "[0-9]+";
 	private static final String RATING_REGEX = "[0-5]";
 
 	private ValidatorUtil() {}
@@ -44,12 +43,20 @@ public class ValidatorUtil {
     public static boolean isValidText(String text) {
         return text != null && text != "";
     }
+    
+    public static boolean isValidBoolean(String booleanParam) {
+        return booleanParam == "true" || booleanParam == "false";
+    }
+    
+    public static boolean isValidSortOrder(String sortOrder) {
+        return sortOrder == "asc" || sortOrder == "desc";
+    }
 
     public static int parseIntParameter(String intParam) throws IncorrectParamException {
         if(isValidInt(intParam)) {
             return Integer.parseInt(intParam);
         }
-        throw new IncorrectParamException("unable to parse id");
+        throw new IncorrectParamException("unable to parse int parameter");
     }
 
     public static int parseRatingParameter(String ratingParam) {
@@ -72,5 +79,11 @@ public class ValidatorUtil {
                 throw new IncorrectParamException("unable to parse date");
             }
         
+    }
+    public static boolean parseBooleanParameter(String booleanParam) throws IncorrectParamException {
+        if(isValidBoolean(booleanParam)) {
+            return Boolean.parseBoolean(booleanParam);
+        }
+        throw new IncorrectParamException("unable to parse boolean parameter");
     }
 }

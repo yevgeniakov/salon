@@ -12,15 +12,16 @@ import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
 import controller.exceptions.DeletingAppointmentException;
+import controller.exceptions.IncorrectParamException;
 import entity.Appointment;
 import entity.Role;
 import entity.User;
 import service.AppointmentManager;
+import service.utils.ValidatorUtil;
 
 public class DeleteAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(DeleteAppointmentCommand.class);
-	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
-	        List.of(Role.ADMIN));
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
 
 	@Override
@@ -29,23 +30,28 @@ public class DeleteAppointmentCommand implements Command {
 
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
-			logger.info("Access denied.", loggedUser,
-					loggedUser == null ? "GUEST" : loggedUser.getRole());
-			
+			logger.info("Access denied.", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 
+		int master_id = 0;
+		int timeslot = 0;
+		LocalDate date = null;
 		try {
-			int master_id = Integer.parseInt(request.getParameter("master_id"));
-			int timeslot = Integer.parseInt(request.getParameter("timeslot"));
-			LocalDate date = LocalDate.parse(request.getParameter("date"));
-
+			master_id = ValidatorUtil.parseIntParameter(request.getParameter("master_id"));
+			timeslot = ValidatorUtil.parseTimeslotParameter(request.getParameter("timeslot"));
+			date = ValidatorUtil.parseDateParameter(request.getParameter("date"));
+		} catch (IncorrectParamException e) {
+			logger.error(e.getMessage(), e);
+			request.setAttribute("error", e.getMessage());
+			return "/error.jsp";
+		}
+		try {
 			User master = new User();
 			master.setId(master_id);
-
 			Appointment appointment = new Appointment(date, timeslot, master, null, null, 0, false, false, "", 0);
 			AppointmentManager manager = AppointmentManager.getInstance();
 			manager.deleteAppointment(appointment);

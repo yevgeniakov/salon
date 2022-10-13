@@ -12,11 +12,13 @@ import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
 import controller.exceptions.FindingAppointmentException;
+import controller.exceptions.IncorrectParamException;
 import controller.exceptions.UpdatingAppointmentException;
 import entity.Appointment;
 import entity.Role;
 import entity.User;
 import service.AppointmentManager;
+import service.utils.ValidatorUtil;
 
 public class LeaveFeedbackCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(LeaveFeedbackCommand.class);
@@ -39,13 +41,23 @@ public class LeaveFeedbackCommand implements Command {
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 
-		try {
-			int master_id = Integer.parseInt(request.getParameter("master_id"));
-			int timeslot = Integer.parseInt(request.getParameter("timeslot"));
-			LocalDate date = LocalDate.parse(request.getParameter("date"));
-			double rating = Double.parseDouble(request.getParameter("rating"));
+		
+			int master_id = 0;
+			int timeslot = 0;
+			LocalDate date = null;
+			int rating = 0;
+			try {
+				master_id = ValidatorUtil.parseIntParameter(request.getParameter("master_id"));
+				timeslot = ValidatorUtil.parseTimeslotParameter(request.getParameter("timeslot"));
+				date = ValidatorUtil.parseDateParameter(request.getParameter("date"));
+				rating = ValidatorUtil.parseIntParameter(request.getParameter("rating"));
+			} catch (IncorrectParamException e) {
+				logger.error(e.getMessage(), e);
+				request.setAttribute("error", e.getMessage());
+				return "/error.jsp";
+			}
 			String feedback = request.getParameter("feedback");
-
+			try {
 			AppointmentManager manager = AppointmentManager.getInstance();
 
 			Appointment appointment = manager.findAppointmentByKey(master_id, date, timeslot);

@@ -10,11 +10,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.IncorrectParamException;
 import controller.exceptions.UpdatingUserException;
 import entity.Role;
 import entity.Service;
 import entity.User;
 import service.UserManager;
+import service.utils.ValidatorUtil;
 
 public class DeleteServiceFromMasterCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(DeleteServiceFromMasterCommand.class);
@@ -37,10 +39,18 @@ public class DeleteServiceFromMasterCommand implements Command {
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 
-		try {
-			int master_id = Integer.parseInt(request.getParameter("master_id"));
-			int service_id = Integer.parseInt(request.getParameter("service_id"));
-
+		
+			int master_id = 0;
+			int service_id = 0;
+			try {
+				master_id = ValidatorUtil.parseIntParameter(request.getParameter("master_id"));
+				service_id = ValidatorUtil.parseIntParameter(request.getParameter("service_id"));
+			} catch (IncorrectParamException e) {
+				logger.error(e.getMessage(), e);
+				request.setAttribute("error", e.getMessage());
+				return "/error.jsp";
+			}
+			try {
 			User master = new User();
 			master.setId(master_id);
 

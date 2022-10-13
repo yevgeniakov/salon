@@ -11,11 +11,13 @@ import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
 import controller.exceptions.FindingUserException;
+import controller.exceptions.IncorrectParamException;
 import entity.Role;
 import entity.Service;
 import entity.User;
 import service.ServiceManager;
 import service.UserManager;
+import service.utils.ValidatorUtil;
 
 public class ShowUserInfoCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowUserInfoCommand.class);
@@ -41,7 +43,13 @@ public class ShowUserInfoCommand implements Command {
 		int id = 0;
 
 		if (!(request.getParameter("id") == null)) {
-			id = Integer.parseInt(request.getParameter("id"));
+			try {
+				id = ValidatorUtil.parseIntParameter(request.getParameter("id"));
+			} catch (IncorrectParamException e) {
+				logger.error(e.getMessage(), e);
+				request.setAttribute("error", e.getMessage());
+				return "/error.jsp";
+			}
 		} else {
 				
 			if (!(loggedUser == null)) {

@@ -12,10 +12,12 @@ import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
 import controller.exceptions.FindingAppointmentException;
+import controller.exceptions.IncorrectParamException;
 import entity.Appointment;
 import entity.Role;
 import entity.User;
 import service.AppointmentManager;
+import service.utils.ValidatorUtil;
 
 public class ShowAppointmentsListCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowAppointmentsListCommand.class);
@@ -38,37 +40,54 @@ public class ShowAppointmentsListCommand implements Command {
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 
-		try {
-			LocalDate dateFrom = (request.getParameter("datefrom") == null
-					|| request.getParameter("datefrom").equals("null")) ? LocalDate.now().minusDays(7)
-							: LocalDate.parse(request.getParameter("datefrom"));
-			LocalDate dateTo = (request.getParameter("dateto") == null || request.getParameter("dateto").equals("null"))
-					? LocalDate.now().plusDays(7)
-					: LocalDate.parse(request.getParameter("dateto"));
-			Integer service_id = (request.getParameter("service_id") == null
-					|| request.getParameter("service_id").equals("null")) ? null
-							: Integer.parseInt(request.getParameter("service_id"));
-			Integer master_id = (request.getParameter("master_id") == null
-					|| request.getParameter("master_id").equals("null")) ? null
-							: Integer.parseInt(request.getParameter("master_id"));
-			Integer user_id = (request.getParameter("user_id") == null
-					|| request.getParameter("user_id").equals("null")) ? null
-							: Integer.parseInt(request.getParameter("user_id"));
-			Boolean isPaid = (request.getParameter("ispaid") == null || request.getParameter("ispaid").equals("null"))
-					? null
-					: Boolean.parseBoolean(request.getParameter("ispaid"));
-			Boolean isDone = (request.getParameter("isdone") == null || request.getParameter("isdone").equals("null"))
-					? null
-					: Boolean.parseBoolean(request.getParameter("isdone"));
-			Boolean isRating = (request.getParameter("israting") == null
-					|| request.getParameter("israting").equals("null")) ? null
-							: Boolean.parseBoolean(request.getParameter("israting"));
-			int itemsPerPage = (request.getParameter("itemsperpage") == null
-					|| request.getParameter("itemsperpage").equals("null")) ? 10
-							: Integer.parseInt(request.getParameter("itemsperpage"));
-			int page = (request.getParameter("page") == null || request.getParameter("page").equals("null")) ? 1
-					: Integer.parseInt(request.getParameter("page"));
-
+		
+			LocalDate dateFrom = null;
+			LocalDate dateTo = null;
+			Integer service_id = null;
+			Integer master_id = null;
+			Integer user_id = null;
+			Boolean isPaid = null;
+			Boolean isDone = null;
+			Boolean isRating = null;
+			int itemsPerPage = 0;
+			int page = 0;
+			try {
+				dateFrom = (request.getParameter("datefrom") == null || request.getParameter("datefrom").equals("null"))
+						? LocalDate.now().minusDays(7)
+						: ValidatorUtil.parseDateParameter(request.getParameter("datefrom"));
+				dateTo = (request.getParameter("dateto") == null || request.getParameter("dateto").equals("null"))
+						? LocalDate.now().plusDays(7)
+						: ValidatorUtil.parseDateParameter(request.getParameter("dateto"));
+				service_id = (request.getParameter("service_id") == null || request.getParameter("service_id").equals("null"))
+						? null
+						: ValidatorUtil.parseIntParameter(request.getParameter("service_id"));
+				master_id = (request.getParameter("master_id") == null || request.getParameter("master_id").equals("null"))
+						? null
+						: ValidatorUtil.parseIntParameter(request.getParameter("master_id"));
+				user_id = (request.getParameter("user_id") == null || request.getParameter("user_id").equals("null"))
+						? null
+						: ValidatorUtil.parseIntParameter(request.getParameter("user_id"));
+				isPaid = (request.getParameter("ispaid") == null || request.getParameter("ispaid").equals("null"))
+						? null
+						: ValidatorUtil.parseBooleanParameter(request.getParameter("ispaid"));
+				isDone = (request.getParameter("isdone") == null || request.getParameter("isdone").equals("null"))
+						? null
+						: ValidatorUtil.parseBooleanParameter(request.getParameter("isdone"));
+				isRating = (request.getParameter("israting") == null || request.getParameter("israting").equals("null"))
+						? null
+						: ValidatorUtil.parseBooleanParameter(request.getParameter("israting"));
+				itemsPerPage = (request.getParameter("itemsperpage") == null || request.getParameter("itemsperpage").equals("null"))
+						? 10
+						: ValidatorUtil.parseIntParameter(request.getParameter("itemsperpage"));
+				page = (request.getParameter("page") == null || request.getParameter("page").equals("null"))
+						? 1
+						: ValidatorUtil.parseIntParameter(request.getParameter("page"));
+			} catch (IncorrectParamException e) {
+				logger.error(e.getMessage(), e);
+				request.setAttribute("error", e.getMessage());
+				return "/error.jsp";
+			}
+			
 			if (loggedUser.getRole() == Role.CLIENT) {
 				user_id = loggedUser.getId();
 			}
@@ -76,7 +95,7 @@ public class ShowAppointmentsListCommand implements Command {
 			if (loggedUser.getRole() == Role.HAIRDRESSER) {
 				master_id = loggedUser.getId();
 			}
-
+			try {
 			AppointmentManager manager = AppointmentManager.getInstance();
 			List<Appointment> appointmentsList = new ArrayList<>();
 			appointmentsList = manager.findAppointmentsByConditions(dateFrom, dateTo, master_id, user_id, service_id,

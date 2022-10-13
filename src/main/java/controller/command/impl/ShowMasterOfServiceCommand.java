@@ -11,11 +11,13 @@ import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
 import controller.exceptions.FindingUserException;
+import controller.exceptions.IncorrectParamException;
 import entity.Role;
 import entity.Service;
 import entity.User;
 import service.ServiceManager;
 import service.UserManager;
+import service.utils.ValidatorUtil;
 
 public class ShowMasterOfServiceCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowMasterOfServiceCommand.class);
@@ -41,10 +43,15 @@ public class ShowMasterOfServiceCommand implements Command {
 		UserManager userManager = UserManager.getInstance();
 		SortedMap<User, Integer> masters = null;
 		String sort = request.getParameter("sort");
-		int service_id = Integer.parseInt(request.getParameter("service_id"));
-
-		// TODO Validator
-
+		
+		int service_id = 0;
+		try {
+			service_id = ValidatorUtil.parseIntParameter(request.getParameter("service_id"));
+		} catch (IncorrectParamException e) {
+			logger.error(e.getMessage(), e);
+			request.setAttribute("error", e.getMessage());
+			return "/error.jsp";
+		}
 		try {
 			masters = userManager.findAllMastersByService(service_id, sort);
 

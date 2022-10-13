@@ -12,10 +12,12 @@ import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
 import controller.exceptions.FindingAppointmentException;
+import controller.exceptions.IncorrectParamException;
 import entity.Appointment;
 import entity.Role;
 import entity.User;
 import service.AppointmentManager;
+import service.utils.ValidatorUtil;
 
 public class ShowAppointmentInfoCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowAppointmentInfoCommand.class);
@@ -38,11 +40,20 @@ public class ShowAppointmentInfoCommand implements Command {
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 
+		
+		int master_id = 0;
+		int timeslot = 0;
+		LocalDate date = null;
 		try {
-			LocalDate date = LocalDate.parse(request.getParameter("date"));
-			int timeslot = Integer.parseInt(request.getParameter("timeslot"));
-			int master_id = Integer.parseInt(request.getParameter("master_id"));
-
+			master_id = ValidatorUtil.parseIntParameter(request.getParameter("master_id"));
+			timeslot = ValidatorUtil.parseTimeslotParameter(request.getParameter("timeslot"));
+			date = ValidatorUtil.parseDateParameter(request.getParameter("date"));
+		} catch (IncorrectParamException e) {
+			logger.error(e.getMessage(), e);
+			request.setAttribute("error", e.getMessage());
+			return "/error.jsp";
+		}
+			try {
 			AppointmentManager manager = AppointmentManager.getInstance();
 			Appointment appointment = new Appointment();
 			appointment = manager.findAppointmentByKey(master_id, date, timeslot);

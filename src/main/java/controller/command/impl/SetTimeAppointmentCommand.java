@@ -12,11 +12,13 @@ import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
 import controller.exceptions.FindingAppointmentException;
+import controller.exceptions.IncorrectParamException;
 import controller.exceptions.UpdatingAppointmentException;
 import entity.Appointment;
 import entity.Role;
 import entity.User;
 import service.AppointmentManager;
+import service.utils.ValidatorUtil;
 
 public class SetTimeAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetTimeAppointmentCommand.class);
@@ -39,26 +41,25 @@ public class SetTimeAppointmentCommand implements Command {
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 
-		try {
-			LocalDate date = (request.getParameter("date") == null || request.getParameter("date").equals("null"))
-					? null
-					: LocalDate.parse(request.getParameter("date"));
-			LocalDate newDate = (request.getParameter("newdate") == null
-					|| request.getParameter("newdate").equals("null")) ? null
-							: LocalDate.parse(request.getParameter("newdate"));
-			Integer master_id = (request.getParameter("master_id") == null
-					|| request.getParameter("master_id").equals("null")) ? null
-							: Integer.parseInt(request.getParameter("master_id"));
-			Integer timeslot = (request.getParameter("timeslot") == null
-					|| request.getParameter("timeslot").equals("null")) ? null
-							: Integer.parseInt(request.getParameter("timeslot"));
-			Integer newTimeslot = (request.getParameter("newtimeslot") == null
-					|| request.getParameter("newtimeslot").equals("null")) ? null
-							: Integer.parseInt(request.getParameter("newtimeslot"));
-
 		
-			// TODO Validator
+			LocalDate date = null;
+			LocalDate newDate = null;
+			Integer master_id = 0;
+			Integer timeslot = 0;
+			Integer newTimeslot = 0;
+			try {
+				date = ValidatorUtil.parseDateParameter(request.getParameter("date"));
+				newDate = ValidatorUtil.parseDateParameter(request.getParameter("newdate"));
+				master_id = ValidatorUtil.parseIntParameter(request.getParameter("master_id"));
+				timeslot = ValidatorUtil.parseTimeslotParameter(request.getParameter("timeslot"));
+				newTimeslot = ValidatorUtil.parseTimeslotParameter(request.getParameter("newtimeslot"));
+			} catch (IncorrectParamException e) {
+				logger.error(e.getMessage(), e);
+				request.setAttribute("error", e.getMessage());
+				return "/error.jsp";
+			}
 
+			try {
 			Appointment appointment = null;
 			AppointmentManager manager = AppointmentManager.getInstance();
 			appointment = manager.findAppointmentByKey(master_id, date, timeslot);

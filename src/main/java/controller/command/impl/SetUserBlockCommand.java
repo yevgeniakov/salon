@@ -10,10 +10,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.IncorrectParamException;
 import controller.exceptions.UpdatingUserException;
 import entity.Role;
 import entity.User;
 import service.UserManager;
+import service.utils.ValidatorUtil;
 
 public class SetUserBlockCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetUserBlockCommand.class);
@@ -37,10 +39,18 @@ public class SetUserBlockCommand implements Command {
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 
 		User user = new User();
-		try {
-			int id = Integer.parseInt(request.getParameter("id"));
-			boolean isBlocked = Boolean.parseBoolean(request.getParameter("isBlocked"));
-
+		
+			int id;
+			boolean isBlocked;
+			try {
+				id = ValidatorUtil.parseIntParameter(request.getParameter("id"));
+				isBlocked = ValidatorUtil.parseBooleanParameter(request.getParameter("isBlocked"));
+			} catch (IncorrectParamException e) {
+				logger.error(e.getMessage(), e);
+				request.setAttribute("error", e.getMessage());
+				return "/error.jsp";
+			}
+			try {
 			UserManager manager = UserManager.getInstance();
 			user = manager.setUserBlock(id, isBlocked);
 

@@ -51,7 +51,7 @@ public class UserDao implements Dao<User> {
 			+ "on master_services.master_id = users.id " + "where service_id=? AND users.role=" + "'" + Role.HAIRDRESSER
 			+ "'";
 
-	private static final String UPDATE_USER = "update users set name=?, surname=?, tel=?, email=?, currentlang=?, info=?, isblocked=? where id=?";
+	private static final String UPDATE_USER = "update users set name=?, surname=?, tel=?, email=?, currentlang=?, info=? where id=?";
 
 	private static final String SET_USER_BLOCK = "update users set isblocked=? where id=?";
 
@@ -248,8 +248,7 @@ public class UserDao implements Dao<User> {
 			stmt.setString(4, t.getEmail());
 			stmt.setString(5, "en");
 			stmt.setString(6, t.getInfo());
-			stmt.setBoolean(7, t.getIsBlocked());
-			stmt.setInt(8, t.getId());
+			stmt.setInt(7, t.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, t.getId());

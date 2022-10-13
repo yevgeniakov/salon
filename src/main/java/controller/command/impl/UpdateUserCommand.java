@@ -1,5 +1,7 @@
 package controller.command.impl;
 
+import static service.utils.ValidatorUtil.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
 import controller.exceptions.FindingServiceException;
+import controller.exceptions.IncorrectParamException;
 import controller.exceptions.UpdatingUserException;
 import entity.Role;
 import entity.User;
@@ -39,19 +42,38 @@ public class UpdateUserCommand implements Command {
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 
-		try {
-			int id = Integer.parseInt(request.getParameter("id"));
+			
+			int id = 0;
+			try {
+				id = parseIntParameter(request.getParameter("id"));
+			} catch (IncorrectParamException e) {
+				logger.error(e.getMessage(), e);
+				request.setAttribute("error", e.getMessage());
+				return "/error.jsp";
+			}
 			String name = request.getParameter("name");
 			String surname = request.getParameter("surname");
 			String email = request.getParameter("email");
 			String tel = request.getParameter("tel");
 			String info = request.getParameter("info");
-			boolean isBlocked = Boolean.parseBoolean(request.getParameter("isBlocked"));
-
+			
+			logger.info(isValidName(name));
+			logger.info(isValidName(surname));
+			logger.info(isValidEmail(email));
+			
+			if (!isValidName(name)
+					||!isValidName(surname) 
+					|| !isValidEmail(email)) {
+				logger.error("Invalid parameters");
+				request.setAttribute("error", "Can't update user. Invalid input data.");
+				return "/error.jsp";
+			}
+			
 			if (loggedUser.getRole() != Role.ADMIN) {
 				id = loggedUser.getId();
 			}
 			
+			try {
 			int i = 1;
 			ServiceManager serviceManager = ServiceManager.getInstance();
 			HashMap<Integer, Integer> serviceMap = new HashMap<>();
@@ -64,7 +86,7 @@ public class UpdateUserCommand implements Command {
 				}
 				i++;
 			}
-			User user = new User(id, email, "", name, surname, tel, null, info, isBlocked, 0, "");
+			User user = new User(id, email, "", name, surname, tel, null, info, false, 0, "");
 
 			UserManager userManager = UserManager.getInstance();
 			user = userManager.updateUser(user);

@@ -39,7 +39,6 @@ public class ShowMasterListCommand implements Command {
 
 		String sort = request.getParameter("sort");
 
-		// TODO Validator
 		UserManager manager = UserManager.getInstance();
 		List<User> users = new ArrayList<>();
 		try {

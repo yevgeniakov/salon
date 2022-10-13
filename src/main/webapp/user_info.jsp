@@ -43,7 +43,7 @@
 	
 	<c:if
 		test="${showuser.role == 'HAIRDRESSER'}">
-			<c:out value="${showuser.info}"></c:out>
+			<c:out value="${showuser.info}"></c:out><br>
 	</c:if>
 	<c:if test="${showuser.role == 'ADMIN'}">
 		<strong>Role:</strong>
@@ -68,8 +68,8 @@
 		<c:set var="count" value="0" scope="page" />
 		<c:forEach items="${serviceabsentlist}" var="item">
 			<c:set var="count" value="${count + 1}" scope="page" />
-			<input name="${'service'}${count}" value="${item.name}">
-			<input name="sum${count}" size="5">
+			<input name="${'service'}${count}" value="${item.name}" size="40">
+			<input name="sum${count}" size="5"> hrn.
 			<br>
 		</c:forEach>
 
@@ -84,8 +84,9 @@
 	</c:if>
 
 
-	<input type="hidden" name="command" value="update_user"> <input
-		type="hidden" name="isBlocked" value="${showuser.isBlocked}">
+	<input type="hidden" name="command" value="update_user">
+	<input type="hidden" name="isBlocked" value="${showuser.isBlocked}">
+	<input type="hidden" name="info" value="${showuser.info}">	
 	<p>
 	<p>
 		<c:if test="${sessionScope.user.role == 'ADMIN'}">

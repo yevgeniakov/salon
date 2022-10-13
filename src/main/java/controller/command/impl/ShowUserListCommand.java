@@ -12,9 +12,11 @@ import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
 import controller.exceptions.FindingUserException;
+import controller.exceptions.IncorrectParamException;
 import entity.Role;
 import entity.User;
 import service.UserManager;
+import service.utils.ValidatorUtil;
 
 public class ShowUserListCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowUserListCommand.class);
@@ -39,16 +41,31 @@ public class ShowUserListCommand implements Command {
 		
 		String sort = request.getParameter("sort");
 		String sortorder = request.getParameter("sortorder");
-		Boolean isBlocked = (request.getParameter("isblocked") == null
-				|| request.getParameter("isblocked").equals("null")) ? null
-						: Boolean.parseBoolean(request.getParameter("isblocked"));
+		if (sortorder != null && !ValidatorUtil.isValidSortOrder(sortorder)) {
+			logger.error("Invalid parameters");
+			request.setAttribute("error", "Can't show user list. Invalid input data: sortorder");
+			return "/error.jsp";
+		}
+		Boolean isBlocked = null;
+		int itemsPerPage = 0;
+		int page = 0;
+		try {
+			isBlocked = (request.getParameter("isblocked") == null || request.getParameter("isblocked").equals("null"))
+					? null
+					: ValidatorUtil.parseBooleanParameter(request.getParameter("isblocked"));
+			itemsPerPage = (request.getParameter("itemsperpage") == null || request.getParameter("itemsperpage").equals("null"))
+					? 10
+					: ValidatorUtil.parseIntParameter(request.getParameter("itemsperpage"));
+			page = (request.getParameter("page") == null || request.getParameter("page").equals("null"))
+					? 1
+					: ValidatorUtil.parseIntParameter(request.getParameter("page"));
+		} catch (IncorrectParamException e) {
+			logger.error(e.getMessage(), e);
+			request.setAttribute("error", e.getMessage());
+			return "/error.jsp";
+		}
 		String searchValue = request.getParameter("searchvalue");
-		int itemsPerPage = (request.getParameter("itemsperpage") == null
-				|| request.getParameter("itemsperpage").equals("null")) ? 10
-						: Integer.parseInt(request.getParameter("itemsperpage"));
-		int page = (request.getParameter("page") == null || request.getParameter("page").equals("null")) ? 1
-				: Integer.parseInt(request.getParameter("page"));
-
+		
 		UserManager manager = UserManager.getInstance();
 		List<User> users = new ArrayList<>();
 
