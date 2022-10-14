@@ -33,7 +33,7 @@ private static final Map<String, Command> commands;
 		commands.put("delete_appointment", new DeleteAppointmentCommand());
 		commands.put("leave_feedback", new LeaveFeedbackCommand());
 		commands.put("show_appointments_list", new ShowAppointmentsListCommand());
-		
+		commands.put("change_locale", new ChangeLocaleCommand());
 	}
 
 	private CommandContainer() {

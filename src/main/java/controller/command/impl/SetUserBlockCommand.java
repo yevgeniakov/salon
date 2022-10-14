@@ -56,6 +56,7 @@ public class SetUserBlockCommand implements Command {
 
 			if (user.getId() != 0) {
 				logger.info("user set blocked = " + isBlocked, id);
+				request.setAttribute("redirect", "redirect");
 				return "Controller?command=show_user_info&id=" + user.getId();
 			}
 			logger.error("Can't set user block");

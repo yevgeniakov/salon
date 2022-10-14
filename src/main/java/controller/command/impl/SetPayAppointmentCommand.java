@@ -59,6 +59,7 @@ public class SetPayAppointmentCommand implements Command {
 
 			logger.info("set appointment payment", appointment.getIsPaid(), appointment.getMaster().getId(),
 					appointment.getDate(), appointment.getTimeslot());
+			request.setAttribute("redirect", "redirect");
 			return "Controller?command=show_appointment_info&master_id=" + appointment.getMaster().getId() + "&date=" + appointment.getDate() + "&timeslot=" + appointment.getTimeslot();
 		} catch (FindingAppointmentException | UpdatingAppointmentException e) {
 			logger.error(e.getMessage(), e);

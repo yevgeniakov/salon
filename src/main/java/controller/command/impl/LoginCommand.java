@@ -39,13 +39,19 @@ public class LoginCommand implements Command {
 
 			request.getSession().setAttribute("user", user);
 			logger.info("user logged in", user.getId(), user.getName(), user.getSurname());
-			if (user.getRole() == Role.ADMIN)
+			request.setAttribute("redirect", "redirect");
+			/*if (user.getRole() == Role.ADMIN)
 				return "admin_page.jsp";
 			if (user.getRole() == Role.CLIENT)
 				return "client_page.jsp";
 			if (user.getRole() == Role.HAIRDRESSER)
-				return "master_page.jsp";
+				return "master_page.jsp";*/
+			
+			logger.info("change_locale.jsp?locale=" + user.getCurrentLang());
+			return "change_locale.jsp?locale=" + user.getCurrentLang();
 		}
+			
+			
 
 		logger.error("user is logged already. ");
 		request.setAttribute("error", "you are logged!");

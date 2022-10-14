@@ -66,6 +66,7 @@ public class SetTimeAppointmentCommand implements Command {
 			manager.setTimeAppointment(appointment, newDate, newTimeslot);
 			appointment = manager.findAppointmentByKey(master_id, newDate, newTimeslot);
 			logger.info("set new datetime for appointment", appointment.getMaster().getId(), appointment.getDate(), appointment.getTimeslot());
+			request.setAttribute("redirect", "redirect");
 			return "Controller?command=show_master_schedule&id=" + appointment.getMaster().getId() + "&date="
 					+ appointment.getDate();
 		} catch (FindingAppointmentException | UpdatingAppointmentException e) {

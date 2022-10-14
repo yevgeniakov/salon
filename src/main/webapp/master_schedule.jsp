@@ -15,7 +15,7 @@
     <title><fmt:message key="label.master_schedule"/></title>
 </head>
 
-<h3><fmt:message key="label.master_schedule"/> - ${master.name} ${master.surname}</h3>
+<h3><fmt:message key="label.master_schedule"/> - <a href="Controller?command=show_user_info&id=${master.id}">${master.name} ${master.surname}</a></h3>
 <br>
 <form method=get name="dateForm">
 <input type="hidden" name="command" value="show_master_schedule">

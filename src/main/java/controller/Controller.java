@@ -58,7 +58,7 @@ public class Controller extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.trace("doPost");
-		String address = "error.jsp";
+		String address = "/error.jsp";
 		String commandName = request.getParameter("command");
 		logger.trace("commandName ==> " + commandName);
 
@@ -71,7 +71,7 @@ public class Controller extends HttpServlet {
 			request.setAttribute("error", "Unable to do action. Try again.");
 		}
 
-		if (request.getAttribute("error") == null) {
+		if (request.getAttribute("redirect") != null) {
 			logger.trace("sending redirect in controller");
 			response.sendRedirect(address);
 		} else {

@@ -25,6 +25,7 @@ public class LogOutCommand implements Command {
 		request.getSession().removeAttribute("user");
 		request.getSession().invalidate();  
 		logger.info("user logged out successfully", loggedUser.getId());
+		request.setAttribute("redirect", "redirect");
 		return "/index.jsp";
 	}
 

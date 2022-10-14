@@ -71,6 +71,7 @@ public class CreateAppointmentCommand implements Command {
 			appointment = manager.createAppointment(appointment);
 
 			logger.info("new appointment created", master_id, user_id, service_id, date, timeslot);
+			request.setAttribute("redirect", "redirect");
 			return "Controller?command=show_master_schedule&id=" + appointment.getMaster().getId() + "&date="
 					+ appointment.getDate();
 

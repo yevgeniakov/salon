@@ -1,8 +1,10 @@
 package service.utils;
 
+import java.sql.SQLClientInfoException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import controller.exceptions.IncorrectParamException;
+import entity.Role;
 
 public class ValidatorUtil {
 	
@@ -51,7 +53,7 @@ public class ValidatorUtil {
     public static boolean isValidSortOrder(String sortOrder) {
         return "asc".equals(sortOrder) || "desc".equals(sortOrder);
     }
-
+    
     public static int parseIntParameter(String intParam) throws IncorrectParamException {
         if(isValidInt(intParam)) {
             return Integer.parseInt(intParam);
@@ -86,4 +88,13 @@ public class ValidatorUtil {
         }
         throw new IncorrectParamException("unable to parse boolean parameter");
     }
+
+	public static Role parseRoleParameter(String role) throws IncorrectParamException {
+		try {
+            return Role.valueOf(role.toUpperCase());
+        } catch(IllegalArgumentException e) {
+            throw new IncorrectParamException("unable to parse role");
+        }
+	}
+
 }

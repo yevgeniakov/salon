@@ -18,11 +18,10 @@
 
 <table>
 <tr>
-<th><fmt:message key="label.id"/></th><th><fmt:message key="label.name"/></th><th><fmt:message key="label.info"/></th><th><fmt:message key="label.masters"/></th>
+<th><fmt:message key="label.service_name"/></th><th><fmt:message key="label.info"/></th><th><fmt:message key="label.masters"/></th>
 </tr>
   <c:forEach items="${servicelist}" var="item">
     <tr>
-      <td><c:out value="${item.id}" /></td>
       <td><c:out value="${item.name}" /></td>
       <td><c:out value="${item.info}" /></td>
       <td><a href = "Controller?command=show_masters_of_service&service_id=${item.id}"><fmt:message key="link.show_masters"/></a></td>

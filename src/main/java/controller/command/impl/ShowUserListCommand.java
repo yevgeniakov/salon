@@ -49,6 +49,7 @@ public class ShowUserListCommand implements Command {
 		Boolean isBlocked = null;
 		int itemsPerPage = 0;
 		int page = 0;
+		Role role = null;
 		try {
 			isBlocked = (request.getParameter("isblocked") == null || request.getParameter("isblocked").equals("null"))
 					? null
@@ -59,6 +60,9 @@ public class ShowUserListCommand implements Command {
 			page = (request.getParameter("page") == null || request.getParameter("page").equals("null"))
 					? 1
 					: ValidatorUtil.parseIntParameter(request.getParameter("page"));
+			role = (request.getParameter("role") == null || request.getParameter("role").equals("null"))
+					? null
+					: ValidatorUtil.parseRoleParameter(request.getParameter("role"));
 		} catch (IncorrectParamException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());
@@ -70,7 +74,7 @@ public class ShowUserListCommand implements Command {
 		List<User> users = new ArrayList<>();
 
 		try {
-			users = manager.findUsersByConditions(isBlocked, searchValue);
+			users = manager.findUsersByConditions(isBlocked, role, searchValue);
 		} catch (FindingUserException e) {
 			logger.info(e.getMessage(), e);
 			request.setAttribute("error", "unable to get user list");
@@ -101,8 +105,9 @@ public class ShowUserListCommand implements Command {
 		request.setAttribute("pagesTotal", pagesTotal);
 		request.setAttribute("itemsPerPage", itemsPerPage);
 		request.setAttribute("sort", sort);
-		request.setAttribute("sortOrder", sortorder);
+		request.setAttribute("sortorder", sortorder);
 		request.setAttribute("isBlocked", isBlocked);
+		request.setAttribute("role", role);
 		request.setAttribute("searchValue", searchValue);
 		return "/user_list.jsp";
 	}

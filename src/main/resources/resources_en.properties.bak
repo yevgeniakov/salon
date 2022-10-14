@@ -25,6 +25,7 @@ button.create_appointment=Create appointment
 button.set_feedback=Set feedback
 
 label.login_page=Login page
+label.registration_page=Registration page
 label.set_locale=Set locale
 label.my_info=My info
 label.id=id
@@ -34,6 +35,7 @@ label.repeat_password=Repeat password
 label.greeting=Welcome to our best Beauty Salon, 
 label.sortby=Sort by
 label.name=Name
+label.service_name=Service name
 label.surname=Surname
 label.tel=Tel.
 label.email=E-mail

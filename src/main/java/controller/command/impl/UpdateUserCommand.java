@@ -112,6 +112,7 @@ public class UpdateUserCommand implements Command {
 				} else {
 					logger.info("admin updated user info", id);
 					request.setAttribute("message", "User data updated successfully!");
+					request.setAttribute("redirect", "redirect");
 					return "Controller?command=show_user_info&id=" + user.getId();
 				}
 			}

@@ -49,14 +49,14 @@
 		<strong><fmt:message key="label.role"/></strong>
 		<br>
 		<input type="radio" name="role" value="CLIENT"
-			<c:if test="${showuser.role == 'CLIENT'}">checked</c:if> disabled /><fmt:message key="create_user_jsp.option.roleclient"/>
+			<c:if test="${showuser.role == 'CLIENT'}">checked</c:if> disabled /><fmt:message key="option.roleclient"/>
     <br>
 		<input type="radio" name="role" value="HAIRDRESSER"
 			<c:if test="${showuser.role == 'HAIRDRESSER'}">checked</c:if>
-			disabled /><fmt:message key="create_user_jsp.option.rolehairdresser"/>
+			disabled /><fmt:message key="option.rolehairdresser"/>
 	<br>
 		<input type="radio" name="role" value="ADMIN"
-			<c:if test="${showuser.role == 'ADMIN'}">checked</c:if> disabled /><fmt:message key="create_user_jsp.option.roleadmin"/>
+			<c:if test="${showuser.role == 'ADMIN'}">checked</c:if> disabled /><fmt:message key="option.roleadmin"/>
 
 </c:if>
 	<c:if
@@ -150,7 +150,7 @@
 <c:if
 	test="${sessionScope.user != null &&sessionScope.user.role == 'ADMIN' && showuser.role == 'CLIENT'}">
 	<br>
-<a href = "appointments_list.jsp?user_id=${showuser.id}"><fmt:message key="link.user_appointments"/></a>
+<a href = "Controller?command=show_appointments_list&user_id=${showuser.id}"><fmt:message key="link.user_appointments"/></a>
 </c:if>
 </body>
 </html>

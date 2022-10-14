@@ -23,18 +23,18 @@ table, th, td {
 </h3>
 <br>
 
-<form action="Controller" method="get">
+<form action="Controller" name="formSearch" method="get">
 	<strong><fmt:message key="label.date_from" /></strong><input
-		type="date" name="datefrom"
+		type="date" name="datefrom" onchange="document.formSearch.submit();"
 		value="${datefrom != null? datefrom : LocalDate.now().plusDays(-7)}">
 	<strong><fmt:message key="label.date_to" /></strong><input type="date"
-		name="dateto"
+		name="dateto" onchange="document.formSearch.submit();"
 		value="${dateto != null? dateto : LocalDate.now().plusDays(7)}">
 
 	<c:if test="${sessionScope.user.role != 'HAIRDRESSER'}">
 		<my:getmasters />
 		<strong><fmt:message key="label.master" /></strong>
-		<select name="master_id">
+		<select name="master_id" onchange="document.formSearch.submit();"> 
 			<option value="null"
 				<c:if test="${master_id == null}"> selected </c:if>><fmt:message
 					key="option.all" /></option>
@@ -50,7 +50,7 @@ table, th, td {
 	<my:getservices master_id="0" />
 
 	<strong><fmt:message key="label.service" /></strong> <select
-		name="service_id">
+		name="service_id" onchange="document.formSearch.submit();">
 		<option value="null"
 			<c:if test="${service_id == null}"> selected </c:if>><fmt:message
 				key="option.all" /></option>
@@ -59,7 +59,7 @@ table, th, td {
 				<c:if test="${service_id == item.id}"> selected </c:if>>${item.name}</option>
 		</c:forEach>
 	</select> <strong><fmt:message key="label.status" /></strong> <select
-		name="isdone">
+		name="isdone" onchange="document.formSearch.submit();">
 		<option value="null" <c:if test="${isDone == null}"> selected </c:if>><fmt:message
 				key="option.all" /></option>
 		<option value=true
@@ -69,7 +69,7 @@ table, th, td {
 			<c:if test="${isDone != null && !isDone}"> selected </c:if>><fmt:message
 				key="option.incomplete" /></option>
 	</select> <strong><fmt:message key="label.payment" /></strong> <select
-		name="ispaid">
+		name="ispaid" onchange="document.formSearch.submit();">
 		<option value="null" <c:if test="${isPaid == null}"> selected </c:if>><fmt:message
 				key="option.all" /></option>
 		<option value=true
@@ -79,7 +79,7 @@ table, th, td {
 			<c:if test="${isPaid != null && !isPaid}"> selected </c:if>><fmt:message
 				key="option.unpaid" /></option>
 	</select> <strong><fmt:message key="label.feedback" /></strong> <select
-		name="israting">
+		name="israting" onchange="document.formSearch.submit();">
 		<option value="null"
 			<c:if test="${isRating == null}"> selected </c:if>><fmt:message
 				key="option.all" /></option>
@@ -114,12 +114,11 @@ table, th, td {
 
 
 	<input type="hidden" name="command" value="show_appointments_list">
-	<input type="submit" value=<fmt:message key="button.search"/>>
-	<input type="reset" value=<fmt:message key="button.reset"/>>
+		
 	<hr>
 
 	<strong><fmt:message key="label.itemsperpage" /></strong> <input
-		name="itemsperpage"
+		name="itemsperpage" onchange="document.formSearch.submit();"
 		value="${itemsPerPage == null ? 10 : itemsPerPage }" size=2> <br>
 	<input type="hidden" name="page" value="1">
 
@@ -151,8 +150,8 @@ table, th, td {
 			<td><c:out value="${item.date}" /></td>
 			<td><my:timeslotdisp timeslot="${item.timeslot}"
 					currentLang="${sessionScope.user.currentLang}" /></td>
-			<td><c:out value="${item.master.name} ${item.master.surname}" /></td>
-			<td><c:out value="${item.user.name} ${item.user.surname}" /></td>
+			<td><a href="Controller?command=show_user_info&id=${item.master.id}"><c:out value="${item.master.name} ${item.master.surname}" /></a></td>
+			<td><a href="Controller?command=show_user_info&id=${item.user.id}"><c:out value="${item.user.name} ${item.user.surname}" /></a></td>
 			<td><c:out value="${item.service.name}" /></td>
 			<td><c:out value="${item.sum} " />
 				<fmt:message key="label.hrn" /></td>

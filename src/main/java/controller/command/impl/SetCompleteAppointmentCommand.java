@@ -58,6 +58,7 @@ public class SetCompleteAppointmentCommand implements Command {
 			manager.setDoneAppointment(appointment, !appointment.getIsDone());
 			appointment.setIsDone(!appointment.getIsDone());
 			logger.info("set appointment complete", appointment.getIsDone(), appointment.getMaster().getId(), appointment.getDate(), appointment.getTimeslot());
+			request.setAttribute("redirect", "redirect");
 			return "Controller?command=show_appointment_info&master_id=" + appointment.getMaster().getId() + "&date=" + appointment.getDate() + "&timeslot=" + appointment.getTimeslot();
 		} catch (FindingAppointmentException | UpdatingAppointmentException e) {
 			logger.error(e.getMessage(), e);

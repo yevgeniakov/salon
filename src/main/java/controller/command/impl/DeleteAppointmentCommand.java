@@ -57,6 +57,7 @@ public class DeleteAppointmentCommand implements Command {
 			manager.deleteAppointment(appointment);
 			request.setAttribute("message", "appointment deleted");
 			logger.info("appointment deleted", master_id, date, timeslot);
+			request.setAttribute("redirect", "redirect");
 			return "Controller?command=show_master_schedule&id=" + master_id + "&date=" + date;
 		} catch (DeletingAppointmentException e) {
 			logger.error(e.getMessage(), e);

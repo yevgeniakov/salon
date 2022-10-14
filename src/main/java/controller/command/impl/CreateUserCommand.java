@@ -88,6 +88,7 @@ public class CreateUserCommand implements Command {
 				}
 				if (loggedUser.getRole() == Role.ADMIN) {
 					logger.info("new user created by Admin", user.getId(), name, surname);
+					request.setAttribute("redirect", "redirect");
 					return "Controller?command=show_user_info&id=" + user.getId();
 				}
 

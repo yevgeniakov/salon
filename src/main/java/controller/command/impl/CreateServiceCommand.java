@@ -56,6 +56,7 @@ public class CreateServiceCommand implements Command {
 				return "/error.jsp";	
 			}
 			logger.info("new service created", service.getId(), name);
+			request.setAttribute("redirect", "redirect");
 			return "Controller?command=show_service_list";
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

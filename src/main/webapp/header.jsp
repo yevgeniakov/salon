@@ -25,7 +25,7 @@ table, th, td {
     		<a href="registration.jsp"><fmt:message key="link.registration"/></a>
 		</c:if>
 
-<form action="change_locale.jsp" name="formlocale" method="post">
+<form action="Controller" name="formlocale" method="post">
 		<fmt:message key="label.set_locale"/>:
 		<select name="locale" onchange="document.formlocale.submit();">
 			<c:forEach items="${applicationScope.locales}" var="locale">
@@ -33,7 +33,7 @@ table, th, td {
 				<option value="${locale.key}" ${selected}>${locale.value}</option>
 			</c:forEach>
 		</select>
-			
+		<input type="hidden" name="command" value="change_locale">	
 	</form>
 
 	<hr>

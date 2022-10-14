@@ -51,11 +51,14 @@ public class UserDao implements Dao<User> {
 			+ "on master_services.master_id = users.id " + "where service_id=? AND users.role=" + "'" + Role.HAIRDRESSER
 			+ "'";
 
-	private static final String UPDATE_USER = "update users set name=?, surname=?, tel=?, email=?, currentlang=?, info=? where id=?";
+	private static final String UPDATE_USER = "update users set name=?, surname=?, tel=?, email=?, info=? where id=?";
 
 	private static final String SET_USER_BLOCK = "update users set isblocked=? where id=?";
+	
+	private static final String SET_USER_CURR_LANG = "update users set currentlang=? where id=?";
 
 	private static final String DELETE_SERVICE = "delete from master_services where master_id=? and service_id=?";
+
 
 	public Connection getConnection() throws SQLException, ClassNotFoundException {
 
@@ -246,9 +249,8 @@ public class UserDao implements Dao<User> {
 			stmt.setString(2, t.getSurname());
 			stmt.setString(3, t.getTel());
 			stmt.setString(4, t.getEmail());
-			stmt.setString(5, "en");
-			stmt.setString(6, t.getInfo());
-			stmt.setInt(7, t.getId());
+			stmt.setString(5, t.getInfo());
+			stmt.setInt(6, t.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, t.getId());
@@ -273,6 +275,24 @@ public class UserDao implements Dao<User> {
 		}
 		t.setBlocked(isBlocked);
 		return t;
+	}
+	
+	public User setUserCurrentLang(Connection con, User user, String locale) {
+		logger.trace("enter");
+
+		PreparedStatement stmt = null;
+		try {
+			stmt = con.prepareStatement(SET_USER_CURR_LANG);
+			stmt.setString(1, locale);
+			stmt.setInt(2, user.getId());
+
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			logger.error(e.getMessage(), e, user.getId(), locale);
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		user.setCurrentLang(locale);
+		return user;
 	}
 
 	public void setServicesForMaster(Connection con, int id, HashMap<Integer, Integer> serviceMap) {
@@ -307,7 +327,7 @@ public class UserDao implements Dao<User> {
 		}
 	}
 
-	public List<User> findAllByConditions(Connection con, Boolean isBlocked, String searchValue) {
+	public List<User> findAllByConditions(Connection con, Boolean isBlocked, Role role, String searchValue) {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
@@ -322,6 +342,8 @@ public class UserDao implements Dao<User> {
 			int i = 0;
 			stmt.setBoolean(++i, (isBlocked == null) ? false : isBlocked);
 			stmt.setBoolean(++i, (isBlocked == null));
+			stmt.setString(++i, (role == null) ? "" : role.toString().toLowerCase());
+			stmt.setBoolean(++i, (role == null));
 			stmt.setBoolean(++i, (searchValue == null));
 			stmt.setString(++i, "%" + (searchValue == null ? "" : searchValue) + "%");
 			stmt.setString(++i, "%" + (searchValue == null ? "" : searchValue) + "%");
@@ -346,8 +368,9 @@ public class UserDao implements Dao<User> {
 
 		StringBuilder str = new StringBuilder(sql);
 
-		str.append(" where ").append("(isBlocked=? or ?)").append(
-				" and (? or (users.name like ? or users.surname like ? or users.email like ? or users.tel like ? ))");
+		str.append(" where ").append("(isBlocked=? or ?)")
+		.append(" and (users.role=? or ?)")
+		.append(" and (? or (users.name like ? or users.surname like ? or users.email like ? or users.tel like ? ))");
 
 		return str.toString();
 	}
@@ -384,8 +407,8 @@ public class UserDao implements Dao<User> {
 		user.setInfo(rs.getString("info"));
 		user.setBlocked(rs.getBoolean("isblocked"));
 		user.setRating(rs.getDouble("rating"));
+		user.setCurrentLang(rs.getString("currentlang"));
 
 		return user;
 	}
-
 }

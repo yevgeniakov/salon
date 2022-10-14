@@ -18,6 +18,7 @@ import controller.exceptions.FindingUserException;
 import controller.exceptions.UpdatingUserException;
 import dao.DBConnection;
 import dao.impl.UserDao;
+import entity.Role;
 import entity.Service;
 import entity.User;
 import service.utils.PasswordEncodingService;
@@ -280,14 +281,14 @@ public class UserManager {
 
 	}
 
-	public List<User> findUsersByConditions(Boolean isBlocked, String searchValue) throws FindingUserException {
+	public List<User> findUsersByConditions(Boolean isBlocked, Role role, String searchValue) throws FindingUserException {
 		logger.trace("enter");
 
 		Connection con = null;
 		List<User> users = new ArrayList<>();
 		try {
 			con = dao.getConnection();
-			users = dao.findAllByConditions(con, isBlocked, searchValue);
+			users = dao.findAllByConditions(con, isBlocked, role, searchValue);
 
 		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
@@ -296,6 +297,23 @@ public class UserManager {
 			DBConnection.close(con);
 		}
 		return users;
+	}
+
+	public void setUserCurrentLang(User user, String locale) throws UpdatingUserException {
+		logger.trace("enter");
+
+		Connection con = null;
+		try {
+			con = dao.getConnection();
+			user = dao.findById(con, user.getId());
+			user = dao.setUserCurrentLang(con, user, locale);
+
+		} catch (SQLException | ClassNotFoundException e) {
+			logger.error(e.getMessage(), e);
+			throw new UpdatingUserException("Cannot set user locale" + e.getMessage());
+		} finally {
+			DBConnection.close(con);
+		}
 	}
 
 }

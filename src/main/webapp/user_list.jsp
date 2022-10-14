@@ -18,17 +18,17 @@ table, th, td {
 
 <br>
 <strong><fmt:message key="label.sortby" /></strong>
-<form action="Controller" method="get">
-	<select name="sort">
+<form action="Controller" name="formSearch" method="get">
+	<select name="sort" onchange="document.formSearch.submit();">
 		<option value="id"
 			<c:if test="${sort == 'id' || sort == null}"> selected </c:if>><fmt:message
 				key="label.id" /></option>
 		<option value="surname"
 			<c:if test="${sort == 'surname'}"> selected </c:if>><fmt:message
-				key="label.surname" /></option>
+				key="option.surname" /></option>
 
 
-	</select> <select name="sortorder">
+	</select> <select name="sortorder" onchange="document.formSearch.submit();">
 		<option value="asc"
 			<c:if test="${sortorder == 'asc' || sortorder == null}"> selected </c:if>><fmt:message
 				key="option.ascending" /></option>
@@ -37,23 +37,39 @@ table, th, td {
 				key="option.descending" /></option>
 
 
-	</select> <strong><fmt:message key="label.status" /></strong> <select
-		name="isblocked">
+	</select> 
+	
+	<strong><fmt:message key="label.role" /></strong>
+	<select name="role" onchange="document.formSearch.submit();">
+		<option value="null"
+			<c:if test="${role == null}"> selected </c:if>><fmt:message
+				key="option.all" /></option>
+		<option value=CLIENT
+			<c:if test="${role != null && role == 'CLIENT'}"> selected </c:if>><fmt:message
+				key="option.roleclient" /></option>
+		<option value=HAIRDRESSER
+			<c:if test="${role != null && role == 'HAIRDRESSER'}"> selected </c:if>><fmt:message
+				key="option.rolehairdresser" /></option>
+
+	</select>
+	
+	<strong><fmt:message key="label.status" /></strong> <select
+		name="isblocked" onchange="document.formSearch.submit();">
 		<option value="null"
 			<c:if test="${isBlocked == null}"> selected </c:if>><fmt:message
 				key="option.all" /></option>
 		<option value=true
 			<c:if test="${isBlocked != null && isBlocked}"> selected </c:if>><fmt:message
-				key="table.cell.status_blocked" /></option>
+				key="option.blocked" /></option>
 		<option value=false
 			<c:if test="${isBlocked != null && !isBlocked}"> selected </c:if>><fmt:message
-				key="table.cell.status_active" /></option>
+				key="option.active" /></option>
 	</select> <strong><fmt:message key="label.searchbyvalue" /></strong> <input
-		name="searchvalue" value="${searchValue == null ? '': searchValue }">
-	<input type="submit" value=<fmt:message key="button.apply"/>> <br>
+		name="searchvalue" onchange="document.formSearch.submit();" value="${searchValue == null ? '': searchValue }">
+	
 	<hr>
 	<strong><fmt:message key="label.itemsperpage" /></strong> <input
-		name="itemsperpage"
+		name="itemsperpage" onchange="document.formSearch.submit();"
 		value="${itemsPerPage == null ? 10 : itemsPerPage }" size=2> <br>
 	<input type="hidden" name="page" value="1"> <input
 		type="hidden" name="command" value="show_user_list">
@@ -67,19 +83,18 @@ table, th, td {
 		<th><fmt:message key="label.tel" /></th>
 		<th><fmt:message key="label.role" /></th>
 		<th><fmt:message key="label.status" /></th>
-		<th><fmt:message key="label.user_page" /></th>
+
 	</tr>
 
 	<c:forEach items="${userlist}" var="item">
 		<tr>
 			<td><c:out value="${item.id}" /></td>
-			<td><c:out value="${item.name} ${item.surname}" /></td>
+			<td><a href="Controller?command=show_user_info&id=${item.id}"><c:out value="${item.name} ${item.surname}" /></a></td>
 			<td><c:out value="${item.email}" /></td>
 			<td><c:out value="${item.tel}" /></td>
 			<td><c:out value="${item.role}" /></td>
 			<td><c:out value="${item.isBlocked? 'BLOCKED' : 'ACTIVE'}" /></td>
-			<td><a href="Controller?command=show_user_info&id=${item.id}"><fmt:message
-						key="label.user_info" /></a></td>
+
 		</tr>
 	</c:forEach>
 </table>
