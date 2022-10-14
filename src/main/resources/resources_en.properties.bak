@@ -91,6 +91,7 @@ label.select_date_time=Choose free date and time:
 label.change_appointment_time=Change appointment time
 label.create_appointment=Create appointment
 label.create_appointment_provide=Please, check your data and provide the service:
+label.time_is_occupied=Time is occupied
 
 link.homepage=Home page
 link.login=Login

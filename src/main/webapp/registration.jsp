@@ -13,7 +13,7 @@
 <title><fmt:message key="label.registration_page"/></title>
 </head>
 
-<h3><fmt:message key="login_jsp.label.greeting"/></h3>
+<h3><fmt:message key="label.provide_your_data"/></h3>
 <br>
 <form action="Controller" method=post>
 	<p>

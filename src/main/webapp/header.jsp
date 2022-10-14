@@ -8,8 +8,9 @@ table, th, td {
 }
 </style>
 <body>
-<c:out value="${sessionScope.currentLocale}"></c:out> 
-
+<c:if test="${currentLocale == null}">
+<c:set var="currentLocale" value="en" scope="session"/>
+</c:if>
 		<a href="index.jsp"><fmt:message key="link.homepage"/></a> |
 		<c:if test="${sessionScope.user != null}">
 
@@ -24,16 +25,15 @@ table, th, td {
     		<a href="registration.jsp"><fmt:message key="link.registration"/></a>
 		</c:if>
 
-<form action="change_locale.jsp" method="post">
+<form action="change_locale.jsp" name="formlocale" method="post">
 		<fmt:message key="label.set_locale"/>:
-		<select name="locale">
+		<select name="locale" onchange="document.formlocale.submit();">
 			<c:forEach items="${applicationScope.locales}" var="locale">
 				<c:set var="selected" value="${locale.key == currentLocale ? 'selected' : '' }"/>
 				<option value="${locale.key}" ${selected}>${locale.value}</option>
 			</c:forEach>
 		</select>
-		<input type="submit" value="<fmt:message key="button.save_locale"/>">
-		
+			
 	</form>
 
 	<hr>

@@ -91,6 +91,7 @@ label.select_date_time=Оберіть вільні дату та час:
 label.change_appointment_time=Зміна дати та часу запису
 label.create_appointment=Створення запису
 label.create_appointment_provide=Будь ласка, перевірте свої дані та оберіть послугу:
+label.time_is_occupied=Час зайнято
 
 link.homepage=Головна
 link.login=Увійти
@@ -112,7 +113,7 @@ menu.master_list=Перелік майстрів
 menu.service_list=Перелік послуг
 menu.my_appointments=Мої записи
 menu.appointments_list=Перелік записів
-menu.create_user=Стрворити користувача
+menu.create_user=Створити користувача
 menu.create_service=Створити послугу
 menu.view_schedule=Показати розклад
 
