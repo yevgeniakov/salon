@@ -124,7 +124,7 @@ table, th, td {
 
 			</form>
 		</c:if>
-	</tr> 
+	</tr>  
 </table>
 
 
