@@ -94,11 +94,12 @@
 		
 </form>
 
+<div id="master-services">
 <c:if test="${services != null && showuser.role == 'HAIRDRESSER'}">
 		
 			<strong> Master Services: </strong>
 
-		<table>
+		<table class="table table-striped">
 			<c:forEach items="${services}" var="entry">
 				<tr>
 					<td><c:out value="${entry.key.name}" /></td>
@@ -122,6 +123,7 @@
 
 
 	</c:if>
+</div>
 
 <c:if
 	test="${sessionScope.user != null && showuser.role == 'HAIRDRESSER'}">

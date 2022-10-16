@@ -43,7 +43,7 @@
 <strong>List of masters </strong>
 
 <div class="table-list">
-	<table class=" table table-striped">
+	<table class="table table-striped">
 <tr>
 <th>Name</th><th>Tel</th><th>Short info</th><th>Rating</th><th>Info</th><c:if test="${sessionScope.user != null}"><th>View schedule</th></c:if>
 </tr>
@@ -69,7 +69,7 @@
 
 	<strong>List of masters doing "${service.name}" </strong>
 	<br>
-	<table>
+	<table class="table table-striped">
 <tr>
 
 <td>Name</td><td>Tel</td><td>Short info</td><td>Rating</td><td>Price</td><td>Info</td><c:if test="${sessionScope.user != null}"><td>View schedule</td></c:if>

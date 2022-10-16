@@ -6,10 +6,12 @@
 
 <link rel="stylesheet" href="css/my.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <body>
 	<div id="header">
-		<a href="index.jsp" class="home" >Home page</a>
+		<a href="index.jsp" img src="images/home.png" class="home" >Home page</a>
+<i class="flag flag-us"></i>
 	<div id="enter">
 		<c:if test="${sessionScope.user != null}">
 

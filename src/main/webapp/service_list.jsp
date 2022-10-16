@@ -2,22 +2,20 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %> 
 <html>
-      <style>
-         table, th, td {
-            border: 1px solid black;
-         }
-      </style>
 <body>
 
 <jsp:include page="header.jsp" />
 <head>
     <title>Service List</title>
 </head>
-
+<div class="tbl_name">
 <h3>Service list</h3>
+</div>
 <br>
 
-<table>
+<div class="table-list">
+
+<table class="table table-striped">
 <tr>
 <th>id</th><th>Name</th><th>Info</th><th>Masters</th>
 </tr>
@@ -30,7 +28,7 @@
     </tr>
   </c:forEach>
 </table>
-
+</div>
 
 
 

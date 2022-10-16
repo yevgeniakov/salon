@@ -5,11 +5,6 @@
 
 
 <html>
-      <style>
-         table, th, td {
-            border: 1px solid black;
-         }
-      </style>
 <body>
 <jsp:include page="header.jsp" />
 <head>
