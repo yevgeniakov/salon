@@ -48,9 +48,16 @@ public class Controller extends HttpServlet {
 			request.setAttribute("error", "Unable to do action. Try again.");
 		}
 		
-		ServletContext servletContext = getServletContext();
-        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(address);
-        requestDispatcher.forward(request, response);
+		if (request.getAttribute("redirect") != null) {
+			logger.trace("sending redirect in controller");
+			response.sendRedirect(address);
+		} else {
+			logger.trace("sending forward in controller");
+			ServletContext servletContext = getServletContext();
+	        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(address);
+	        requestDispatcher.forward(request, response);	
+		
+		}
 	}
 
 	/**
