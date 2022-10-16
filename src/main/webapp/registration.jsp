@@ -2,15 +2,14 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <html>
-      <style>
-         table, th, td {
-            border: 1px solid black;
-         }
-      </style>
+
 <body>
 <jsp:include page="header.jsp" />
 <head>
 <title><fmt:message key="label.registration_page"/></title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+crossorigin="anonymous">
 </head>
 
 <h3><fmt:message key="label.provide_your_data"/></h3>
@@ -46,10 +45,10 @@
 	<p>
 	<p>
 		<input type="submit" value=<fmt:message key="button.register"/>> <input type="reset"
-			value=<fmt:message key="button.reset"/>>
+			value=<fmt:message key="button.reset"/>> <button class="btn btn-primary" type="submit">Button</button>
 </form>
 
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
 </html>

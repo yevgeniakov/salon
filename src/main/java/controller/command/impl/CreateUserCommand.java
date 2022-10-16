@@ -52,8 +52,7 @@ public class CreateUserCommand implements Command {
 			if (!isValidName(name) 
 					|| !isValidName(surname) 
 					|| !isValidEmail(email) 
-					|| !isValidPassword(password) 
-					|| !isValidText(info)) {
+					|| !isValidPassword(password)) {
 				logger.error("Invalid parameters");
 				request.setAttribute("error", "Can't create user. Invalid input data.");
 				return "/error.jsp";

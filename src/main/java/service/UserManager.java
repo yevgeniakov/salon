@@ -160,6 +160,10 @@ public class UserManager {
 
 		try {
 			con = dao.getConnection();
+			User exUser = dao.findByEmail(con, user.getEmail());
+			if (exUser != null) {
+				throw new CreatingUserException("Cannot create user: " + "this e-mail is already registered!");
+			}
 			user = dao.save(con, user);
 
 		} catch (SQLException | ClassNotFoundException e) {
@@ -227,6 +231,11 @@ public class UserManager {
 
 		try {
 			con = dao.getConnection();
+			User exUser = dao.findByEmail(con, user.getEmail());
+			
+			if (exUser != null) {
+				throw new CreatingUserException("Cannot create user: " + "this e-mail is already registered!");
+			}
 			con.setAutoCommit(false);
 			user = dao.save(con, user);
 			dao.setServicesForMaster(con, user.getId(), serviceMap);

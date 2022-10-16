@@ -32,7 +32,7 @@ label.id=id
 label.login=Логін
 label.password=Пароль
 label.repeat_password=Повторіть пароль
-label.greeting=Ласкаво просимо до нашого найкращого Бьюті Салону, 
+label.greeting=Ласкаво просимо до нашого найкращого Бьюті Салону 
 label.sortby=Сортувати за
 label.name=Ім'я
 label.service_name=Назва послуги
@@ -140,6 +140,8 @@ option.paid=оплачені
 option.unpaid=не оплачені
 option.feedback_left=з відгуком
 option.feedback_not_left=без відгука
+option.blocked=заблоковані
+option.active=активні
 
 
 label.status_active=Активний

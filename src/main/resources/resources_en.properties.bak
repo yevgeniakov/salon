@@ -32,7 +32,7 @@ label.id=id
 label.login=Login
 label.password=Password
 label.repeat_password=Repeat password
-label.greeting=Welcome to our best Beauty Salon, 
+label.greeting=Welcome to our best Beauty Salon 
 label.sortby=Sort by
 label.name=Name
 label.service_name=Service name
@@ -136,6 +136,8 @@ option.paid=paid
 option.unpaid=unpaid
 option.feddback_left=with feedback
 option.feedback_not_left=without feedback
+option.blocked=blocked
+option.active=active
 
 label.status_active=Active
 label.status_blocked=Blocked

@@ -13,8 +13,7 @@
 <head>
 <title>Best Beauty Salon</title>
 </head>
-<h2><fmt:message key="label.greeting"/>${sessionScope.user.name == null? 'guest' : sessionScope.user.name}!
-</h2>
+<h2><fmt:message key="label.greeting"/><c:if test="${sessionScope.user != null }"><c:out value=", "></c:out><c:out value="${sessionScope.user.name}"></c:out></c:if><c:out value="!"></c:out></h2>
 
 <br>
 <a href = "Controller?command=show_appointments_list"><fmt:message key="menu.appointments_list"/></a>

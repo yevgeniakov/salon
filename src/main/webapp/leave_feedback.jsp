@@ -6,10 +6,12 @@
          table, th, td {
             border: 1px solid black;
          }
+
       </style>
 <body>
 <jsp:include page="header.jsp" />
 <head>
+
 <title><fmt:message key="label.leave_feedback"/></title>
 </head>
 
