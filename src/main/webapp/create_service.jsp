@@ -16,14 +16,11 @@
 <h3><fmt:message key="label.appointments_list"/></h3>
 <br>
 <form action="Controller" method=post>
-
-
-	<strong><fmt:message key="label.name_of_service"/></strong> <br> <input size="100"
-		name="name"> <br>
+	<strong><fmt:message key="label.name_of_service"/></strong> <br> <input name="name" required> <br>
 	<p>
 
 		<strong><fmt:message key="label.service_info"/></strong> <br>
-		<textarea rows="10" cols="60" name="info">
+		<textarea rows="10" cols="60" name="info" required>
 
     </textarea>
 

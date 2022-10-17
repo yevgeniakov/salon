@@ -125,7 +125,7 @@ public class UserDao implements Dao<User> {
 			stmt.setString(3, t.getTel());
 			stmt.setString(4, t.getName());
 			stmt.setString(5, t.getSurname());
-			stmt.setString(6, "en");
+			stmt.setString(6, t.getCurrentLang());
 			stmt.setString(7, t.getRole().name().toLowerCase());
 			stmt.setString(8, t.getInfo());
 			stmt.setBoolean(9, false);

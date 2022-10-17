@@ -49,7 +49,7 @@
 				<td><c:out value="${item.rating}" /></td>
 				<c:if test="${sessionScope.user != null}">
 					<td><a
-						href="Controller?command=show_master_schedule&id=${item.id}&date=${LocalDate.now()}">
+						href="Controller?command=show_master_schedule&id=${item.id}&date=${LocalDate.now().plusDays(1)}">
 							<fmt:message key="link.view_schedule"/> </a></td>
 				</c:if>
 			</tr>
@@ -78,7 +78,7 @@
 
 				<c:if test="${sessionScope.user != null}">
 					<td><a
-						href="Controller?command=show_master_schedule&id=${entry.key.id}&date=${LocalDate.now()}">
+						href="Controller?command=show_master_schedule&id=${entry.key.id}&date=${LocalDate.now().plusDays(1)}">
 							<fmt:message key="label.view_schedule"/> </a></td>
 				</c:if>
 			</tr>

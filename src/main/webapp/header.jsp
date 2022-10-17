@@ -10,7 +10,8 @@
 
 
 <head>
-<link rel="shortcut icon" href="favicon.ico"/>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 

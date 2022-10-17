@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import controller.command.Command;
 import controller.exceptions.CheckCredentialsException;
 import controller.exceptions.FindingUserException;
-import entity.Role;
 import entity.User;
 import service.UserManager;
 

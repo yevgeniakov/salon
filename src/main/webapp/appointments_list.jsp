@@ -151,7 +151,7 @@ table, th, td {
 		<tr>
 			<td><c:out value="${item.date}" /></td>
 			<td><my:timeslotdisp timeslot="${item.timeslot}"
-					currentLang="${sessionScope.user.currentLang}" /></td>
+					currentLang="${sessionScope.currentLocale}" /></td>
 			<td><a href="Controller?command=show_user_info&id=${item.master.id}"><c:out value="${item.master.name} ${item.master.surname}" /></a></td>
 			<td><a href="Controller?command=show_user_info&id=${item.user.id}"><c:out value="${item.user.name} ${item.user.surname}" /></a></td>
 			<td><c:out value="${item.service.name}" /></td>
