@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/include/head.jspf"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@page import="java.time.LocalDate"%>
 <html>
       <style>
          table, th, td {
@@ -35,7 +36,7 @@
       <td><my:timeslotdisp timeslot = "${item.timeslot}" currentLang="${sessionScope.currentLocale}"/></td>
       <td><c:if test="${item.master != null}"><c:out value="${item.master.name} ${item.master.surname}" /></c:if></td>
       <td colspan="${item.user != null ? 0 :7 }" align="center">
-      <c:if test="${item.user == null && sessionScope.user.role == 'CLIENT'}">
+      <c:if test="${item.user == null && sessionScope.user.role == 'CLIENT' && param.date >= LocalDate.now()}">
       <a href = "create_appointment.jsp?master_id=${item.master.id}&date=${date}&timeslot=${item.timeslot}"><fmt:message key="link.create_appointment"/></a>
       </c:if>
       <c:if test="${item.user != null && (sessionScope.user.role == 'ADMIN' || sessionScope.user.id == item.user.id || sessionScope.user.id == item.master.id)}">

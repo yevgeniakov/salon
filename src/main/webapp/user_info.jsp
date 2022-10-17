@@ -85,7 +85,7 @@
 
 	<c:if
 		test="${sessionScope.user.role == 'ADMIN' && showuser.isBlocked }">
-		<strong><fmt:message key="table.cell.status_blocked"/></strong>
+		<strong><fmt:message key="label.status_blocked"/></strong>
 
 
 	</c:if>
@@ -133,7 +133,7 @@
 <c:if
 	test="${sessionScope.user != null && showuser.role == 'HAIRDRESSER'}">
 	<a
-		href="Controller?command=show_master_schedule&id=${showuser.id}&date=${LocalDate.now()}">
+		href="Controller?command=show_master_schedule&id=${showuser.id}&date=${LocalDate.now().plusDays(1)}">
 		<fmt:message key="link.view_schedule"/> </a>
 </c:if>
 <c:if test="${sessionScope.user.role == 'ADMIN'}">
