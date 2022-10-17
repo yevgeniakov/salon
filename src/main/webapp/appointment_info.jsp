@@ -23,7 +23,7 @@
 
 	<strong><fmt:message key="label.time"/></strong><br>
 	
-	<my:timeslotdisp timeslot="${appointment.timeslot}" currentLang="${sessionScope.user.currentLang}"/>
+	<my:timeslotdisp timeslot="${appointment.timeslot}" currentLang="${sessionScope.currentLocale}"/>
 	
 	<br>
 	<h:appkeyinputs/>

@@ -1,6 +1,5 @@
 package service.utils;
 
-import java.sql.SQLClientInfoException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import controller.exceptions.IncorrectParamException;

@@ -32,7 +32,7 @@
 </tr>
   <c:forEach items="${schedule}" var="item">
     <tr>
-      <td><my:timeslotdisp timeslot = "${item.timeslot}" currentLang="${sessionScope.user.currentLang}"/></td>
+      <td><my:timeslotdisp timeslot = "${item.timeslot}" currentLang="${sessionScope.currentLocale}"/></td>
       <td><c:if test="${item.master != null}"><c:out value="${item.master.name} ${item.master.surname}" /></c:if></td>
       <td colspan="${item.user != null ? 0 :7 }" align="center">
       <c:if test="${item.user == null && sessionScope.user.role == 'CLIENT'}">

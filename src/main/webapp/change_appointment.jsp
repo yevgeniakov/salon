@@ -43,7 +43,7 @@
 	<select name="newtimeslot">
 		
 		<c:forEach items="${freetimeslots}" var="item">
-			<option value="${item}"><my:timeslotdisp timeslot = "${item}" currentLang="${sessionScope.user.currentLang}"/></option>
+			<option value="${item}"><my:timeslotdisp timeslot = "${item}" currentLang="${sessionScope.currentLocale}"/></option>
 		</c:forEach>
 	</select> 
 	<input type="hidden" name="master_id" value="${param.master_id}">

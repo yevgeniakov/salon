@@ -10,6 +10,13 @@ div#header {
 
 }
 
+
+.registration_data {
+    border: blue;
+    margin-left: 10%;
+    float: left;
+    width: auto;
+}
 .btn {
 margin-right: 5px;
 }

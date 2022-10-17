@@ -42,9 +42,16 @@
 	<br>
 	
 	<c:if
-		test="${showuser.role == 'HAIRDRESSER'}">
+		test="${showuser.role == 'HAIRDRESSER' && sessionScope.user.role != 'ADMIN'}">
 			<c:out value="${showuser.info}"></c:out><br>
 	</c:if>
+	
+	<c:if
+		test="${showuser.role == 'HAIRDRESSER' && sessionScope.user.role == 'ADMIN'}">
+		<textarea rows="10" cols="60" name="info">${showuser.info}</textarea><br>
+			
+	</c:if>
+	
 	<c:if test="${showuser.role == 'ADMIN'}">
 		<strong><fmt:message key="label.role"/></strong>
 		<br>
@@ -86,9 +93,8 @@
 
 	<input type="hidden" name="command" value="update_user">
 	<input type="hidden" name="isBlocked" value="${showuser.isBlocked}">
-	<input type="hidden" name="info" value="${showuser.info}">	
-	<p>
-	<p>
+		
+	
 		<c:if test="${sessionScope.user.role == 'ADMIN'}">
 			<input type="submit" value=<fmt:message key="button.update_data"/>>
 		</c:if>

@@ -69,8 +69,13 @@ public class CreateUserCommand implements Command {
 				}
 				i++;
 			}
-
-			User user = new User(0, email, password, name, surname, tel, role, info, false, 0, "en");
+			String currentLang = (String) request.getSession().getAttribute("currentLocale");
+			logger.info(currentLang);
+			if (!("en".equals(currentLang) || "uk".equals(currentLang))) {
+				currentLang = "en";
+			}
+			logger.info(currentLang);
+			User user = new User(0, email, password, name, surname, tel, role, info, false, 0, currentLang);
 			UserManager userManager = UserManager.getInstance();
 			if (serviceMap.isEmpty()) {
 				user = userManager.createUser(user);
@@ -79,7 +84,7 @@ public class CreateUserCommand implements Command {
 			}
 
 			if (user.getId() != 0) {
-				
+				request.setAttribute("redirect", "redirect");
 				if (loggedUser == null) {
 					logger.info("new registration", user.getId(), name, surname);
 					request.getSession().setAttribute("user", user);
@@ -87,13 +92,10 @@ public class CreateUserCommand implements Command {
 				}
 				if (loggedUser.getRole() == Role.ADMIN) {
 					logger.info("new user created by Admin", user.getId(), name, surname);
-					request.setAttribute("redirect", "redirect");
 					return "Controller?command=show_user_info&id=" + user.getId();
 				}
-
 				return "index.jsp";
 			}
-			
 			logger.error("Can't create user");
 			request.setAttribute("error", "Can't create user");
 			return "/error.jsp";

@@ -30,8 +30,8 @@ public class DisplayTimeTag extends TagSupport {
 
 		
 		try {
-			if ("ua".equals(currentLang)) {
-				pageContext.getOut().write(timeslot + ": 00");
+			if ("uk".equals(currentLang)) {
+				pageContext.getOut().write(timeslot + ":00");
 			} else {
 				
 				if (timeslot == 0) pageContext.getOut().write("12 a.m.");
