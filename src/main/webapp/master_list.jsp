@@ -12,6 +12,8 @@
 <head>
 <title><fmt:message key="label.master_list"/></title>
 </head>
+
+<div class="sort-controller">
 <c:if test="${param.service_id != null}">
 <c:set var="user_id" scope="request" value="${param.service_id}"/>
 </c:if>
@@ -27,11 +29,15 @@
 	<input type="hidden" name="service_id" value="${service_id}">
 	<input type="hidden" name="command" value="${service_id == null? 'show_master_list' : 'show_masters_of_service' }">
 </form>
+</div>
 
+
+<div class="table-list">
 <br>
 <c:if test="${service == null}">
-<strong><fmt:message key="label.master_list"/></strong>
-	<table>
+<strong><h3><fmt:message key="label.master_list"/></h3></strong>
+
+	<table class="table table-striped">
 <tr>
 <th><fmt:message key="label.name"/></th><th><fmt:message key="label.tel"/></th><th><fmt:message key="label.short_info"/></th><th><fmt:message key="label.rating"/></th><c:if test="${sessionScope.user != null}"><th><fmt:message key="label.view_schedule"/></th></c:if>
 </tr>
@@ -80,6 +86,7 @@
 	</table>
 </c:if>
 
+</div>
 
 
 

@@ -129,7 +129,9 @@ table, th, td {
 <br>
 
 
-<table>
+
+<div class="table-list">
+<table class="table table-striped">
 
 	<tr>
 		<th><fmt:message key="label.date" /></th>
@@ -184,9 +186,11 @@ table, th, td {
 		</tr>
 	</c:forEach>
 </table>
+</div>
 
 <br>
-<table>
+<div class="table-list">
+<table class="table table-striped">
 	<tr>
 <c:if test="${page != 1}">
 	<form action="Controller" method="get">
@@ -230,6 +234,6 @@ table, th, td {
 
 	</tr>
 </table>
-
+</div>
 </body>
 </html>

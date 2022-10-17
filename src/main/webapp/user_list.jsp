@@ -75,7 +75,7 @@ table, th, td {
 		type="hidden" name="command" value="show_user_list">
 
 </form>
-<table>
+<table class="table table-striped">
 	<tr>
 		<th><fmt:message key="label.id" /></th>
 		<th><fmt:message key="label.name" /></th>
@@ -101,7 +101,7 @@ table, th, td {
 
 <br>
 
-<table border="1">
+<table class="table table-striped" border="1">
 	<tr>
 		<c:if test="${page != 1}">
 			<form action="Controller" method="get">

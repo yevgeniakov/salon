@@ -3,25 +3,69 @@
 
 <html>
 <body>
-<jsp:include page="header.jsp" />
+
+<link href="css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
 <head>
     <title><fmt:message key="label.login_page"/></title>
 </head>
+<style>
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
 
-<h3><fmt:message key="label.provide_your_data"/></h3>
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
 
-<form action="Controller" method=post>
-    <p><strong><fmt:message key="label.login"/></strong>
-    <br>
-    <input type="email" name="email" size="50">
-    <p><p><strong><fmt:message key="label.password"/></strong>
-    <br>
-    <input type="password" size="20" name="password">
-    <p><p>
-    <input type="submit" value=<fmt:message key="button.login"/>>
-    <input type="reset" value=<fmt:message key="button.reset"/>>
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+</style>
+
+
+
+
+
+
+
+<div>
+ <jsp:include page="header.jsp" />
+
+</div>
+
+<div class="l_form form-signin w-100 m-auto">
+
+ <form  action="Controller" method=post>
+
+    <h3 class="h3 mb-3 fw-normal"><fmt:message key="label.provide_your_data"/></h3>
+    <div class="form-floating">
+      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+      <label for="floatingPassword"><fmt:message key="label.password"/></label>
+    </div>
+
+    <div class="checkbox mb-3">
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit"><fmt:message key="button.login"/></button>
     <input type="hidden" name="command" value = "login">
-</form>
+  </form>
+
+</div>
+
 
 
 
