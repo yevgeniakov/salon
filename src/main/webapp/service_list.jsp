@@ -15,8 +15,8 @@
 
 <h3><fmt:message key="label.service_list"/></h3>
 <br>
-
-<table>
+<div class="table-list">
+<table class="table table-striped">
 <tr>
 <th><fmt:message key="label.service_name"/></th><th><fmt:message key="label.info"/></th><th><fmt:message key="label.masters"/></th>
 </tr>
@@ -28,7 +28,7 @@
     </tr>
   </c:forEach>
 </table>
-
+</div>
 
 
 

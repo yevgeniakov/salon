@@ -6,6 +6,10 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Salon Maven Webapp</name>
+<<<<<<< HEAD
+=======
+  <!-- FIXME change it to the project's website -->
+>>>>>>> front
   <url>http://www.example.com</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -92,11 +96,23 @@
                <includes>
                   <include>**/*.css</include>
                   <include>**/*.js</include>
+                  <include>**/*.png</include>
+                  <include>**/*.map</include>
                 </includes>
 	        <excludes>
                    <exclude>**/*.xml</exclude>
 		</excludes>
               </resource>
+	    <resource>
+            <targetPath>${basedir}/target/${project.build.finalName}/WEB-INF/classes</targetPath>
+            <directory>${basedir}/src/main/resources</directory>
+               <includes>
+                  <include>**/*.properties</include>
+               </includes>
+	        <excludes>
+                   <exclude>**/*.xml</exclude>
+		</excludes>
+        </resource>
             </resources>
           </configuration>
         </plugin>
