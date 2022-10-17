@@ -1,0 +1,112 @@
+a.home {
+    margin-left: 10px;
+}
+
+
+div#header {
+    margin-top: 10px;
+    height: 20px;
+
+
+}
+
+.btn {
+margin-right: 5px;
+}
+
+
+div#btns {
+    margin-top: 10;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+}
+
+div#enter {
+    float: right;
+    margin-right: 15px;
+}
+
+.col-sm-2 {
+    flex: 0 0 auto;
+    width: 25%;
+}
+
+.card {
+    max-width: 500px;
+}
+
+.row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+    margin-bottom: 10px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.sort-controller {
+    float: right;
+    margin-right: 5%;
+}
+
+
+.list-masters {
+    margin-top: 80px;
+    margin-left: 20px;
+    text-align: center;
+    font-size: 22;
+
+}
+
+div#bl1 {
+    float: left;
+    width: 120;
+
+}
+
+div#bl2 {
+    width: 100;
+    float: left;
+    margin-left: 10;
+}
+
+
+.table-list {
+    width: 90%;
+    margin-left: 3%;
+}
+
+
+.master-services {
+    width: 70%;
+    margin-left: 3%;
+}
+
+.tbl_name {
+    text-align: center;
+
+}
+
+
+.u_profile {
+    margin-right: 7%;
+}
+
+
+.lang_switch {
+    margin-right: 50px;
+}
+
+
+
+.my_info {
+    width: 600px;
+    margin-left: 7%;
+}
