@@ -3,7 +3,7 @@
 
 <input type="hidden" name="command" value="show_user_list">
 <input type="hidden" name= "sort" value="${sort}">
-<input type="hidden" name= "sortorder" value="${sortOrder}">	
+<input type="hidden" name= "sortorder" value="${sortorder}">	
 <input type="hidden" name= "isblocked" value="${isBlocked == null? 'null' : isBlocked}"> 	
 <input type="hidden" name="searchvalue" value="${searchValue == null ? '': searchValue }">
 

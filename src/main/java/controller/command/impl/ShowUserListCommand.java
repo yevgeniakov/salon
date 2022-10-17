@@ -46,6 +46,12 @@ public class ShowUserListCommand implements Command {
 			request.setAttribute("error", "Can't show user list. Invalid input data: sortorder");
 			return "/error.jsp";
 		}
+		if (sort == null) {
+			sort = "id";
+		}
+		if (sortorder == null) {
+			sortorder = "asc";
+		}
 		Boolean isBlocked = null;
 		int itemsPerPage = 0;
 		int page = 0;
