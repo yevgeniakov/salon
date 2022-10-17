@@ -6,10 +6,6 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Salon Maven Webapp</name>
-<<<<<<< HEAD
-=======
-  <!-- FIXME change it to the project's website -->
->>>>>>> front
   <url>http://www.example.com</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

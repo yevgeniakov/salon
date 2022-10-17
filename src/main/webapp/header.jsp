@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/include/head.jspf"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <link rel="stylesheet" href="css/main.css">
@@ -61,7 +62,7 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
      ${ sessionScope.user != null ? sessionScope.user.name : "Guest" }</a>
-          </a>
+         
           <ul class="dropdown-menu dropdown-menu-right dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
             <li><h6 class="dropdown-header"> ${ sessionScope.user != null ? sessionScope.user.name.concat(' ').concat(sessionScope.user.surname) : "Guest" } </h6></li>
 	<c:if test="${sessionScope.user != null}">
@@ -77,7 +78,7 @@
 
 	<c:if test="${sessionScope.user == null}">
             <li><a class="dropdown-item" href="login.jsp"><fmt:message key="link.login"/></a></li>
-            <li><a class="dropdown-item" href="registration.jsp"><fmt:message key="link.registration"/></li>
+            <li><a class="dropdown-item" href="registration.jsp"><fmt:message key="link.registration"/></a></li>
 	</c:if>
 	      <li><hr class="dropdown-divider"></li>
 

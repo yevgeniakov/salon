@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/include/head.jspf"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+
 <html>
 <style>
 table, th, td {
