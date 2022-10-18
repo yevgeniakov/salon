@@ -149,5 +149,5 @@ label.status_active=Active
 label.status_blocked=Blocked
 
 confirmation.delete_appointment="Are you sure you want to delete this appointment?"
-confirmation.block_user="Are you sure you want to block this user?"
-confirmation.unblock_user="Are you sure you want to unblock this user?"
+confirmation.block_user=Are you sure you want to block this user?
+confirmation.unblock_user=Are you sure you want to unblock this user?

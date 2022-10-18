@@ -154,5 +154,5 @@ label.status_active=Активний
 label.status_blocked=Заблокований
 
 confirmation.delete_appointment="Ви впевнені, що хочете видалити цей запис?"
-confirmation.block_user="Ви впевнені, що хочете заблокувати цього користувача?"
-confirmation.unblock_user="Ви впевнені, що хочете розблокувати цього користувача?"
+confirmation.block_user=Ви впевнені, що хочете заблокувати цього користувача?
+confirmation.unblock_user=Ви впевнені, що хочете розблокувати цього користувача?

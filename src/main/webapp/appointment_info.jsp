@@ -77,7 +77,9 @@ table, th, td {
 <br>
 
 <c:if test="${sessionScope.user.id == appointment.master.id}">
-	<form action="Controller" method="post">
+<fmt:message key="confirmation.complete_appointment" var="conf_complete" />
+		<fmt:message key="confirmation.incomplete_appointment" var="conf_incomplete" />
+	<form action="Controller" method="post" data-confirm="${appointment.isDone? conf_incomplete : conf_complete}">
 		<h:appkeyinputs />
 		<input type="hidden" name="command" value="set_complete_appointment">
 		<fmt:message key="button.set_complete" var="bcomplete" />
@@ -94,7 +96,9 @@ table, th, td {
 <c:out value="${appointment.isPaid? lpaid : lunpaid}"></c:out>
 <br>
 <c:if test="${sessionScope.user.role == 'ADMIN'}">
-	<form action="Controller" method="post">
+		<fmt:message key="confirmation.pay_appointment" var="conf_paid" />
+		<fmt:message key="confirmation.unpay_appointment" var="conf_unpaid" />
+	<form action="Controller" method="post" data-confirm="${appointment.isPaid? conf_unpaid : conf_paid}">
 		<h:appkeyinputs />
 		<input type="hidden" name="command" value="set_pay_appointment">
 		<fmt:message key="button.set_paid" var="bpaid" />
