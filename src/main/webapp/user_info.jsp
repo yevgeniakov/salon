@@ -86,7 +86,7 @@
 	<c:if
 		test="${sessionScope.user.role == 'ADMIN' && showuser.isBlocked }">
 		<strong><fmt:message key="label.status_blocked"/></strong>
-
+<br>
 
 	</c:if>
 
@@ -137,8 +137,10 @@
 		<fmt:message key="link.view_schedule"/> </a>
 </c:if>
 <c:if test="${sessionScope.user.role == 'ADMIN'}">
+<fmt:message key="confirmation.block_user" var="conf_block" />
+<fmt:message key="confirmation.unblock_user" var="conf_unblock" />
 
-	<form action="Controller" method=post>
+	<form action="Controller" method=post data-confirm="${showuser.isBlocked? conf_unblock : conf_block }">
 		<input type="hidden" name="command" value="set_user_block"> <input
 			type="hidden" name="isBlocked"
 			value="${showuser.isBlocked? 'false' : 'true'}"> <input
@@ -158,5 +160,6 @@
 	<br>
 <a href = "Controller?command=show_appointments_list&user_id=${showuser.id}"><fmt:message key="link.user_appointments"/></a>
 </c:if>
+<script src="${pageContext.request.contextPath}/js/form_confirmation.js"></script>
 </body>
 </html>

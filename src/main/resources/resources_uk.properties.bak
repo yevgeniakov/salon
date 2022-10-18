@@ -8,11 +8,12 @@ button.reset=Очистити
 button.apply=Застосувати
 button.search=Пошук
 button.update_data="Записати дані"
-button.create_user="Створити користувача
+button.create_user="Створити користувача"
 button.create_service=Створити послугу
 button.change_time="Змінити час"
 button.change=Змінити
 button.leave_feedback=Залишити відгук
+button.change_feedback=Змінити відгук
 button.set_complete=Виконано
 button.set_incomplete=Не виконано
 button.set_paid=Оплачено
@@ -95,6 +96,9 @@ label.create_appointment=Створення запису
 label.create_appointment_provide=Будь ласка, перевірте свої дані та оберіть послугу:
 label.time_is_occupied=Час зайнято
 label.create_user=Створення користувача
+label.users=Користувачі
+label.services=Послуги
+label.appointments=Записи
 
 link.homepage=Головна
 link.login=Увійти
@@ -109,7 +113,8 @@ link.prev=Попередня
 link.show_masters=Показати майстрів з цієї послуги
 link.appointment_info=Інформація про запис
 link.create_appointment=Записатися
-
+link.profile=Профіль
+link.help=Допомога
 
 menu.user_list=Перелік користувачів
 menu.master_list=Перелік майстрів
@@ -147,3 +152,7 @@ option.active=активні
 
 label.status_active=Активний
 label.status_blocked=Заблокований
+
+confirmation.delete_appointment="Ви впевнені, що хочете видалити цей запис?"
+confirmation.block_user="Ви впевнені, що хочете заблокувати цього користувача?"
+confirmation.unblock_user="Ви впевнені, що хочете розблокувати цього користувача?"

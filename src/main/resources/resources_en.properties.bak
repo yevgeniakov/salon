@@ -13,6 +13,7 @@ button.create_service=Create service
 button.change_time=Change time
 button.change=Change
 button.leave_feedback=Leave feedback
+button.change_feedback=Change feedback
 button.set_complete=Set complete
 button.set_incomplete=Set incomplete
 button.set_paid=Set paid
@@ -94,6 +95,10 @@ label.change_appointment_time=Change appointment time
 label.create_appointment=Create appointment
 label.create_appointment_provide=Please, check your data and provide the service:
 label.time_is_occupied=Time is occupied
+label.create_user=Create User
+label.users=Users
+label.services=Services
+label.appointments=Appointments
 
 link.homepage=Home page
 link.login=Login
@@ -108,7 +113,8 @@ link.prev=Prev
 link.show_masters=Show masters
 link.appointment_info=Appointment info
 link.create_appointment=Create appointment
-
+link.profile=Profile
+link.help=Help
 
 menu.user_list=User list
 menu.master_list=Master list
@@ -142,4 +148,6 @@ option.active=active
 label.status_active=Active
 label.status_blocked=Blocked
 
-
+confirmation.delete_appointment="Are you sure you want to delete this appointment?"
+confirmation.block_user="Are you sure you want to block this user?"
+confirmation.unblock_user="Are you sure you want to unblock this user?"

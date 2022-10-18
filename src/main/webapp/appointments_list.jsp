@@ -174,7 +174,7 @@ table, th, td {
 						key="link.appointment_info" /></a></td>
 			<td><c:if
 					test="${item.user != null && sessionScope.user.role == 'ADMIN' && !(item.isDone)}">
-					<form action="Controller" method="post">
+					<form action="Controller" method="post" data-confirm=<fmt:message key="confirmation.delete_appointment" />>
 						<input type="hidden" name=master_id value="${item.master.id}" />
 						<input type="hidden" name=date value="${item.date}" /> <input
 							type="hidden" name=timeslot value="${item.timeslot}" /> <input
@@ -235,5 +235,6 @@ table, th, td {
 	</tr>
 </table>
 </div>
+<script src="${pageContext.request.contextPath}/js/form_confirmation.js"></script>
 </body>
 </html>
