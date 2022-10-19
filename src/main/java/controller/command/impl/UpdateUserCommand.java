@@ -108,6 +108,7 @@ public class UpdateUserCommand implements Command {
 
 				if (loggedUser.getRole() != Role.ADMIN) {
 					logger.info("user updated his info", id);
+					request.setAttribute("redirect", "redirect");
 					return "my_info.jsp";
 				} else {
 					logger.info("admin updated user info", id);

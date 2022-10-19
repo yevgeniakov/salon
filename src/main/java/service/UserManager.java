@@ -228,11 +228,9 @@ public class UserManager {
 			logger.error(e.getMessage(), e);
 			throw new CreatingUserException("Cannot create user: " + e.getMessage());
 		}
-
 		try {
 			con = dao.getConnection();
 			User exUser = dao.findByEmail(con, user.getEmail());
-			
 			if (exUser != null) {
 				throw new CreatingUserException("Cannot create user: " + "this e-mail is already registered!");
 			}
@@ -253,7 +251,6 @@ public class UserManager {
 		} finally {
 			DBConnection.close(con);
 		}
-
 		return user;
 	}
 

@@ -24,6 +24,7 @@ public class DBConnection {
 		ds.setMinIdle(5);
 		ds.setMaxIdle(10);
 		ds.setDefaultAutoCommit(true);
+
 	}
 
 	public static Connection getConnection() throws SQLException {

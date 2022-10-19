@@ -2,11 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@page import="java.time.LocalDate"%>
 <html>
-      <style>
-         table, th, td {
-            border: 1px solid black;
-         }
-      </style>
+
 <body>
 <jsp:include page="header.jsp" />
 <head>
@@ -35,7 +31,7 @@
 <div class="table-list">
 <br>
 <c:if test="${service == null}">
-<strong><h3><fmt:message key="label.master_list"/></h3></strong>
+<h3 align="center"><fmt:message key="label.master_list"/></h3>
 
 	<table class="table table-striped">
 <tr>
@@ -61,7 +57,7 @@
 
 	<strong><fmt:message key="label.masters_who"/> "${service.name}" </strong>
 	<br>
-	<table>
+	<table class="table table-striped">
 <tr>
 
 <th><fmt:message key="label.name"/></th><th><fmt:message key="label.tel"/></th><th><fmt:message key="label.short_info"/></th><th><fmt:message key="label.rating"/></th><th><fmt:message key="label.price"/></th><c:if test="${sessionScope.user != null}"><th><fmt:message key="label.view_schedule"/></th></c:if>

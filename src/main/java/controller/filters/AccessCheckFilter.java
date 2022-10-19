@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -25,17 +27,17 @@ public class AccessCheckFilter implements Filter{
 	private static final Logger logger = LogManager.getLogger(AccessCheckFilter.class); 
    
     private static final String[] ClientAllowedURLs = {
-            "/header.jsp", "locale", "/client_page.jsp", "/error.jsp", "/my_info.jsp", "/master_list.jsp", 
+            "/header.jsp", "locale", "/index.jsp", "/error.jsp", "/my_info.jsp", "/master_list.jsp", 
             "/master_schedule.jsp", "/create_appointment.jsp", "/leave_feedback.jsp", 
-            "/appointments_list.jsp", "/appointment_info.jsp", "/Controller", "css", "ico", "/js/", "/images"
+            "/appointments_list.jsp", "/appointment_info.jsp", "/Controller", "/css/", "ico", "/js/", "/images"
     };
     private static final String[] MasterAllowedURLs = {
-    		"/header.jsp", "locale", "/master_page.jsp", "/error.jsp", "/my_info.jsp", "/master_schedule", 
-            "/appointments_list.jsp", "/appointment_info.jsp", "/Controller", "css", "ico", "/js/", "/images"
+    		"/header.jsp", "locale", "/index.jsp", "/error.jsp", "/my_info.jsp", "/master_schedule", 
+            "/appointments_list.jsp", "/appointment_info.jsp", "/Controller", "/css/", "ico", "/js/", "/images"
     };
     private static final String[] GuestAllowedURLs = {
     		"/header.jsp", "locale", "/index.jsp", "/registration.jsp", "/login.jsp", "/error.jsp", 
-            "/master_list.jsp", "/master_info.jsp", "/Controller", "css", "ico", "/js/", "/images"
+            "/master_list.jsp", "/master_info.jsp", "/Controller", "/css/", "ico", "/js/", "/images"
     };
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -64,16 +66,18 @@ public class AccessCheckFilter implements Filter{
         logger.trace("isAdmin = " + isAdmin + ", isClient = " + isClient + ", isMaster = " + isMaster + ", isGuest = " + isGuest);
         String destinationPage = path;
         
-        if (isAdmin) destinationPage = "admin_page.jsp";
-        if (isClient) destinationPage = "client_page.jsp";
-        if (isMaster) destinationPage = "master_page.jsp";
-        if (isGuest) destinationPage = "index.jsp";
+        destinationPage = "/error.jsp";
         
         if (isAdmin && !isAdminAllowed() || isClient && !isClientAllowed() || isMaster && !isMasterAllowed() || isGuest && !isGuestAllowed() ) {
         	logger.trace("don't allowed " + httpRequest.getRequestURI() + ", redirecting to " + destinationPage);
-         	HttpServletResponse httpResponse = (HttpServletResponse) response;
-        	httpResponse.sendRedirect(destinationPage);
-        	
+         	//HttpServletResponse httpResponse = (HttpServletResponse) response;
+        	//httpResponse.sendRedirect(destinationPage);
+        	request.setAttribute("error", "Access denied");
+        	logger.trace("sending forward in controller");
+			ServletContext servletContext = httpRequest.getSession().getServletContext();
+	        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(destinationPage);
+	        requestDispatcher.forward(request, response);
+			
         } else {
         
         logger.trace("allowed");
@@ -120,10 +124,7 @@ public class AccessCheckFilter implements Filter{
 	}
 	
 	private boolean isAdminAllowed() {
-		String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
-		if (path.contains("/index") || path.contains("/master_page") || path.contains("/client_page")) {
-			return false;
-		}
+
 		return true;
 	}
 

@@ -57,7 +57,11 @@ public class CreateAppointmentCommand implements Command {
 				request.setAttribute("error", e.getMessage());
 				return "/error.jsp";
 			}
-			
+			if (date.isBefore(LocalDate.now())) {
+				logger.error("try to make appointment in the past");
+				request.setAttribute("error", "You are trying to make appointment in the past. Please, choose the correct date.");
+				return "/error.jsp";
+			}
 			try {
 			User user = new User();
 			user.setId(user_id);

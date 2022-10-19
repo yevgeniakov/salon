@@ -105,11 +105,11 @@
 		
 			<strong><fmt:message key="label.master_services"/></strong>
 
-		<table>
+		<table class="table table-striped">
 			<c:forEach items="${services}" var="entry">
 				<tr>
 					<td><c:out value="${entry.key.name}" /></td>
-					<td><c:out value="${entry.value}"/></td>
+					<td><c:out value="${entry.value}"/> <fmt:message key="label.hrn"/></td>
 
 					<c:if test="${sessionScope.user.role == 'ADMIN'}">
 						<td>

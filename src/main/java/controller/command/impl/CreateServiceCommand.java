@@ -41,7 +41,8 @@ public class CreateServiceCommand implements Command {
 			String name = request.getParameter("name");
 			String info = request.getParameter("info");
 			
-			if (!ValidatorUtil.isValidText(name) || ValidatorUtil.isValidText(info)) {
+					
+			if (!ValidatorUtil.isValidText(name) || !ValidatorUtil.isValidText(info)) {
 				logger.error("Service is not created. Invalid params", name, info);
 				request.setAttribute("error", "Can't create service. Invalid input data.");
 				return "/error.jsp";

@@ -54,11 +54,10 @@ public class UserDao implements Dao<User> {
 	private static final String UPDATE_USER = "update users set name=?, surname=?, tel=?, email=?, info=? where id=?";
 
 	private static final String SET_USER_BLOCK = "update users set isblocked=? where id=?";
-	
+
 	private static final String SET_USER_CURR_LANG = "update users set currentlang=? where id=?";
 
 	private static final String DELETE_SERVICE = "delete from master_services where master_id=? and service_id=?";
-
 
 	public Connection getConnection() throws SQLException, ClassNotFoundException {
 
@@ -66,7 +65,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	@Override
-	public User findById(Connection con, int id) {
+	public User findById(Connection con, int id) throws SQLException {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
@@ -81,7 +80,7 @@ public class UserDao implements Dao<User> {
 			return null;
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, id);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		} finally {
 			DBConnection.closeResultSet(rs);
 			DBConnection.closeStatement(stmt);
@@ -89,7 +88,7 @@ public class UserDao implements Dao<User> {
 	}
 
 	@Override
-	public List<User> findAll(Connection con) {
+	public List<User> findAll(Connection con) throws SQLException {
 		logger.trace("enter");
 
 		List<User> users = new ArrayList<>();
@@ -105,7 +104,7 @@ public class UserDao implements Dao<User> {
 			return users;
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		} finally {
 			DBConnection.closeResultSet(rs);
 			DBConnection.closeStatement(stmt);
@@ -113,10 +112,11 @@ public class UserDao implements Dao<User> {
 	}
 
 	@Override
-	public User save(Connection con, User t) {
+	public User save(Connection con, User t) throws SQLException {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
+		ResultSet keys = null;
 		int rows = 0;
 		try {
 			stmt = con.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
@@ -133,33 +133,26 @@ public class UserDao implements Dao<User> {
 			rows = stmt.executeUpdate();
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, t.getId());
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		}
-		
 		if (rows == 1) {
 			try {
-				ResultSet keys = stmt.getGeneratedKeys();
-				
+				keys = stmt.getGeneratedKeys();
 				while (keys.next()) {
 					t.setId(keys.getInt(1));
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				logger.error(e.getMessage(), e, t.getId());
+				throw e;
 			} finally {
+				DBConnection.closeResultSet(keys);
 				DBConnection.closeStatement(stmt);
 			}
 		}
 		return t;
 	}
 
-	@Override
-	public void delete(Connection con, User t) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public List<User> findAllMasters(Connection con) {
+	public List<User> findAllMasters(Connection con) throws SQLException {
 		logger.trace("enter");
 
 		List<User> masters = new ArrayList<>();
@@ -168,53 +161,49 @@ public class UserDao implements Dao<User> {
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(FIND_ALL_MASTERS);
-			
 			while (rs.next()) {
 				masters.add(exstractUser(rs));
 			}
 			return masters;
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		} finally {
 			DBConnection.closeResultSet(rs);
 			DBConnection.closeStatement(stmt);
 		}
 	}
 
-	public SortedMap<User, Integer> findAllMastersByService(Connection con, int service_id, String sort) {
+	public SortedMap<User, Integer> findAllMastersByService(Connection con, int service_id, String sort)
+			throws SQLException {
 		logger.trace("enter");
 
 		SortedMap<User, Integer> masters;
-
 		if ("rating".equals(sort)) {
 			masters = new TreeMap<>(Comparator.comparing(User::getRating).reversed().thenComparing(User::getSurname));
 		} else {
 			masters = new TreeMap<>(Comparator.comparing(User::getSurname));
 		}
-
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
 			stmt = con.prepareStatement(FIND_ALL_MASTERS_BY_SERVICES);
 			stmt.setInt(1, service_id);
 			rs = stmt.executeQuery();
-
 			while (rs.next()) {
 				masters.put(exstractUser(rs), rs.getInt("price"));
 			}
-
 			return masters;
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, service_id, sort);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		} finally {
 			DBConnection.closeResultSet(rs);
 			DBConnection.closeStatement(stmt);
 		}
 	}
 
-	public User findByEmail(Connection con, String email) {
+	public User findByEmail(Connection con, String email) throws SQLException {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
@@ -223,26 +212,23 @@ public class UserDao implements Dao<User> {
 			stmt = con.prepareStatement(FIND_USER_BY_EMAIL);
 			stmt.setString(1, email);
 			rs = stmt.executeQuery();
-			
 			if (rs.next()) {
 				return exstractUser(rs);
 			}
 			return null;
-
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, email);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		} finally {
 			DBConnection.closeResultSet(rs);
 			DBConnection.closeStatement(stmt);
 		}
 	}
 
-	public User update(Connection con, User t) {
+	public User update(Connection con, User t) throws SQLException {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
-
 		try {
 			stmt = con.prepareStatement(UPDATE_USER);
 			stmt.setString(1, t.getName());
@@ -254,12 +240,12 @@ public class UserDao implements Dao<User> {
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, t.getId());
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		}
 		return t;
 	}
 
-	public User setUserBlock(Connection con, User t, boolean isBlocked) {
+	public User setUserBlock(Connection con, User t, boolean isBlocked) throws SQLException {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
@@ -267,17 +253,16 @@ public class UserDao implements Dao<User> {
 			stmt = con.prepareStatement(SET_USER_BLOCK);
 			stmt.setBoolean(1, isBlocked);
 			stmt.setInt(2, t.getId());
-
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, t.getId(), isBlocked);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		}
 		t.setBlocked(isBlocked);
 		return t;
 	}
-	
-	public User setUserCurrentLang(Connection con, User user, String locale) {
+
+	public User setUserCurrentLang(Connection con, User user, String locale) throws SQLException {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
@@ -285,58 +270,53 @@ public class UserDao implements Dao<User> {
 			stmt = con.prepareStatement(SET_USER_CURR_LANG);
 			stmt.setString(1, locale);
 			stmt.setInt(2, user.getId());
-
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, user.getId(), locale);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		}
 		user.setCurrentLang(locale);
 		return user;
 	}
 
-	public void setServicesForMaster(Connection con, int id, HashMap<Integer, Integer> serviceMap) {
+	public void setServicesForMaster(Connection con, int id, HashMap<Integer, Integer> serviceMap) throws SQLException {
 		logger.trace("enter");
 
 		Statement stmt = null;
 		String sql = getSqlForMasterServices(id, serviceMap);
-
 		try {
 			stmt = con.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, id, serviceMap);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		}
 	}
 
-	public void deleteServiceFromMaster(Connection con, User master, Service service) {
+	public void deleteServiceFromMaster(Connection con, User master, Service service) throws SQLException {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
-
 		try {
 			stmt = con.prepareStatement(DELETE_SERVICE);
 			stmt.setInt(1, master.getId());
 			stmt.setInt(2, service.getId());
-
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, master, service);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		}
 	}
 
-	public List<User> findAllByConditions(Connection con, Boolean isBlocked, Role role, String searchValue) {
+	public List<User> findAllByConditions(Connection con, Boolean isBlocked, Role role, String searchValue)
+			throws SQLException {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		List<User> users = new ArrayList<>();
 		String sql = FIND_ALL_USERS;
-
 		sql = addConditionsToSQL(sql);
-
 		try {
 			stmt = con.prepareStatement(sql);
 			int i = 0;
@@ -349,29 +329,29 @@ public class UserDao implements Dao<User> {
 			stmt.setString(++i, "%" + (searchValue == null ? "" : searchValue) + "%");
 			stmt.setString(++i, "%" + (searchValue == null ? "" : searchValue) + "%");
 			stmt.setString(++i, "%" + (searchValue == null ? "" : searchValue) + "%");
-
 			rs = stmt.executeQuery();
-
 			while (rs.next()) {
 				users.add(exstractUser(rs));
 			}
 			return users;
-
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, isBlocked, searchValue);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		}
+	}
+	
+	@Override
+	public void delete(Connection con, User t) {
+		// TODO Auto-generated method stub
+
 	}
 
 	private String addConditionsToSQL(String sql) {
 		logger.trace("enter");
 
 		StringBuilder str = new StringBuilder(sql);
-
-		str.append(" where ").append("(isBlocked=? or ?)")
-		.append(" and (users.role=? or ?)")
-		.append(" and (? or (users.name like ? or users.surname like ? or users.email like ? or users.tel like ? ))");
-
+		str.append(" where ").append("(isBlocked=? or ?)").append(" and (users.role=? or ?)").append(
+				" and (? or (users.name like ? or users.surname like ? or users.email like ? or users.tel like ? ))");
 		return str.toString();
 	}
 
@@ -408,7 +388,6 @@ public class UserDao implements Dao<User> {
 		user.setBlocked(rs.getBoolean("isblocked"));
 		user.setRating(rs.getDouble("rating"));
 		user.setCurrentLang(rs.getString("currentlang"));
-
 		return user;
 	}
 }

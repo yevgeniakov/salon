@@ -50,7 +50,7 @@ public class ServiceDao implements Dao<Service> {
 	}
 
 	@Override
-	public Service findById(Connection con, int id) {
+	public Service findById(Connection con, int id) throws SQLException {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
@@ -63,10 +63,9 @@ public class ServiceDao implements Dao<Service> {
 				return exstractService(rs);
 			}
 			return null;
-
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, id);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		} finally {
 			DBConnection.closeResultSet(rs);
 			DBConnection.closeStatement(stmt);
@@ -74,7 +73,7 @@ public class ServiceDao implements Dao<Service> {
 	}
 
 	@Override
-	public List<Service> findAll(Connection con) {
+	public List<Service> findAll(Connection con) throws SQLException {
 		logger.trace("enter");
 
 		List<Service> services = new ArrayList<>();
@@ -89,14 +88,14 @@ public class ServiceDao implements Dao<Service> {
 			return services;
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		} finally {
 			DBConnection.closeResultSet(rs);
 			DBConnection.closeStatement(stmt);
 		}
 	}
 
-	public TreeMap<Service, Integer> findAllbyMaster(Connection con, int master_id) {
+	public TreeMap<Service, Integer> findAllbyMaster(Connection con, int master_id) throws SQLException {
 		logger.trace("enter");
 
 		TreeMap<Service, Integer> services = new TreeMap<>();
@@ -112,14 +111,14 @@ public class ServiceDao implements Dao<Service> {
 			return services;
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, master_id);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		} finally {
 			DBConnection.closeResultSet(rs);
 			DBConnection.closeStatement(stmt);
 		}
 	}
 
-	public Service findByName(Connection con, String name) {
+	public Service findByName(Connection con, String name) throws SQLException {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
@@ -132,10 +131,9 @@ public class ServiceDao implements Dao<Service> {
 				return exstractService(rs);
 			}
 			return null;
-
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, name);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		} finally {
 			DBConnection.closeResultSet(rs);
 			DBConnection.closeStatement(stmt);
@@ -143,7 +141,7 @@ public class ServiceDao implements Dao<Service> {
 	}
 
 	@Override
-	public Service save(Connection con, Service t) {
+	public Service save(Connection con, Service t) throws SQLException {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
@@ -155,7 +153,7 @@ public class ServiceDao implements Dao<Service> {
 			rows = stmt.executeUpdate();
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, t.getId());
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		}
 		if (rows == 1) {
 			try {
@@ -165,7 +163,7 @@ public class ServiceDao implements Dao<Service> {
 				}
 			} catch (SQLException e) {
 				logger.error(e.getMessage(), e, t.getId());
-				// TODO Auto-generated catch block
+				throw e;
 			} finally {
 				DBConnection.closeStatement(stmt);
 			}
@@ -179,7 +177,7 @@ public class ServiceDao implements Dao<Service> {
 
 	}
 
-	public List<Service> findAllAbsentByMaster(Connection con, int master_id) {
+	public List<Service> findAllAbsentByMaster(Connection con, int master_id) throws SQLException {
 		logger.trace("enter");
 
 		List<Service> services = new ArrayList<>();
@@ -195,13 +193,13 @@ public class ServiceDao implements Dao<Service> {
 			return services;
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, master_id);
-			throw new RuntimeException(e.getMessage(), e);
+			throw e;
 		} finally {
 			DBConnection.closeResultSet(rs);
 			DBConnection.closeStatement(stmt);
 		}
 	}
-	
+
 	private Service exstractService(ResultSet rs) throws SQLException {
 		logger.trace("enter");
 

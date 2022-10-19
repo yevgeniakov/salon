@@ -27,7 +27,7 @@
 
 <hr>
 
-<table>
+<table class="table table-striped">
 <tr>
 <th><fmt:message key="label.time"/></th><th><fmt:message key="label.master"/></th><th><fmt:message key="label.info"/></th><th><fmt:message key="label.client"/></th><th><fmt:message key="label.service"/></th><th><fmt:message key="label.sum"/></th><th><fmt:message key="label.isdone"/></th><th><fmt:message key="label.ispaid"/></th><th><fmt:message key="label.rating"/></th>
 </tr>

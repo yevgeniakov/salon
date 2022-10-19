@@ -6,10 +6,10 @@
 <head>
 <title><fmt:message key="label.error"/></title>
 </head>
-
-<h3><fmt:message key="label.error_message"/></h3>
+<div align="center">
+<img src="${pageContext.request.contextPath}/images/error.png"/> <h3><fmt:message key="label.error_message"/></h3>
 <br> <h4>${error}</h4>
-<br>
+</div>
 
 </body>
 </html>
