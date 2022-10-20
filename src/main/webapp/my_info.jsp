@@ -9,56 +9,70 @@
       </style>
 <body>
 <jsp:include page="header.jsp" />
+
 <head>
+<link href="css/registration.css" rel="stylesheet">
+<link href='css/jquery.rating.css' type="text/css" rel="stylesheet" />
 <title><fmt:message key="label.my_info"/></title>
 </head>
 
 
 
-<div class="my_info">
+<div class="registration_data">
 
 <h3><fmt:message key="label.my_info"/></h3>
 <br>
+<c:if test="${sessionScope.user.role == 'HAIRDRESSER'}">
+<fmt:message key="label.rating" var="val" />
+ <c:out value="${val}: ${sessionScope.user.rating}"></c:out>
+  <c:if test="${sessionScope.user.rating !=0}">
+ <br>
+<h:createstars rating="${sessionScope.user.rating}" inputname="${'rat'}${sessionScope.user.id}"/>
+<br>
+</c:if>
+</c:if>
 
-<form action="Controller" method=post>
+<form action="Controller" method=post id="profile_form">
 	<input type="hidden" name="id" value="${sessionScope.user.id}" /> <br>
 
 
 <div class="mb-3 row">
-  <label for="exampleFormControlInput1" class="col-sm-2 col-form-label"><fmt:message key="label.name"/></label>
+  <label for="name" class="col-sm-2 col-form-label"><fmt:message key="label.name"/></label>
 <div class="col-sm-10">
-  <input type="text" class="form-control" name="name" id="exampleFormControlInput1" value="${sessionScope.user.name}">
+  <input type="text" class="form-control" name="name" id="name" value="${sessionScope.user.name}">
+  <span id="error_firstname" class="error" aria-live="polite"></span>
 </div>
 </div>
 
 <div class="mb-3 row">
-  <label for="exampleFormControlInput1" class="col-sm-2 col-form-label"><fmt:message key="label.surname"/></label>
+  <label for="surname" class="col-sm-2 col-form-label"><fmt:message key="label.surname"/></label>
 <div class="col-sm-10">
-  <input type="text" class="form-control" name="surname" id="exampleFormControlInput1" value="${sessionScope.user.surname}">
+  <input type="text" class="form-control" name="surname" id="surname" value="${sessionScope.user.surname}">
+    <span id="error_surname" class="error" aria-live="polite"></span>
 </div>
 </div>
 
 <div class="mb-3 row">
-  <label for="exampleFormControlInput1" class="col-sm-2 col-form-label"><fmt:message key="label.email"/></label>
+  <label for="email" class="col-sm-2 col-form-label"><fmt:message key="label.email"/></label>
 <div class="col-sm-10">
-  <input type="text" class="form-control" name="email" id="exampleFormControlInput1" value="${sessionScope.user.email}">
+  <input type="text" class="form-control" name="email" id="email" value="${sessionScope.user.email}">
+    <span id="error_email" class="error" aria-live="polite"></span>
 </div>
 </div>
 
 <div class="mb-3 row">
-  <label for="exampleFormControlInput1" class="col-sm-2 col-form-label"><fmt:message key="label.tel"/></label>
+  <label for="tel" class="col-sm-2 col-form-label"><fmt:message key="label.tel"/></label>
 <div class="col-sm-10">
-  <input type="text" class="form-control" name="tel" id="exampleFormControlInput1"  value="${sessionScope.user.tel}">
+  <input type="text" class="form-control" name="tel" id="tel"  value="${sessionScope.user.tel}">
+    <span id="error_tel" class="error" aria-live="polite"></span>
 </div>
 </div>
 
-
-
-
-
-	<c:if
+<c:if
 		test="${sessionScope.user.role == 'HAIRDRESSER'}">
-			<c:out value="${sessionScope.user.info}"></c:out>
+		<label><fmt:message key="label.master_info"/></label><br>
+		<span class="border border-info">${sessionScope.user.info}</span><br>
+			
 	</c:if>
 				
 		<br>
@@ -68,18 +82,18 @@
 	
 		<strong><fmt:message key="label.role"/></strong>
 		<br>
-		<input type="radio" name="role" value="CLIENT"
+		<input class="form-check-input" type="radio" name="role" value="CLIENT"
 			<c:if test="${sessionScope.user.role == 'CLIENT'}">checked</c:if>
 			disabled /><fmt:message key="option.roleclient"/>
     <br>
-		<input type="radio" name="role" value="HAIRDRESSER"
+		<input class="form-check-input" type="radio" name="role" value="HAIRDRESSER"
 			<c:if test="${sessionScope.user.role == 'HAIRDRESSER'}">checked</c:if>
 			disabled /><fmt:message key="option.rolehairdresser"/>
 	<br>
-		<input type="radio" name="role" value="ADMIN"
+		<input class="form-check-input" type="radio" name="role" value="ADMIN"
 			<c:if test="${sessionScope.user.role == 'ADMIN'}">checked</c:if>
 			disabled /><fmt:message key="option.roleadmin"/>
-
+<br>
 </c:if>
 	<c:if test="${sessionScope.user.role == 'HAIRDRESSER'}">
 		<my:getservices master_id="${sessionScope.user.id}" />
@@ -103,12 +117,18 @@
 	<input type="hidden" name="isBlocked" value="${sessionScope.user.isBlocked}">
 	<input type="hidden" name="info" value="${sessionScope.user.info}">
 	<input type="hidden" name="command" value="update_user">
-	<p>
-	<p>
-		<input type="submit" value=<fmt:message key="button.update_data"/>>
+<br>
+		<button type="submit" class="btn btn-primary"><fmt:message key="button.update_data"/></button>
 </form>
 </div>
 
-
+<script src="${pageContext.request.contextPath}/js/info.js"></script>
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'
+	type="text/javascript"></script>
+<script src='js/jquery.MetaData.js' type="text/javascript"
+	></script>
+<script src='js/jquery.rating.js' type="text/javascript"
+	></script>
 </body>
 </html>

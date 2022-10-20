@@ -18,94 +18,9 @@ table, th, td {
 </h3>
 
 <br>
-
-
-<nav class="navbar bg-light">
-  <div class="container-fluid">
-<form action="Controller" name="formSearch" method="get">
-
-<div class="row">
-<div class="col-sm"><p class="text-center"><fmt:message key="label.sortby"/></p></div>
-<div class="col-sm"><p class="text-center"><fmt:message key="label.role" /></p></div>
-<div class="col-sm"><p class="text-center"><fmt:message key="label.status"/></p></div>
-<div class="col-sm"><p class="text-center"><fmt:message key="label.searchbyvalue" /></p></div>
-<div class="w-100"></div>
-<div class="col-sm row">
-<div class="col-sm">
-	<select name="sort" class="form-select" onchange="document.formSearch.submit();">
-		<option value="id"
-			<c:if test="${sort == 'id' || sort == null}"> selected </c:if>><fmt:message
-				key="label.id" /></option>
-		<option value="surname"
-			<c:if test="${sort == 'surname'}"> selected </c:if>><fmt:message
-				key="option.surname" /></option>
-	</select> 
-</div>
-<div class="col-sm">
-	<select name="sortorder" class="form-select" onchange="document.formSearch.submit();">
-		<option value="asc"
-			<c:if test="${sortorder == 'asc' || sortorder == null}"> selected </c:if>><fmt:message
-				key="option.ascending" /></option>
-		<option value="desc"
-			<c:if test="${sortorder == 'desc'}"> selected </c:if>><fmt:message
-				key="option.descending" /></option>
-	</select>
-</div>
-</div>
-<div class="col-sm">
-	<select name="role" class="form-select" onchange="document.formSearch.submit();">
-		<option value="null"
-			<c:if test="${role == null}"> selected </c:if>><fmt:message
-				key="option.all" /></option>
-		<option value=CLIENT
-			<c:if test="${role != null && role == 'CLIENT'}"> selected </c:if>><fmt:message
-				key="option.roleclient" /></option>
-		<option value=HAIRDRESSER
-			<c:if test="${role != null && role == 'HAIRDRESSER'}"> selected </c:if>><fmt:message
-				key="option.rolehairdresser" /></option>
-
-	</select>
-
-</div>
-<div class="col-sm">
-<select
-		name="isblocked" class="form-select" onchange="document.formSearch.submit();">
-		<option value="null"
-			<c:if test="${isBlocked == null}"> selected </c:if>><fmt:message
-				key="option.all" /></option>
-		<option value=true
-			<c:if test="${isBlocked != null && isBlocked}"> selected </c:if>><fmt:message
-				key="option.blocked" /></option>
-		<option value=false
-			<c:if test="${isBlocked != null && !isBlocked}"> selected </c:if>><fmt:message
-				key="option.active" /></option>
-	</select>
-</div>
-
-<div class="col-sm">
-<input	class="search_field1" name="searchvalue" onchange="document.formSearch.submit();" value="${searchValue == null ? '': searchValue }">
-	<input type="hidden" name="page" value="1"> <input
-		type="hidden" name="command" value="show_user_list">
-
-</div>
-<div class="w-100"></div>
-<div class="col-sm"><fmt:message key="label.itemsperpage" /> <input	name="itemsperpage" onchange="document.formSearch.submit();"
-		value="${itemsPerPage == null ? 10 : itemsPerPage }" size=2> <br>
-
-	<input type="hidden" name="page" value="1"> <input
-		type="hidden" name="command" value="show_user_list">
-</div>
-
-</div>
-    </form>
-</div>
-
-</nav>
-
-<!--
 <strong><fmt:message key="label.sortby" /></strong>
 <form action="Controller" name="formSearch" method="get">
-	<select name="sort" class="form-select" onchange="document.formSearch.submit();">
+	<select name="sort" onchange="document.formSearch.submit();">
 		<option value="id"
 			<c:if test="${sort == 'id' || sort == null}"> selected </c:if>><fmt:message
 				key="label.id" /></option>
@@ -114,8 +29,7 @@ table, th, td {
 				key="option.surname" /></option>
 
 
-	</select> 
-	<select name="sortorder" class="form-select" onchange="document.formSearch.submit();">
+	</select> <select name="sortorder" onchange="document.formSearch.submit();">
 		<option value="asc"
 			<c:if test="${sortorder == 'asc' || sortorder == null}"> selected </c:if>><fmt:message
 				key="option.ascending" /></option>
@@ -127,7 +41,7 @@ table, th, td {
 	</select> 
 	
 	<strong><fmt:message key="label.role" /></strong>
-	<select name="role" class="form-select" onchange="document.formSearch.submit();">
+	<select name="role" onchange="document.formSearch.submit();">
 		<option value="null"
 			<c:if test="${role == null}"> selected </c:if>><fmt:message
 				key="option.all" /></option>
@@ -141,7 +55,7 @@ table, th, td {
 	</select>
 	
 	<strong><fmt:message key="label.status" /></strong> <select
-		name="isblocked" class="form-select" onchange="document.formSearch.submit();">
+		name="isblocked" onchange="document.formSearch.submit();">
 		<option value="null"
 			<c:if test="${isBlocked == null}"> selected </c:if>><fmt:message
 				key="option.all" /></option>
@@ -151,19 +65,17 @@ table, th, td {
 		<option value=false
 			<c:if test="${isBlocked != null && !isBlocked}"> selected </c:if>><fmt:message
 				key="option.active" /></option>
-	</select> 
-<strong><fmt:message key="label.searchbyvalue" /></strong> <input
+	</select> <strong><fmt:message key="label.searchbyvalue" /></strong> <input
 		name="searchvalue" onchange="document.formSearch.submit();" value="${searchValue == null ? '': searchValue }">
 	
 	<hr>
 	<strong><fmt:message key="label.itemsperpage" /></strong> <input
 		name="itemsperpage" onchange="document.formSearch.submit();"
 		value="${itemsPerPage == null ? 10 : itemsPerPage }" size=2> <br>
-
 	<input type="hidden" name="page" value="1"> <input
 		type="hidden" name="command" value="show_user_list">
 
-</form> -->
+</form>
 <table class="table table-striped">
 	<tr>
 		<th><fmt:message key="label.id" /></th>

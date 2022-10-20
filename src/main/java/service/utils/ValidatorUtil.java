@@ -13,6 +13,7 @@ public class ValidatorUtil {
 	private static final String EMAIL_REGEX = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-zA-Z]{2,})$";
 	private static final String TIMESLOT_REGEX = "2[0-3]|[0-1]?[0-9]";
 	private static final String ID_REGEX = "[0-9]+";
+	private static final String TEL_REGEX = "0\\d{9}";
 	private static final String RATING_REGEX = "[0-5]";
 
 	private ValidatorUtil() {}
@@ -43,6 +44,10 @@ public class ValidatorUtil {
     
     public static boolean isValidText(String text) {
         return text != null && !"".equals(text);
+    }
+    
+    public static boolean isValidTel(String tel) {
+    	return tel != null && tel.matches(TEL_REGEX);
     }
     
     public static boolean isValidBoolean(String booleanParam) {

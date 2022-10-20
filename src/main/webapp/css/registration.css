@@ -1,12 +1,15 @@
 @charset "UTF-8";
 
 .registration_data {
-    margin-left: 3%;
-    float: left;
-    width: auto;
+    margin:auto;
+    
+    width: 500px;
+}
+.registration-btns {
+	margin: auto;
 }
 
-input.email {
+form-control.email {
   appearance: none;
   width: 100%;
   border: 1px solid #333;
@@ -19,12 +22,12 @@ input.email {
 }
 
 /* This is our style for the invalid fields */
-input.invalid {
-  border-color: #900;
-  background-color: #fdd;
+.invalid {
+  border-color: #900 !important;
+  background-color: rgb(254, 233, 234) !important;
 }
 
-input:focus.invalid {
+form-control:focus.invalid {
   outline: none;
 }
 
@@ -35,7 +38,9 @@ input:focus.invalid {
 
   font-size: 80%;
   color: #950000;
-  background-color: #ffcece;
+  background-color: white;
+  border-color: #950000;
+  border-width: 1px solid;
   border-radius: 0 0 5px 5px;
   box-sizing: border-box;
 }

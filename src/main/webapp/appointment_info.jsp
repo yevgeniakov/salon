@@ -11,6 +11,7 @@ table, th, td {
 	<jsp:include page="header.jsp" />
 <head>
 <title><fmt:message key="label.appointment_info" /></title>
+    <link href='css/jquery.rating.css' type="text/css" rel="stylesheet" />
 </head>
 
 <h3>
@@ -114,7 +115,8 @@ table, th, td {
 
 <c:if test="${appointment.rating != 0}">
 	<strong><fmt:message key="label.rating" /></strong>
-	<c:out value="${appointment.rating}"></c:out>
+	<br>
+	<h:createstars rating="${appointment.rating}" inputname="rat1"/>
 	<br>
 	<br>
 	<strong><fmt:message key="label.feedback" /></strong>
@@ -142,5 +144,12 @@ table, th, td {
 	</form>
 </c:if>
 <script src="${pageContext.request.contextPath}/js/form_confirmation.js"></script>
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'
+	type="text/javascript"></script>
+<script src='js/jquery.MetaData.js' type="text/javascript"
+	></script>
+<script src='js/jquery.rating.js' type="text/javascript"
+	></script>
 </body>
 </html>

@@ -12,6 +12,7 @@ table, th, td {
 <body>
 	<jsp:include page="header.jsp" />
 <head>
+    <link href='css/jquery.rating.css' type="text/css" rel="stylesheet" />
 <title><fmt:message key="label.appointments_list" /></title>
 </head>
 <c:if test="${param.user_id != null}">
@@ -24,10 +25,10 @@ table, th, td {
 <br>
 
 <form action="Controller" name="formSearch" method="get">
-	<strong><fmt:message key="label.date_from" /></strong><input
+	<strong><fmt:message key="label.date_from" /></strong><input 
 		type="date" name="datefrom" onchange="document.formSearch.submit();"
 		value="${datefrom != null? datefrom : LocalDate.now().plusDays(-7)}">
-	<strong><fmt:message key="label.date_to" /></strong><input type="date"
+	<strong><fmt:message key="label.date_to" /></strong><input type="date" 
 		name="dateto" onchange="document.formSearch.submit();"
 		value="${dateto != null? dateto : LocalDate.now().plusDays(7)}">
 
@@ -146,9 +147,10 @@ table, th, td {
 		<th><fmt:message key="label.info" /></th>
 		<th>...</th>
 	</tr>
-
+<c:set var="i" value="0"></c:set>
 	<c:forEach items="${appointmentsList}" var="item">
 		<tr>
+		
 			<td><c:out value="${item.date}" /></td>
 			<td><my:timeslotdisp timeslot="${item.timeslot}"
 					currentLang="${sessionScope.currentLocale}" /></td>
@@ -167,8 +169,12 @@ table, th, td {
 			<td><c:if test="${item.user != null}">
 					<c:out value="${item.isPaid? lpaid : lunpaid}"></c:out>
 				</c:if></td>
-			<td align="center"><c:out
-					value="${item.rating == 0? '-' : item.rating}"></c:out></td>
+			<td align="center">
+			<c:if test="${item.rating != 0}">
+			<c:set var="i" value="${i + 1}"></c:set>
+			<h:createstars rating="${item.rating}" inputname="${'rat'}${i}"/>
+			</c:if>
+			<c:out value="${item.rating == 0? '-' : ''}"></c:out></td>
 			<td><a
 				href="Controller?command=show_appointment_info&master_id=${item.master.id}&date=${item.date}&timeslot=${item.timeslot}"><fmt:message
 						key="link.appointment_info" /></a></td>
@@ -236,5 +242,12 @@ table, th, td {
 </table>
 </div>
 <script src="${pageContext.request.contextPath}/js/form_confirmation.js"></script>
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'
+	type="text/javascript"></script>
+<script src='js/jquery.MetaData.js' type="text/javascript"
+	></script>
+<script src='js/jquery.rating.js' type="text/javascript"
+	></script>
 </body>
 </html>

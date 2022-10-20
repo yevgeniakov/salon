@@ -52,7 +52,8 @@ public class CreateUserCommand implements Command {
 			if (!isValidName(name) 
 					|| !isValidName(surname) 
 					|| !isValidEmail(email) 
-					|| !isValidPassword(password)) {
+					|| !isValidPassword(password)
+					|| !isValidTel(tel)) {
 				logger.error("Invalid parameters");
 				request.setAttribute("error", "Can't create user. Invalid input data.");
 				return "/error.jsp";
@@ -88,7 +89,7 @@ public class CreateUserCommand implements Command {
 				if (loggedUser == null) {
 					logger.info("new registration", user.getId(), name, surname);
 					request.getSession().setAttribute("user", user);
-					return "client_page.jsp";
+					return "index.jsp";
 				}
 				if (loggedUser.getRole() == Role.ADMIN) {
 					logger.info("new user created by Admin", user.getId(), name, surname);

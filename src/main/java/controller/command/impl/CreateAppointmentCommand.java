@@ -78,7 +78,6 @@ public class CreateAppointmentCommand implements Command {
 			request.setAttribute("redirect", "redirect");
 			return "Controller?command=show_master_schedule&id=" + appointment.getMaster().getId() + "&date="
 					+ appointment.getDate();
-
 		} catch (FindingAppointmentException | CreatingAppointmentException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", "Something wrong. try once more.");

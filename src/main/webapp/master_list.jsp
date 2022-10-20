@@ -17,7 +17,7 @@
 <br>
 <strong><fmt:message key="label.sortby"/></strong>
 <form action="Controller" name="formSearch" method="get">
-<select name="sort" onchange="document.formSearch.submit();">
+<select name="sort" class="form-select" onchange="document.formSearch.submit();">
 		<option value="surname" <c:if test="${sort == 'surname' || sort == null}"> selected </c:if>><fmt:message key="option.surname"/></option>
 		<option value="rating" <c:if test="${sort == 'rating'}"> selected </c:if>><fmt:message key="option.rating"/></option>
 		
@@ -55,7 +55,7 @@
 
 <c:if test="${service != null}">
 
-	<strong><fmt:message key="label.masters_who"/> "${service.name}" </strong>
+	<h3 align="center"><fmt:message key="label.masters_who"/> ${service.name} </h3>
 	<br>
 	<table class="table table-striped">
 <tr>

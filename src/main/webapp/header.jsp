@@ -18,18 +18,13 @@
 </head>
 <body>
 
-
-
-
-
-
-
 <c:if test="${currentLocale == null}">
 <c:set var="currentLocale" value="en" scope="session"/>
 </c:if>
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+
   <div class="container-fluid">
     <a class="navbar-brand h1" href="index.jsp">BestBeauty</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">

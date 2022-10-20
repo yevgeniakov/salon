@@ -6,6 +6,7 @@
 <jsp:include page="header.jsp" />
 <head>
     <title>Best Beauty Salon</title>
+    <link href='css/jquery.rating.css' type="text/css" rel="stylesheet" />
 </head>
 <h2><fmt:message key="label.greeting"/><c:if test="${sessionScope.user != null }"><c:out value=", "></c:out><c:out value="${sessionScope.user.name}"></c:out></c:if><c:out value="!"></c:out></h2>
 
@@ -18,5 +19,44 @@
 <h2>Here is some general information</h2>
 
 
+
+
+<h:createstars rating="5.0" inputname="rat"/>
+
+
+
+
+<br>
+
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled" checked="checked"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+<input name="adv1" type="radio" class="star {split:4}" disabled="disabled"/>
+
+
+
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'
+	type="text/javascript"></script>
+<script src='js/jquery.MetaData.js' type="text/javascript"
+	></script>
+<script src='js/jquery.rating.js' type="text/javascript"
+	></script>
 </body>
 </html>
