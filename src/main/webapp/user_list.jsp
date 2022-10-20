@@ -8,13 +8,9 @@
 <head>
 <title><fmt:message key="label.user_list" /></title>
 </head>
-<br>
 <h3 align="center">
 	<fmt:message key="label.user_list" />
 </h3>
-
-<br>
-
 
 <nav class="navbar bg-light">
   <div class="container-fluid">

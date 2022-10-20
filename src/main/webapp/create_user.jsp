@@ -9,7 +9,7 @@
 <link href="css/registration.css" rel="stylesheet">
 <title><fmt:message key="label.create_user" /></title>
 </head>
-<br>
+
 <div class="registration_data">
 	<h3>
 		<fmt:message key="label.provide_user_data" />

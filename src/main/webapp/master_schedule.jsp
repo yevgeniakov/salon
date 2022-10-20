@@ -10,7 +10,7 @@
 <head>
     <title><fmt:message key="label.master_schedule"/></title>
 </head>
-<br>
+
 <h3 align="center"><fmt:message key="label.master_schedule"/> - <a href="Controller?command=show_user_info&id=${master.id}">${master.name} ${master.surname}</a></h3>
 <br>
 <form method=get name="dateForm">

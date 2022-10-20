@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
-<br>
 <div class="registration_data">
 	<h3>
 		<fmt:message key="label.provide_your_data" />
