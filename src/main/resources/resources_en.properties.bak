@@ -155,6 +155,7 @@ confirmation.complete_appointment=Are you sure you want to complete this appoint
 confirmation.incomplete_appointment=Are you sure you want to set this appointment INCOMPLETE?
 confirmation.pay_appointment=Are you sure you want to set payment for this appointment?
 confirmation.unpay_appointment=Are you sure you want to set this appointment UNPAID?
+confirmation.delete_service=Are you sure you want to delete this service from master?
 
 photo.caption1="Our masters are always glad to see you!"
 photo.caption2="Transformation to blonde"

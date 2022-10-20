@@ -19,7 +19,7 @@
 
 
 <div class="registration_data">
-
+<br>
 <h3><fmt:message key="label.my_info"/></h3>
 <br>
 <c:if test="${sessionScope.user.role == 'HAIRDRESSER'}">

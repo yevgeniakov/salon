@@ -46,8 +46,6 @@
     	    </li>
         </c:if>
 
-
-
 	<c:if test="${sessionScope.user.role == 'CLIENT'}">
             <li class="nav-item  m_list">
 		<a class="nav-link active" href="Controller?command=show_master_list"><fmt:message key="menu.master_list"/></a>
@@ -62,8 +60,6 @@
 		<a class="nav-link active" href="contacts.jsp"><fmt:message key="link.homepage"/></a>
     	    </li>
         </c:if>
-
-
 
 	<c:if test="${sessionScope.user.role == 'HAIRDRESSER'}">
             <li class="nav-item  m_list">
@@ -113,10 +109,6 @@
 
       </ul>
 
-
-
-
-
       <ul class="navbar-nav ms-auto">
 <li class="nav-item lang_switch">
 <form  action="Controller" name="formlocale" method="post">
@@ -131,16 +123,14 @@
 </form>
 </li>
 
-
-
-
         <li class="nav-item dropdown dropstart">
+        <fmt:message key="label.guest" var="labelGuest"/>
           <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-     ${ sessionScope.user != null ? sessionScope.user.name : "Guest" }</a>
+     ${ sessionScope.user != null ? sessionScope.user.name : labelGuest }</a>
          
           <ul class="dropdown-menu dropdown-menu-right dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-            <li><h6 class="dropdown-header"> ${ sessionScope.user != null ? sessionScope.user.name.concat(' ').concat(sessionScope.user.surname) : "Guest" } </h6></li>
+            <li><h6 class="dropdown-header"> ${ sessionScope.user != null ? sessionScope.user.name.concat(' ').concat(sessionScope.user.surname) : labelGuest } </h6></li>
 	<c:if test="${sessionScope.user != null}">
         <li><h6 class="dropdown-header"> --==${sessionScope.user.role}==-- </h6></li>
 	</c:if>
@@ -158,7 +148,7 @@
 	</c:if>
 	      <li><hr class="dropdown-divider"></li>
 
-            <li><a class="dropdown-item" href="#"><fmt:message key="link.help"/></a></li>
+            <li><a class="dropdown-item" href="help.jsp"><fmt:message key="link.help"/></a></li>
           </ul>
         </li>
       </ul>

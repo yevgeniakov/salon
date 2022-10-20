@@ -13,6 +13,7 @@ table, th, td {
 <link href="css/registration.css" rel="stylesheet">
 <title><fmt:message key="label.create_user" /></title>
 </head>
+<br>
 <div class="registration_data">
 	<h3>
 		<fmt:message key="label.provide_user_data" />
@@ -114,10 +115,10 @@ table, th, td {
 
 
 		<div class="btn-group registration-btns">
-			<button class="w-50 btn btn-lg btn-primary" type="submit">
+			<button class="w-100 btn btn-lg btn-primary" type="submit">
 				<fmt:message key="button.create_user" />
 			</button>
-			<button class="w-50 btn btn-lg btn-primary" type="reset">
+			<button class="w-100 btn btn-lg btn-primary" type="reset">
 				<fmt:message key="button.reset" />
 			</button>
 		</div>

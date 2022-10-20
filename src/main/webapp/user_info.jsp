@@ -16,6 +16,7 @@
 <title>User info</title>
 </head>
 <div class="registration_data">
+<br>
 <h3><fmt:message key="label.user_info"/> - ${showuser.name} ${showuser.surname} </h3>
 <h4>${showuser.role}</h4>
 <c:if test="${showuser.role == 'HAIRDRESSER'}">
