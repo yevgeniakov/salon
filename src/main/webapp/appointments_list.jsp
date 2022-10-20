@@ -15,11 +15,12 @@ table, th, td {
     <link href='css/jquery.rating.css' type="text/css" rel="stylesheet" />
 <title><fmt:message key="label.appointments_list" /></title>
 </head>
+<br>
 <c:if test="${param.user_id != null}">
 	<c:set var="user_id" scope="request" value="${param.user_id}" />
 </c:if>
 
-<h3>
+<h3 align="center">
 	<fmt:message key="label.appointments_list" />
 </h3>
 <br>

@@ -13,7 +13,7 @@ table, th, td {
 <title><fmt:message key="label.user_list" /></title>
 </head>
 <br>
-<h3>
+<h3 align="center">
 	<fmt:message key="label.user_list" />
 </h3>
 

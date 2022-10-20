@@ -26,6 +26,7 @@ button.create_appointment=Створити запис
 button.set_feedback=Зберегти відгук
 
 label.login_page=Авторизація
+label.guest=Гість
 label.registration_page=Реєстрація
 label.set_locale=Встановити мову
 label.my_info=Моя інформація

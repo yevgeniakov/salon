@@ -13,8 +13,8 @@
 <head>
     <title><fmt:message key="label.service_list"/></title>
 </head>
-
-<h3><fmt:message key="label.service_list"/></h3>
+<br>
+<h3 align="center"><fmt:message key="label.service_list"/></h3>
 <br>
 <div class="table-list">
 <table class="table table-striped">

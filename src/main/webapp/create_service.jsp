@@ -11,28 +11,36 @@
 <jsp:include page="header.jsp" />
 <head>
 <title>Create Service Page</title>
+<link href="css/registration.css" rel="stylesheet">
 </head>
-
-<h3><fmt:message key="label.appointments_list"/></h3>
+<br>
+<div class="registration_data">
+<h3><fmt:message key="label.create_service"/></h3>
 <br>
 <form action="Controller" method=post>
-	<strong><fmt:message key="label.name_of_service"/></strong> <br> <input name="name" required> <br>
+	<strong><fmt:message key="label.name_of_service"/></strong> <br>
+	<input class="form-control" name="name" required> <br>
 	<p>
 
 		<strong><fmt:message key="label.service_info"/></strong> <br>
-		<textarea rows="10" cols="60" name="info" required>
+		<textarea class="form-control" rows="10" cols="60" name="info" required>
 
     </textarea>
 
 		<br> <input type="hidden" name="current_lang" value="en">
 		<input type="hidden" name="command" value="create_service">
-	<p>
-	<p>
-		<input type="submit" value=<fmt:message key="button.create_service"/>> <input type="reset"
-			value=<fmt:message key="button.reset"/>>
+
+		<div class="btn-group registration-btns" align="center">
+			<button class="w-100 btn btn-lg btn-primary text-nowrap" type="submit">
+				<fmt:message key="button.create_service" />
+			</button>
+			<button class="w-100 btn btn-lg btn-primary text-nowrap" type="reset">
+				<fmt:message key="button.reset" />
+			</button>
+		</div>
 </form>
 
 
-
+</div>
 </body>
 </html>

@@ -76,10 +76,10 @@
 			type="hidden" name="role" value="CLIENT"> <input
 			type="hidden" name="command" value="create_user">
 		<div class="btn-group registration-btns">
-			<button class="w-50 btn btn-lg btn-primary" type="submit">
+			<button class="w-50 btn btn-lg btn-primary text-nowrap" type="submit">
 				<fmt:message key="button.register" />
 			</button>
-			<button class="w-50 btn btn-lg btn-primary" type="reset">
+			<button class="w-50 btn btn-lg btn-primary text-nowrap" type="reset">
 				<fmt:message key="button.reset" />
 			</button>
 		</div>

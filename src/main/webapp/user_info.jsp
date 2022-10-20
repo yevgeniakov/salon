@@ -141,7 +141,7 @@
 	
 		<c:if test="${sessionScope.user.role == 'ADMIN'}">
 		<br>
-			<button type="submit" class="btn btn-primary"><fmt:message key="button.update_data"/></button> 
+			<button type="submit" class="btn btn-primary text-nowrap"><fmt:message key="button.update_data"/></button> 
 		</c:if>
 		
 </form>
@@ -180,7 +180,7 @@
 								<input type="hidden" name=service_id value="${entry.key.id}" />
 								<input type="hidden" name=master_id value="${showuser.id}" /> 
 								<input type="hidden" name=command value="delete_service_from_master" />
-								<button type="submit" class="btn btn-danger" name="submit">X</button>
+								<button type="submit" class="btn btn-danger text-nowrap" name="submit">X</button>
 							</form>
 						</td>
 					</c:if>

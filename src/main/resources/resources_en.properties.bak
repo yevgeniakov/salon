@@ -26,6 +26,7 @@ button.create_appointment=Create appointment
 button.set_feedback=Set feedback
 
 label.login_page=Login page
+label.guest=Guest
 label.registration_page=Registration page
 label.set_locale=Set locale
 label.my_info=My info
