@@ -2,13 +2,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@page import="java.time.LocalDate"%>
 <html>
-      <style>
-         table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-         }
-      </style>
-<body>
+
+<body class="d-flex flex-column h-100">
 <jsp:include page="header.jsp" />
 
 
@@ -68,7 +63,11 @@
 </table>
 
 
-
+    <footer class="footer mt-auto py-3 bg-dark">
+      <div class="container">
+        <span class="text-light">Beauty Salon © 2022</span>
+      </div>
+    </footer>
 
 
 </body>

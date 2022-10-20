@@ -2,12 +2,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <html>
-      <style>
-         table, th, td {
-            border: 1px solid black;
-         }
-      </style>
-<body>
+
+<body class="d-flex flex-column h-100">
 <jsp:include page="header.jsp" />
 
 <head>
@@ -121,7 +117,11 @@
 		<button type="submit" class="btn btn-primary"><fmt:message key="button.update_data"/></button>
 </form>
 </div>
-
+    <footer class="footer mt-auto py-3 bg-dark">
+      <div class="container">
+        <span class="text-light">Beauty Salon © 2022</span>
+      </div>
+    </footer>
 <script src="${pageContext.request.contextPath}/js/info.js"></script>
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'

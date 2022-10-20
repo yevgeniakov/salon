@@ -2,12 +2,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
 <html>
-<style>
-table, th, td {
-	border: 1px solid black;
-}
-</style>
-<body>
+
+<body class="d-flex flex-column h-100">
 	<jsp:include page="header.jsp" />
 <head>
 <title><fmt:message key="label.user_list" /></title>
@@ -190,51 +186,35 @@ table, th, td {
 
 <br>
 
-<table class="table table-striped" border="1">
-	<tr>
-		<c:if test="${page != 1}">
-			<form action="Controller" method="get">
-				<h:userlistpageparam />
-				<input type="hidden" name="page" value="${page - 1}"> <input
-					type="submit" value="<<">
 
-			</form>
-
-
-		</c:if>
-
+<nav aria-label="Page navigation">
+	<ul class="pagination">
+		<li class="page-item ${page != 1? '' : 'disabled' }"><a
+			class="page-link"
+			href="Controller?command=show_user_list&sort=${sort}&sortorder=${sortorder}&isblocked=${isBlocked == null? 'null' : isBlocked}&searchvalue=${searchValue == null ? '': searchValue}&itemsperpage=${itemsPerPage}&page=${page - 1}
+">&laquo;</a>
+		</li>
 		<c:forEach begin="1" end="${pagesTotal}" var="i">
-			<c:choose>
-				<c:when test="${page eq i}">
-                        ${i}
-                    </c:when>
-				<c:otherwise>
-					<form action="Controller" method="get">
-						<h:userlistpageparam />
-						<input type="hidden" name="page" value="${i}"> <input
-							type="submit" value="${i}">
-
-					</form>
-				</c:otherwise>
-			</c:choose>
+			<li class="page-item ${page eq i? 'active' : '' }"><a
+				class="page-link"
+				href="Controller?command=show_user_list&sort=${sort}&sortorder=${sortorder}&isblocked=${isBlocked == null? 'null' : isBlocked}&searchvalue=${searchValue == null ? '': searchValue}&itemsperpage=${itemsPerPage}&page=${i}
+">${i}</a>
+			</li>
 		</c:forEach>
+		<li class="page-item ${page lt pagesTotal? '' : 'disabled' }"><a
+			class="page-link"
+			href="Controller?command=show_user_list&sort=${sort}&sortorder=${sortorder}&isblocked=${isBlocked == null? 'null' : isBlocked}&searchvalue=${searchValue == null ? '': searchValue}&itemsperpage=${itemsPerPage}&page=${page + 1}
+">&raquo;</a>
+		</li>
+	</ul>
+</nav>
 
 
-		<c:if test="${page lt pagesTotal}">
-			<form action="Controller" method="get">
-				<h:userlistpageparam />
-				<input type="hidden" name="page" value="${page + 1}"> <input
-					type="submit" value=">>">
-
-			</form>
-		</c:if>
-	</tr>  
-</table>
-
-
-
-
-
+<footer class="footer mt-auto py-3 bg-dark">
+      <div class="container">
+        <span class="text-light">Beauty Salon © 2022</span>
+      </div>
+    </footer>
 
 </body>
 </html>

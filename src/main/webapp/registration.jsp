@@ -3,7 +3,7 @@
 
 <html>
 
-<body>
+<body class="d-flex flex-column h-100">
 	<jsp:include page="header.jsp" />
 <head>
 <title><fmt:message key="label.registration_page" /></title>
@@ -85,6 +85,11 @@
 		</div>
 	</form>
 </div>
+    <footer class="footer mt-auto py-3 bg-dark">
+      <div class="container">
+        <span class="text-light">Beauty Salon © 2022</span>
+      </div>
+    </footer>
 <script src="${pageContext.request.contextPath}/js/registration.js"></script>
 </body>
 </html>

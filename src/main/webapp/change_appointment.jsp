@@ -2,12 +2,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <html>
-      <style>
-         table, th, td {
-            border: 1px solid black;
-         }
-      </style>
-<body>
+
+<body class="d-flex flex-column h-100">
 <jsp:include page="header.jsp" />
 <head>
 
@@ -54,7 +50,11 @@
 	<input type="submit" name="submit" value=<fmt:message key="button.set_new_time"/>>
 </form>
 
-
+    <footer class="footer mt-auto py-3 bg-dark">
+      <div class="container">
+        <span class="text-light">Beauty Salon © 2022</span>
+      </div>
+    </footer>
 
 </body>
 </html>

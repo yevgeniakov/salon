@@ -3,7 +3,7 @@
 
 
 <html>
-<body>
+<body class="d-flex flex-column h-100">
 <jsp:include page="header.jsp" />
 <head>
     <title>Best Beauty Salon</title>
@@ -43,6 +43,12 @@ The administrator can:</p>
 <p>The hairdresser sees his schedule (busy and free time slots) and marks the execution of the order.<br>
 After providing services, the Client leaves feedback. The offer to leave feedback comes to the Client's e-mail the day after the service is provided.</p>
 </div>
+
+    <footer class="footer mt-auto py-3 bg-dark">
+      <div class="container">
+        <span class="text-light">Beauty Salon © 2022</span>
+      </div>
+    </footer>
 </body>
 
 </html>

@@ -2,26 +2,19 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <html>
-      <style>
-         table, th, td {
-            border: 1px solid black;
-         }
-      </style>
-<body>
+
+<body class="d-flex flex-column h-100">
 <jsp:include page="header.jsp" />
 <head>
 <title>Create Service Page</title>
 <link href="css/registration.css" rel="stylesheet">
 </head>
-<br>
 <div class="registration_data">
 <h3><fmt:message key="label.create_service"/></h3>
 <br>
 <form action="Controller" method=post>
 	<strong><fmt:message key="label.name_of_service"/></strong> <br>
 	<input class="form-control" name="name" required> <br>
-	<p>
-
 		<strong><fmt:message key="label.service_info"/></strong> <br>
 		<textarea class="form-control" rows="10" cols="60" name="info" required>
 
@@ -42,5 +35,11 @@
 
 
 </div>
+
+    <footer class="footer mt-auto py-3 bg-dark">
+      <div class="container">
+        <span class="text-light">Beauty Salon © 2022</span>
+      </div>
+    </footer>
 </body>
 </html>

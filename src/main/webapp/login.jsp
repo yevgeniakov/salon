@@ -3,7 +3,7 @@
 
 
 <html>
-<body>
+<body class="d-flex flex-column h-100">
 
 
 
@@ -68,7 +68,11 @@
 
 </div>
 
-
+    <footer class="footer mt-auto py-3 bg-dark">
+      <div class="container">
+        <span class="text-light">Beauty Salon © 2022</span>
+      </div>
+    </footer>
 
 
 </body>

@@ -26,16 +26,16 @@ public class AccessCheckFilter implements Filter{
 	private static final Logger logger = LogManager.getLogger(AccessCheckFilter.class); 
    
     private static final String[] ClientAllowedURLs = {
-            "/header.jsp", "locale", "/index.jsp", "/error.jsp", "/my_info.jsp", "/master_list.jsp", 
+            "/header.jsp", "footer.jsp", "locale", "/index.jsp", "/error.jsp", "/my_info.jsp", "/master_list.jsp", 
             "/master_schedule.jsp", "/create_appointment.jsp", "/leave_feedback.jsp", 
             "/appointments_list.jsp", "/appointment_info.jsp", "help.jsp", "/Controller", "/css/", "ico", "/js/", "/images"
     };
     private static final String[] MasterAllowedURLs = {
-    		"/header.jsp", "locale", "/index.jsp", "/error.jsp", "/my_info.jsp", "/master_schedule", 
+    		"/header.jsp", "footer.jsp", "locale", "/index.jsp", "/error.jsp", "/my_info.jsp", "/master_schedule", 
             "/appointments_list.jsp", "/appointment_info.jsp", "help.jsp", "/Controller", "/css/", "ico", "/js/", "/images"
     };
     private static final String[] GuestAllowedURLs = {
-    		"/header.jsp", "locale", "/index.jsp", "/registration.jsp", "/login.jsp", "/error.jsp", 
+    		"/header.jsp", "footer.jsp", "locale", "/index.jsp", "/registration.jsp", "/login.jsp", "/error.jsp", 
             "/master_list.jsp", "/master_info.jsp", "help.jsp", "/Controller", "/css/", "ico", "/js/", "/images"
     };
 	@Override

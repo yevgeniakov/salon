@@ -3,12 +3,8 @@
 <%@page import="java.time.LocalDate"%>
 
 <html>
-      <style>
-         table, th, td {
-            border: 1px solid black;
-         }
-      </style>
-<body>
+
+<body class="d-flex flex-column h-100">
 <jsp:include page="header.jsp" />
 <head>
 <link href="css/registration.css" rel="stylesheet">
@@ -194,6 +190,12 @@
 	</c:if>
 
 </div>
+
+    <footer class="footer mt-auto py-3 bg-dark">
+      <div class="container">
+        <span class="text-light">Beauty Salon © 2022</span>
+      </div>
+    </footer>
 <script src="${pageContext.request.contextPath}/js/form_confirmation.js"></script>
 <script src="${pageContext.request.contextPath}/js/info.js"></script>
 <script
