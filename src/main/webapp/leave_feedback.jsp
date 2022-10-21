@@ -8,20 +8,21 @@
 <head>
 
 <link href='css/jquery.rating.css' type="text/css" rel="stylesheet" />
+<link href="css/registration.css" rel="stylesheet">
 <title><fmt:message key="label.leave_feedback" /></title>
 </head>
-
+<div class="leave-feedback">
 <h3>
 	<fmt:message key="label.provide_feedback" />
 </h3>
 <br>
 
-<form action="Controller" method=post>
+<form action="Controller" method=post id="feedback_form">
 
 	<strong><fmt:message key="label.your_rating" /></strong> <br>
 	<c:forEach var="i" begin="1" end="5">
 
-		<input type="radio" class="star" name="rating" value="${i}" />
+		<input type="radio" class="star" name="rating" id="rating" value="${i}" />
 	</c:forEach>
 	<input type="hidden" name="master_id" value="${param.master_id}">
 	<input type="hidden" name="date" value="${param.date}"> <input
@@ -30,14 +31,17 @@
 
 
 	<strong><fmt:message key="label.your_feedback" /></strong> <br>
-	<textarea rows="10" cols="60" name="feedback"></textarea>
-
-	<p>
-	<p>
-		<input type="submit" value=<fmt:message key="button.set_feedback"/>>
-		<input type="reset" value=<fmt:message key="button.reset"/>>
+	<textarea class="form-control" rows="10" cols="60" name="feedback"></textarea>
+<div class="btn-group">
+	<button class="w-70 btn btn-lg btn-primary text-nowrap" type="submit">
+		<fmt:message key="button.set_feedback" />
+	</button>
+	<button class="w-70 btn btn-lg btn-secondary text-nowrap" type="reset">
+		<fmt:message key="button.reset" />
+	</button>
+	</div>
 </form>
-
+</div>
     <footer class="footer mt-auto py-3 bg-dark">
       <div class="container">
         <span class="text-light">Beauty Salon © 2022</span>
@@ -50,6 +54,8 @@
 <script src='js/jquery.MetaData.js' type="text/javascript"
 	></script>
 <script src='js/jquery.rating.js' type="text/javascript"
+	></script>
+	<script src='js/leave_feedback.js' type="text/javascript"
 	></script>
 </body>
 </html>

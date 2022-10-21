@@ -11,11 +11,8 @@
 <link href='css/jquery.rating.css' type="text/css" rel="stylesheet" />
 <title><fmt:message key="label.my_info"/></title>
 </head>
-
-
-
 <div class="user-info">
-<br>
+
 <h3><fmt:message key="label.my_info"/></h3>
 <br>
 <c:if test="${sessionScope.user.role == 'HAIRDRESSER'}">
