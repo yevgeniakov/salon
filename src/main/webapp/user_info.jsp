@@ -11,7 +11,7 @@
 <link href='css/jquery.rating.css' type="text/css" rel="stylesheet" />
 <title>User info</title>
 </head>
-<div class="registration_data">
+<div class="user-info">
 
 <h3><fmt:message key="label.user_info"/> - ${showuser.name} ${showuser.surname} </h3>
 <h4>${showuser.role}</h4>

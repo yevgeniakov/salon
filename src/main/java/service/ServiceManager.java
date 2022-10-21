@@ -104,7 +104,6 @@ public class ServiceManager {
 		logger.trace("enter");
 
 		Connection con = null;
-
 		try {
 			con = dao.getConnection();
 			service = dao.save(con, service);

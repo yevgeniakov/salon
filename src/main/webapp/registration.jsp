@@ -6,12 +6,13 @@
 <body class="d-flex flex-column h-100">
 	<jsp:include page="header.jsp" />
 <head>
+<br>
 <title><fmt:message key="label.registration_page" /></title>
 <link href="css/registration.css" rel="stylesheet">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
-<div class="registration_data">
+<div class="create-user">
 	<h3>
 		<fmt:message key="label.provide_your_data" />
 	</h3>
@@ -78,7 +79,7 @@
 			<button class="w-50 btn btn-lg btn-primary text-nowrap" type="submit">
 				<fmt:message key="button.register" />
 			</button>
-			<button class="w-50 btn btn-lg btn-primary text-nowrap" type="reset">
+			<button class="w-50 btn btn-lg btn-secondary text-nowrap" type="reset">
 				<fmt:message key="button.reset" />
 			</button>
 		</div>

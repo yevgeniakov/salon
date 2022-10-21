@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import controller.command.Command;
+import controller.exceptions.CreatingServiceException;
 import entity.Role;
 import entity.Service;
 import entity.User;
@@ -40,8 +41,6 @@ public class CreateServiceCommand implements Command {
 		try {
 			String name = request.getParameter("name");
 			String info = request.getParameter("info");
-			
-					
 			if (!ValidatorUtil.isValidText(name) || !ValidatorUtil.isValidText(info)) {
 				logger.error("Service is not created. Invalid params", name, info);
 				request.setAttribute("error", "Can't create service. Invalid input data.");
@@ -59,9 +58,9 @@ public class CreateServiceCommand implements Command {
 			logger.info("new service created", service.getId(), name);
 			request.setAttribute("redirect", "redirect");
 			return "Controller?command=show_service_list";
-		} catch (Exception e) {
+		} catch (CreatingServiceException e) {
 			logger.error(e.getMessage(), e);
-			request.setAttribute("error", "Can't create service");
+			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
 	}

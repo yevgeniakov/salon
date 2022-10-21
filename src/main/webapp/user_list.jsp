@@ -8,10 +8,11 @@
 <head>
 <title><fmt:message key="label.user_list" /></title>
 </head>
+<br>
 <h3 align="center">
 	<fmt:message key="label.user_list" />
 </h3>
-
+<div class="table-list">
 <nav class="navbar bg-light">
   <div class="container-fluid">
 <form action="Controller" name="formSearch" method="get">
@@ -156,6 +157,7 @@
 		type="hidden" name="command" value="show_user_list">
 
 </form> -->
+
 <table class="table table-striped">
 	<tr>
 		<th><fmt:message key="label.id" /></th>
@@ -179,6 +181,7 @@
 		</tr>
 	</c:forEach>
 </table>
+
 
 <br>
 
@@ -205,7 +208,7 @@
 	</ul>
 </nav>
 
-
+</div>
 <footer class="footer mt-auto py-3 bg-dark">
       <div class="container">
         <span class="text-light">Beauty Salon © 2022</span>

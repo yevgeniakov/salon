@@ -9,7 +9,7 @@
 <title>Create Service Page</title>
 <link href="css/registration.css" rel="stylesheet">
 </head>
-<div class="registration_data">
+<div class="create-service">
 <h3><fmt:message key="label.create_service"/></h3>
 <br>
 <form action="Controller" method=post>
@@ -27,7 +27,7 @@
 			<button class="w-100 btn btn-lg btn-primary text-nowrap" type="submit">
 				<fmt:message key="button.create_service" />
 			</button>
-			<button class="w-100 btn btn-lg btn-primary text-nowrap" type="reset">
+			<button class="w-100 btn btn-lg btn-secondary text-nowrap" type="reset">
 				<fmt:message key="button.reset" />
 			</button>
 		</div>

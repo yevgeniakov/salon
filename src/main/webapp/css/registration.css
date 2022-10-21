@@ -1,9 +1,26 @@
 @charset "UTF-8";
 
 .registration_data {
+	padding-top: 2%;
     margin:auto;
-    
     width: 800px;
+}
+
+.create-user {
+	padding-top: 2%;
+	margin-left: 3%;
+    width: 800px;
+}
+.create-service {
+	padding-top: 2%;
+	margin-left: 3%;
+    width: 1000px;
+}
+
+.user-info {
+	padding-top: 2%;
+	margin:auto;
+    width: 1000px;
 }
 .registration-btns {
 	margin: auto;

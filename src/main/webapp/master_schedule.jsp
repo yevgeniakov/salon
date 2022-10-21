@@ -9,23 +9,29 @@
 
 <head>
     <title><fmt:message key="label.master_schedule"/></title>
+    <link href="css/main.css" rel="stylesheet">
+    <link href='css/jquery.rating.css' type="text/css" rel="stylesheet" />
 </head>
 
 <h3 align="center"><fmt:message key="label.master_schedule"/> - <a href="Controller?command=show_user_info&id=${master.id}">${master.name} ${master.surname}</a></h3>
 <br>
+<div class="table-list">
+<div class="col-sm-1">
 <form method=get name="dateForm">
+
 <input type="hidden" name="command" value="show_master_schedule">
 <input type="hidden" name="id" value="${param.id}">
-<input type="date" name=date value="${param.date}" onchange="document.dateForm.submit();">
+<input class="form-control" type="date" name=date value="${param.date}" onchange="document.dateForm.submit();">
 
 </form>
-
+</div>
 <hr>
 
 <table class="table table-striped">
 <tr>
 <th><fmt:message key="label.time"/></th><th><fmt:message key="label.master"/></th><th><fmt:message key="label.info"/></th><th><fmt:message key="label.client"/></th><th><fmt:message key="label.service"/></th><th><fmt:message key="label.sum"/></th><th><fmt:message key="label.isdone"/></th><th><fmt:message key="label.ispaid"/></th><th><fmt:message key="label.rating"/></th>
 </tr>
+<c:set var="i" value="0"></c:set>
   <c:forEach items="${schedule}" var="item">
     <tr>
       <td><my:timeslotdisp timeslot = "${item.timeslot}" currentLang="${sessionScope.currentLocale}"/></td>
@@ -54,14 +60,17 @@
       
    	  <td><c:if test="${item.user != null}"><c:out value="${item.isDone? lcomplete : lincomplete}"></c:out></c:if></td>
       <td><c:if test="${item.user != null}"><c:out value="${item.isPaid? lpaid : lunpaid}"></c:out></c:if></td>
-      <td align="center"><c:out value="${item.rating == 0? '-' : item.rating}"></c:out></td>
+      <td align="center"><c:if test="${item.rating != 0}">
+						<c:set var="i" value="${i + 1}"></c:set>
+						<h:createstars rating="${item.rating}" inputname="${'rat'}${i}" />
+					</c:if> <c:out value="${item.rating == 0? '-' : ''}"></c:out></td>
 </c:if>
       
       
     </tr>
   </c:forEach>
 </table>
-
+</div>
 
     <footer class="footer mt-auto py-3 bg-dark">
       <div class="container">
@@ -69,6 +78,10 @@
       </div>
     </footer>
 
-
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'
+	type="text/javascript"></script>
+<script src='js/jquery.MetaData.js' type="text/javascript"></script>
+<script src='js/jquery.rating.js' type="text/javascript"></script>
 </body>
 </html>

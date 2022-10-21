@@ -14,7 +14,7 @@
 
 
 
-<div class="registration_data">
+<div class="user-info">
 <br>
 <h3><fmt:message key="label.my_info"/></h3>
 <br>
@@ -101,7 +101,7 @@
 				<c:forEach items="${servicemap}" var="entry">
 					<tr>
 						<td><c:out value="${entry.key.name}" /></td>
-						<td><c:out value="${entry.value} hrn." /></td>
+						<td><c:out value="${entry.value} " /><fmt:message key="label.hrn"/></td>
 
 
 					</tr>

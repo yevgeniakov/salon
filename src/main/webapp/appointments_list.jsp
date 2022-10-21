@@ -186,7 +186,7 @@
 			</tr>
 		</c:forEach>
 	</table>
-</div>
+
 
 <br>
 
@@ -226,7 +226,7 @@
 	</ul>
 </nav>
 
-
+</div>
 
 <footer class="footer mt-auto py-3 bg-dark">
 	<div class="container">
