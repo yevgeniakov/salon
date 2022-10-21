@@ -241,6 +241,8 @@ public class UserDao implements Dao<User> {
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, t.getId());
 			throw e;
+		} finally {
+			DBConnection.closeStatement(stmt);
 		}
 		return t;
 	}
@@ -257,6 +259,8 @@ public class UserDao implements Dao<User> {
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, t.getId(), isBlocked);
 			throw e;
+		} finally {
+			DBConnection.closeStatement(stmt);
 		}
 		t.setBlocked(isBlocked);
 		return t;
@@ -274,6 +278,8 @@ public class UserDao implements Dao<User> {
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, user.getId(), locale);
 			throw e;
+		} finally {
+			DBConnection.closeStatement(stmt);
 		}
 		user.setCurrentLang(locale);
 		return user;
@@ -290,6 +296,8 @@ public class UserDao implements Dao<User> {
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, id, serviceMap);
 			throw e;
+		} finally {
+			DBConnection.closeStatement(stmt);
 		}
 	}
 
@@ -305,6 +313,8 @@ public class UserDao implements Dao<User> {
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, master, service);
 			throw e;
+		} finally {
+			DBConnection.closeStatement(stmt);
 		}
 	}
 
@@ -337,13 +347,15 @@ public class UserDao implements Dao<User> {
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, isBlocked, searchValue);
 			throw e;
+		} finally {
+			DBConnection.closeResultSet(rs);
+			DBConnection.closeStatement(stmt);
 		}
 	}
 	
 	@Override
 	public void delete(Connection con, User t) {
-		// TODO Auto-generated method stub
-
+		throw new UnsupportedOperationException();
 	}
 
 	private String addConditionsToSQL(String sql) {

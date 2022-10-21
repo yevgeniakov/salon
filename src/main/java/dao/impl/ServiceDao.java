@@ -173,8 +173,7 @@ public class ServiceDao implements Dao<Service> {
 
 	@Override
 	public void delete(Connection con, Service t) {
-		// TODO Auto-generated method stub
-
+		throw new UnsupportedOperationException(); 
 	}
 
 	public List<Service> findAllAbsentByMaster(Connection con, int master_id) throws SQLException {
@@ -207,7 +206,6 @@ public class ServiceDao implements Dao<Service> {
 		service.setId(rs.getInt("id"));
 		service.setName(rs.getString("name"));
 		service.setInfo(rs.getString("info"));
-
 		logger.trace(service);
 		return service;
 	}

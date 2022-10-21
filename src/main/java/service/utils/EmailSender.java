@@ -17,10 +17,7 @@ public class EmailSender implements Runnable {
 
 	@Override
 	public void run() {
-		/*
-		 * AppointmentManager manager = AppointmentManager.getInstance();
-		 * manager.sendEmailsForFeedback();
-		 */
+		 // sendEmailsForFeedback();
 	}
 
 	public void sendEmailsForFeedback() {

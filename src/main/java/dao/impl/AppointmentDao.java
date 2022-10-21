@@ -209,6 +209,8 @@ public class AppointmentDao implements Dao<Appointment> {
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, t);
 			throw e;
+		} finally {
+			DBConnection.closeStatement(stmt);
 		}
 	}
 
@@ -217,7 +219,6 @@ public class AppointmentDao implements Dao<Appointment> {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
-
 		try {
 			stmt = con.prepareStatement(DELETE_APPOINTMENT);
 			stmt.setDate(1, Date.valueOf(t.getDate()));
@@ -227,6 +228,8 @@ public class AppointmentDao implements Dao<Appointment> {
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, t);
 			throw e;
+		} finally {
+			DBConnection.closeStatement(stmt);
 		}
 	}
 
@@ -251,9 +254,7 @@ public class AppointmentDao implements Dao<Appointment> {
 			User master = new User(master_id, master_email, master_password, master_name, master_surname, master_tel,
 					master_role, master_info, master_isblocked, master_rating, master_currentLang);
 			appointment.setMaster(master);
-
 			int user_id = rs.getInt("user_id");
-
 			if (user_id == 0) {
 				return appointment;
 			}
@@ -275,21 +276,16 @@ public class AppointmentDao implements Dao<Appointment> {
 			String service_info = rs.getString("service_info");
 			Service service = new Service(service_id, service_name, service_info);
 			appointment.setService(service);
-
 			appointment.setSum(rs.getInt("sum"));
 			appointment.setFeedback(rs.getString("feedback"));
 			appointment.setIsDone(rs.getBoolean("isdone"));
 			appointment.setIsPaid(rs.getBoolean("ispaid"));
 			appointment.setRating(rs.getDouble("rating"));
-
 		} catch (NumberFormatException e) {
 			logger.error(e.getMessage(), e);
-
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
-
 		}
-
 		return appointment;
 	}
 
@@ -301,29 +297,23 @@ public class AppointmentDao implements Dao<Appointment> {
 		Statement stmt_create_table = null;
 		Statement stmt_drop_table = null;
 		ResultSet rs = null;
-
 		try {
 			stmt_drop_table = con.createStatement();
 			stmt_drop_table.executeUpdate(DROP_TABLE);
 			logger.trace("temp table dropped");
-
 			stmt_create_table = con.createStatement();
 			stmt_create_table.executeUpdate(CREATE_TABLE);
 			logger.trace("temp table created");
-
 			stmt = con.prepareStatement(GET_MASTER_SCHEDULE);
 			stmt.setDate(1, Date.valueOf(date));
 			stmt.setInt(2, master.getId());
 			stmt.setInt(3, master.getId());
 			stmt.setDate(4, Date.valueOf(date));
 			stmt.setInt(5, master.getId());
-
 			rs = stmt.executeQuery();
 			logger.trace("query executed");
-
 			stmt_drop_table.executeUpdate(DROP_TABLE);
 			logger.trace("temp table dropped");
-
 			while (rs.next()) {
 				appointments.add(exstractAppointment(rs));
 			}
@@ -383,13 +373,13 @@ public class AppointmentDao implements Dao<Appointment> {
 			stmt.setInt(2, appointment.getMaster().getId());
 			stmt.setDate(3, Date.valueOf(appointment.getDate()));
 			stmt.setInt(4, appointment.getTimeslot());
-
 			stmt.executeUpdate();
-
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, appointment.getMaster().getId(), appointment.getDate(),
 					appointment.getTimeslot());
 			throw e;
+		} finally {
+			DBConnection.closeStatement(stmt);
 		}
 	}
 
@@ -397,7 +387,6 @@ public class AppointmentDao implements Dao<Appointment> {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
-
 		try {
 			stmt = con.prepareStatement(SET_ISDONE);
 			stmt.setBoolean(1, isDone);
@@ -409,6 +398,8 @@ public class AppointmentDao implements Dao<Appointment> {
 			logger.error(e.getMessage(), e, appointment.getMaster().getId(), appointment.getDate(),
 					appointment.getTimeslot(), isDone);
 			throw e;
+		} finally {
+			DBConnection.closeStatement(stmt);
 		}
 	}
 
@@ -417,7 +408,6 @@ public class AppointmentDao implements Dao<Appointment> {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
-
 		try {
 			stmt = con.prepareStatement(SET_FEEDBACK);
 			stmt.setString(1, feedback);
@@ -430,6 +420,8 @@ public class AppointmentDao implements Dao<Appointment> {
 			logger.error(e.getMessage(), e, appointment.getMaster().getId(), appointment.getDate(),
 					appointment.getTimeslot(), feedback, rating);
 			throw e;
+		} finally {
+			DBConnection.closeStatement(stmt);
 		}
 	}
 
@@ -445,6 +437,8 @@ public class AppointmentDao implements Dao<Appointment> {
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, master.getId(), rating);
 			throw e;
+		} finally {
+			DBConnection.closeStatement(stmt);
 		}
 	}
 
@@ -466,6 +460,9 @@ public class AppointmentDao implements Dao<Appointment> {
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, master.getId());
 			throw e;
+		} finally {
+			DBConnection.closeResultSet(rs);
+			DBConnection.closeStatement(stmt);
 		}
 	}
 
@@ -504,6 +501,9 @@ public class AppointmentDao implements Dao<Appointment> {
 			logger.error(e.getMessage(), e, dateFrom, dateTo, master_id, user_id, service_id, isDone, isPaid, isRating);
 			;
 			throw e;
+		} finally {
+			DBConnection.closeResultSet(rs);
+			DBConnection.closeStatement(stmt);
 		}
 	}
 
@@ -570,6 +570,8 @@ public class AppointmentDao implements Dao<Appointment> {
 			logger.error(e.getMessage(), e, appointment.getMaster().getId(), appointment.getDate(),
 					appointment.getTimeslot(), newDate, newTimeslot);
 			throw e;
+		} finally {
+			DBConnection.closeStatement(stmt);
 		}
 	}
 }
