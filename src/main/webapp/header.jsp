@@ -41,9 +41,7 @@
             <li class="nav-item m_list">
 		<a class="nav-link active" href="Controller?command=show_service_list"><fmt:message key="menu.service_list"/></a>
     	    </li>
-            <li class="nav-item m_list">
-		<a class="nav-link active" href="contacts.jsp"><fmt:message key="link.homepage"/></a>
-    	    </li>
+
         </c:if>
 
 	<c:if test="${sessionScope.user.role == 'CLIENT'}">
@@ -56,9 +54,7 @@
             <li class="nav-item m_list">
 		<a class="nav-link active" href="Controller?command=show_appointments_list"><fmt:message key="menu.my_appointments"/></a>
     	    </li>
-            <li class="nav-item m_list">
-		<a class="nav-link active" href="contacts.jsp"><fmt:message key="link.homepage"/></a>
-    	    </li>
+
         </c:if>
 
 	<c:if test="${sessionScope.user.role == 'HAIRDRESSER'}">
@@ -68,9 +64,7 @@
             <li class="nav-item m_list">
 		<a class="nav-link active" href="Controller?command=show_appointments_list"><fmt:message key="menu.appointments_list"/></a>
     	    </li>
-            <li class="nav-item m_list">
-		<a class="nav-link active" href="contacts.jsp"><fmt:message key="link.homepage"/></a>
-    	    </li>
+
         </c:if>
 
 	<c:if test="${sessionScope.user.role == 'ADMIN'}">
@@ -101,9 +95,6 @@
         		    <li><a class="dropdown-item" href="Controller?command=show_appointments_list"><fmt:message key="label.appointments_list"/></a></li>
         	    </ul>
         </li>
-            <li class="nav-item m_list">
-		<a class="nav-link active" href="contacts.jsp"><fmt:message key="link.homepage"/></a>
-    	    </li>
 
         </c:if>
 

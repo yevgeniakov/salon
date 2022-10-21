@@ -203,6 +203,8 @@ form.addEventListener("reset", () => {
     tel.classList.remove("invalid");
     error_tel.textContent = "";
     error_tel.className = "error";
+    
+    master_options.style.setProperty('display', 'none');
   });
   
   

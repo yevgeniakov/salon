@@ -162,7 +162,7 @@ form.addEventListener("submit", (event) => {
  if (!isValid) {
 	event.preventDefault();
     tel.classList.add("invalid");
-    error_tel.textContent = "Tel number must be in format^ 0XXXXXXXXX";
+    error_tel.textContent = "Tel number must be in format: 0XXXXXXXXX";
     error_tel.className = "error active";
   } else {
 	tel.classList.remove("invalid");

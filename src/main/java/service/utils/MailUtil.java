@@ -3,14 +3,16 @@ package service.utils;
 import java.util.Properties;
 
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class MailUtil {
 	
-	public static void sendMessage(String adress, String subject, String body) throws Exception {
+	public static void sendMessage(String adress, String subject, String body) throws AddressException, MessagingException  {
 		
 		
 	    String username = "yevheniia.kov@ukr.net";

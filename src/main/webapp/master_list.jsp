@@ -24,8 +24,7 @@
 	</h3>
 </c:if>
 <c:if test="${service != null}">
-	<h3 align="center">
-		<fmt:message key="label.masters_who" />
+		<h3 align="center">
 		${service.name}
 	</h3>
 </c:if>
@@ -82,13 +81,16 @@
 <th><fmt:message key="label.name"/></th><th><fmt:message key="label.tel"/></th><th><fmt:message key="label.short_info"/></th><th><fmt:message key="label.rating"/></th><th><fmt:message key="label.price"/></th><c:if test="${sessionScope.user != null}"><th><fmt:message key="label.view_schedule"/></th></c:if>
 
 </tr>	
-
+<c:set var="i" value="0"></c:set>
 		<c:forEach items="${masters}" var="entry">
 			<tr>
 				<td><a href="Controller?command=show_user_info&id=${entry.key.id}"><c:out value="${entry.key.name} ${entry.key.surname}" /></a></td>
 				<td><c:out value="${entry.key.tel}" /></td>
 				<td><c:out value="${entry.key.info}" /></td>
-				<td><c:out value="${entry.key.rating}" /></td>
+				<td align="center"><c:if test="${entry.key.rating != 0}">
+						<c:set var="i" value="${i + 1}"></c:set>
+						<h:createstars rating="${entry.key.rating}" inputname="${'rat'}${i}" />
+					</c:if> <c:out value="${entry.key.rating == 0? '-' : ''}"></c:out></td>
 				<td><c:out value="${entry.value} hrn." /></td>
 
 				<c:if test="${sessionScope.user != null}">
