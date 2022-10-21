@@ -28,6 +28,12 @@
 	margin-left: 3%;
     width: 800px;
 }
+
+.appointment-info {
+	align-self:center;
+	margin-top: 2%;
+    width: 300px;
+}
 .registration-btns {
 	margin: auto;
 }

@@ -32,14 +32,11 @@
 
 	<strong><fmt:message key="label.your_feedback" /></strong> <br>
 	<textarea class="form-control" rows="10" cols="60" name="feedback"></textarea>
-<div class="btn-group">
+<br>
 	<button class="w-70 btn btn-lg btn-primary text-nowrap" type="submit">
 		<fmt:message key="button.set_feedback" />
 	</button>
-	<button class="w-70 btn btn-lg btn-secondary text-nowrap" type="reset">
-		<fmt:message key="button.reset" />
-	</button>
-	</div>
+
 </form>
 </div>
     <footer class="footer mt-auto py-3 bg-dark">
