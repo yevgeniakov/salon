@@ -34,7 +34,11 @@
 	margin-top: 2%;
     width: 300px;
 }
-
+.create-appointment {
+	align-self:center;
+	margin-top: 2%;
+    width: 500px;
+}
 .change-appointment {
 	align-self:center;
 	margin-top: 2%;

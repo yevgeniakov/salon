@@ -7,8 +7,10 @@
 
 <jsp:include page="header.jsp" />
 <head>
+
     <title><fmt:message key="label.service_list"/></title>
 </head>
+
 <h3 align="center"><fmt:message key="label.service_list"/></h3>
 <br>
 <div class="table-list">

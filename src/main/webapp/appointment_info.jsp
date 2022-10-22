@@ -91,7 +91,8 @@
 <h5 class="card-title">
 <fmt:message key="label.sum" /></h5>
   <div class="card-body">
-<c:out value="${appointment.sum} hrn."></c:out>
+<c:out value="${appointment.sum} " /> <fmt:message key="label.hrn" />
+
 </div>
 </div>
 <fmt:message key="label.complete" var="lcomplete" />
