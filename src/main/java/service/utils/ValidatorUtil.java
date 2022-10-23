@@ -65,11 +65,11 @@ public class ValidatorUtil {
         throw new IncorrectParamException("unable to parse int parameter");
     }
 
-    public static int parseRatingParameter(String ratingParam) {
+    public static int parseRatingParameter(String ratingParam) throws IncorrectParamException {
         if(isValidRating(ratingParam)) {
             return Integer.parseInt(ratingParam);
         }
-        return 0;
+        throw new IncorrectParamException("unable to parse rating parameter");
     }
 
     public static int parseTimeslotParameter(String timeslotParam) throws IncorrectParamException {
@@ -81,7 +81,7 @@ public class ValidatorUtil {
     public static LocalDate parseDateParameter(String dateParam) throws IncorrectParamException {
             try {
                 return LocalDate.parse(dateParam);
-            } catch(DateTimeParseException e) {
+            } catch(DateTimeParseException | NullPointerException e) {
                 throw new IncorrectParamException("unable to parse date");
             }
         
@@ -96,7 +96,7 @@ public class ValidatorUtil {
 	public static Role parseRoleParameter(String role) throws IncorrectParamException {
 		try {
             return Role.valueOf(role.toUpperCase());
-        } catch(IllegalArgumentException e) {
+        } catch(IllegalArgumentException | NullPointerException e) {
             throw new IncorrectParamException("unable to parse role");
         }
 	}

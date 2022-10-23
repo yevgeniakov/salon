@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 public class Service implements Comparable<Service> {
 	private int id;
 	private String name;
@@ -58,6 +60,25 @@ public class Service implements Comparable<Service> {
 	@Override
 	public int compareTo(Service o) {
 		return this.getName().compareTo(o.getName());
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Service other = (Service) obj;
+		return id == other.id;
 	}
 
 

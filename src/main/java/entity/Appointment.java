@@ -1,6 +1,7 @@
 package entity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Appointment {
 	private LocalDate date;
@@ -121,6 +122,23 @@ public class Appointment {
 	public String toString() {
 		return "Appointment [date=" + date + ", timeslot=" + timeslot + ", master=" + master + ", user="
 				+ user + ", service=" + service + ", sum=" + sum + ", feedback=" + feedback + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(date, master, timeslot);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Appointment other = (Appointment) obj;
+		return Objects.equals(date, other.date) && Objects.equals(master, other.master) && timeslot == other.timeslot;
 	}
 	
 	
