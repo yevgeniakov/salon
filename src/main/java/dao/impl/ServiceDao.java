@@ -60,7 +60,7 @@ public class ServiceDao implements Dao<Service> {
 			stmt.setInt(1, id);
 			rs = stmt.executeQuery();
 			if (rs.next()) {
-				return exstractService(rs);
+				return extractService(rs);
 			}
 			return null;
 		} catch (SQLException e) {
@@ -83,7 +83,7 @@ public class ServiceDao implements Dao<Service> {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(FIND_ALL_SERVICES);
 			while (rs.next()) {
-				services.add(exstractService(rs));
+				services.add(extractService(rs));
 			}
 			return services;
 		} catch (SQLException e) {
@@ -106,7 +106,7 @@ public class ServiceDao implements Dao<Service> {
 			stmt.setInt(1, master_id);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				services.put(exstractService(rs), rs.getInt("price"));
+				services.put(extractService(rs), rs.getInt("price"));
 			}
 			return services;
 		} catch (SQLException e) {
@@ -128,7 +128,7 @@ public class ServiceDao implements Dao<Service> {
 			stmt.setString(1, name);
 			rs = stmt.executeQuery();
 			if (rs.next()) {
-				return exstractService(rs);
+				return extractService(rs);
 			}
 			return null;
 		} catch (SQLException e) {
@@ -187,7 +187,7 @@ public class ServiceDao implements Dao<Service> {
 			stmt.setInt(1, master_id);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				services.add(exstractService(rs));
+				services.add(extractService(rs));
 			}
 			return services;
 		} catch (SQLException e) {
@@ -199,7 +199,7 @@ public class ServiceDao implements Dao<Service> {
 		}
 	}
 
-	private Service exstractService(ResultSet rs) throws SQLException {
+	private Service extractService(ResultSet rs) throws SQLException {
 		logger.trace("enter");
 
 		Service service = new Service();

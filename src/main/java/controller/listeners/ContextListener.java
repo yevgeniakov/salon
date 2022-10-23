@@ -2,6 +2,8 @@ package controller.listeners;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -33,7 +35,7 @@ public class ContextListener implements ServletContextListener {
 
     	Properties locales = new Properties();
     	try {
-			locales.load(new FileInputStream(localesFileRealPath));
+			locales.load(Files.newInputStream(Paths.get(localesFileRealPath)));
 		} catch (IOException e) {
 			logger.error("can't load locales properties");
 		}
@@ -46,7 +48,7 @@ public class ContextListener implements ServletContextListener {
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new EmailSender(), 0, 1, TimeUnit.DAYS);
         
-        logger.info("set sheduler for email reminders");
+        logger.info("set scheduler for email reminders");
         
     }
 

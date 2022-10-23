@@ -150,7 +150,7 @@ public class AppointmentDao implements Dao<Appointment> {
 				throw e;
 			}
 			if (rs.next()) {
-				return exstractAppointment(rs);
+				return extractAppointment(rs);
 			}
 			logger.trace("no result.", master_id, date, timeslot);
 			return null;
@@ -175,7 +175,7 @@ public class AppointmentDao implements Dao<Appointment> {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(FIND_ALL_APPOINTMENTS);
 			while (rs.next()) {
-				appointments.add(exstractAppointment(rs));
+				appointments.add(extractAppointment(rs));
 			}
 			return appointments;
 		} catch (SQLException e) {
@@ -233,7 +233,7 @@ public class AppointmentDao implements Dao<Appointment> {
 		}
 	}
 
-	private Appointment exstractAppointment(ResultSet rs) throws SQLException {
+	private Appointment extractAppointment(ResultSet rs) throws SQLException {
 		logger.trace("enter");
 
 		Appointment appointment = new Appointment();
@@ -315,7 +315,7 @@ public class AppointmentDao implements Dao<Appointment> {
 			stmt_drop_table.executeUpdate(DROP_TABLE);
 			logger.trace("temp table dropped");
 			while (rs.next()) {
-				appointments.add(exstractAppointment(rs));
+				appointments.add(extractAppointment(rs));
 			}
 			return appointments;
 		} catch (SQLException e) {
@@ -486,15 +486,15 @@ public class AppointmentDao implements Dao<Appointment> {
 			stmt.setBoolean(++i, (user_id == null));
 			stmt.setInt(++i, (service_id == null) ? 0 : service_id);
 			stmt.setBoolean(++i, (service_id == null));
-			stmt.setBoolean(++i, (isDone == null) ? false : isDone);
+			stmt.setBoolean(++i, isDone != null && isDone);
 			stmt.setBoolean(++i, (isDone == null));
-			stmt.setBoolean(++i, (isPaid == null) ? false : isPaid);
+			stmt.setBoolean(++i, isPaid != null && isPaid);
 			stmt.setBoolean(++i, (isPaid == null));
-			stmt.setBoolean(++i, (isRating == null) ? true : !isRating);
-			stmt.setBoolean(++i, (isRating == null) ? true : isRating);
+			stmt.setBoolean(++i, isRating == null || !isRating);
+			stmt.setBoolean(++i, isRating == null || isRating);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				appointments.add(exstractAppointment(rs));
+				appointments.add(extractAppointment(rs));
 			}
 			return appointments;
 		} catch (SQLException e) {

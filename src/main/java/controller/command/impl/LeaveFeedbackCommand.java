@@ -50,7 +50,7 @@ public class LeaveFeedbackCommand implements Command {
 				master_id = ValidatorUtil.parseIntParameter(request.getParameter("master_id"));
 				timeslot = ValidatorUtil.parseTimeslotParameter(request.getParameter("timeslot"));
 				date = ValidatorUtil.parseDateParameter(request.getParameter("date"));
-				rating = ValidatorUtil.parseIntParameter(request.getParameter("rating"));
+				rating = ValidatorUtil.parseRatingParameter(request.getParameter("rating"));
 			} catch (IncorrectParamException e) {
 				logger.error(e.getMessage(), e);
 				request.setAttribute("error", e.getMessage());

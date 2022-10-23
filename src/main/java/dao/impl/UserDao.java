@@ -75,7 +75,7 @@ public class UserDao implements Dao<User> {
 			stmt.setInt(1, id);
 			rs = stmt.executeQuery();
 			if (rs.next()) {
-				return exstractUser(rs);
+				return extractUser(rs);
 			}
 			return null;
 		} catch (SQLException e) {
@@ -99,7 +99,7 @@ public class UserDao implements Dao<User> {
 			rs = stmt.executeQuery(FIND_ALL_USERS);
 
 			while (rs.next()) {
-				users.add(exstractUser(rs));
+				users.add(extractUser(rs));
 			}
 			return users;
 		} catch (SQLException e) {
@@ -162,7 +162,7 @@ public class UserDao implements Dao<User> {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(FIND_ALL_MASTERS);
 			while (rs.next()) {
-				masters.add(exstractUser(rs));
+				masters.add(extractUser(rs));
 			}
 			return masters;
 		} catch (SQLException e) {
@@ -191,7 +191,7 @@ public class UserDao implements Dao<User> {
 			stmt.setInt(1, service_id);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				masters.put(exstractUser(rs), rs.getInt("price"));
+				masters.put(extractUser(rs), rs.getInt("price"));
 			}
 			return masters;
 		} catch (SQLException e) {
@@ -213,7 +213,7 @@ public class UserDao implements Dao<User> {
 			stmt.setString(1, email);
 			rs = stmt.executeQuery();
 			if (rs.next()) {
-				return exstractUser(rs);
+				return extractUser(rs);
 			}
 			return null;
 		} catch (SQLException e) {
@@ -330,7 +330,7 @@ public class UserDao implements Dao<User> {
 		try {
 			stmt = con.prepareStatement(sql);
 			int i = 0;
-			stmt.setBoolean(++i, (isBlocked == null) ? false : isBlocked);
+			stmt.setBoolean(++i, isBlocked != null && isBlocked);
 			stmt.setBoolean(++i, (isBlocked == null));
 			stmt.setString(++i, (role == null) ? "" : role.toString().toLowerCase());
 			stmt.setBoolean(++i, (role == null));
@@ -341,7 +341,7 @@ public class UserDao implements Dao<User> {
 			stmt.setString(++i, "%" + (searchValue == null ? "" : searchValue) + "%");
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				users.add(exstractUser(rs));
+				users.add(extractUser(rs));
 			}
 			return users;
 		} catch (SQLException e) {
@@ -361,10 +361,8 @@ public class UserDao implements Dao<User> {
 	private String addConditionsToSQL(String sql) {
 		logger.trace("enter");
 
-		StringBuilder str = new StringBuilder(sql);
-		str.append(" where ").append("(isBlocked=? or ?)").append(" and (users.role=? or ?)").append(
-				" and (? or (users.name like ? or users.surname like ? or users.email like ? or users.tel like ? ))");
-		return str.toString();
+		return sql + " where " + "(isBlocked=? or ?)" + " and (users.role=? or ?)" +
+				" and (? or (users.name like ? or users.surname like ? or users.email like ? or users.tel like ? ))";
 	}
 
 	private String getSqlForMasterServices(int id, HashMap<Integer, Integer> serviceMap) {
@@ -385,7 +383,7 @@ public class UserDao implements Dao<User> {
 		return sql.toString();
 	}
 
-	private User exstractUser(ResultSet rs) throws SQLException {
+	private User extractUser(ResultSet rs) throws SQLException {
 		logger.trace("enter");
 
 		User user = new User();

@@ -16,7 +16,6 @@ public class Service implements Comparable<Service> {
 
 
 	public Service() {
-		// TODO Auto-generated constructor stub
 	}
 
 

@@ -26,7 +26,7 @@ import service.utils.PasswordEncodingService;
 public class UserManager {
 
 	private static UserManager instance;
-	private UserDao dao;
+	private final UserDao dao;
 	private static final Logger logger = LogManager.getLogger(UserManager.class);
 
 	public static synchronized UserManager getInstance() {
@@ -44,7 +44,7 @@ public class UserManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		User user = null;
+		User user;
 		try {
 			con = dao.getConnection();
 			user = dao.findById(con, id);
@@ -61,7 +61,7 @@ public class UserManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		List<User> users = new ArrayList<>();
+		List<User> users;
 		try {
 			con = dao.getConnection();
 			users = dao.findAll(con);
@@ -79,7 +79,7 @@ public class UserManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		List<User> masters = new ArrayList<>();
+		List<User> masters;
 		try {
 			con = dao.getConnection();
 			masters = dao.findAllMasters(con);
@@ -96,7 +96,7 @@ public class UserManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		SortedMap<User, Integer> masters = null;
+		SortedMap<User, Integer> masters;
 		try {
 			con = dao.getConnection();
 			masters = dao.findAllMastersByService(con, service_id, sort);
@@ -142,7 +142,7 @@ public class UserManager {
 		}
 
 		if (user.getIsBlocked()) {
-			logger.info("user login failed. User is blocked", email);
+			logger.info("user login failed. User is blocked. " + email);
 			throw new CheckCredentialsException("user is blocked");
 		}
 		return user;
@@ -242,7 +242,9 @@ public class UserManager {
 		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e, "transaction cancelled");
 			try {
-				con.rollback();
+				if (con != null) {
+					con.rollback();
+				}
 			} catch (SQLException e1) {
 				logger.error(e.getMessage(), e, "transaction cancelling failed");
 				throw new CreatingUserException("Cannot create user: " + e1.getMessage());
@@ -291,7 +293,7 @@ public class UserManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		List<User> users = new ArrayList<>();
+		List<User> users;
 		try {
 			con = dao.getConnection();
 			users = dao.findAllByConditions(con, isBlocked, role, searchValue);

@@ -17,7 +17,7 @@ import entity.Service;
 
 public class ServiceManager {
 	private static ServiceManager instance;
-	private ServiceDao dao;
+	private final ServiceDao dao;
 	private static final Logger logger = LogManager.getLogger(ServiceManager.class);
 
 	public static synchronized ServiceManager getInstance() {
@@ -35,7 +35,7 @@ public class ServiceManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		Service service = null;
+		Service service;
 		try {
 			con = dao.getConnection();
 			service = dao.findById(con, id);
@@ -53,7 +53,7 @@ public class ServiceManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		Service service = null;
+		Service service;
 		try {
 			con = dao.getConnection();
 			service = dao.findByName(con, name);
@@ -70,7 +70,7 @@ public class ServiceManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		List<Service> services = new ArrayList<>();
+		List<Service> services;
 		try {
 			con = dao.getConnection();
 			services = dao.findAll(con);
@@ -87,7 +87,7 @@ public class ServiceManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		TreeMap<Service, Integer> services = new TreeMap<>();
+		TreeMap<Service, Integer> services;
 		try {
 			con = dao.getConnection();
 			services = dao.findAllbyMaster(con, master_id);
@@ -120,7 +120,7 @@ public class ServiceManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		List<Service> services = new ArrayList<>();
+		List<Service> services;
 		try {
 			con = dao.getConnection();
 			services = dao.findAllAbsentByMaster(con, master_id);

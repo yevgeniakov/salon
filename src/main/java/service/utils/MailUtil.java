@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 public class MailUtil {
 	
-	public static void sendMessage(String adress, String subject, String body) throws AddressException, MessagingException  {
+	public static void sendMessage(String address, String subject, String body) throws AddressException, MessagingException  {
 		
 		
 	    String username = "yevheniia.kov@ukr.net";
@@ -22,9 +22,9 @@ public class MailUtil {
 	    Session session = Session.getInstance(props);
 	    MimeMessage msg = new MimeMessage(session);
 	    msg.setFrom(new InternetAddress("yevheniia.kov@ukr.net"));
-	    msg.setRecipient(Message.RecipientType.TO, new InternetAddress("yevgenia.kov@gmail.com"));
-	    msg.setSubject("Java test 2");
-	    msg.setText("Hi,\n\nHow are you?");
+	    msg.setRecipient(Message.RecipientType.TO, new InternetAddress(address));
+	    msg.setSubject(subject);
+	    msg.setText(body);
 	    // set the message content here
 	    Transport.send(msg, username, password);
 	}

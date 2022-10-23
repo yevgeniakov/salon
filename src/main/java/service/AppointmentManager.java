@@ -56,7 +56,7 @@ public class AppointmentManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		List<Appointment> services = new ArrayList<>();
+		List<Appointment> services;
 		try {
 			con = dao.getConnection();
 			services = dao.findAll(con);
@@ -74,7 +74,7 @@ public class AppointmentManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		List<Appointment> appointments = new ArrayList<>();
+		List<Appointment> appointments;
 		try {
 			con = dao.getConnection();
 			appointments = dao.getMasterSchedule(con, date, master);
@@ -178,11 +178,13 @@ public class AppointmentManager {
 			double newMasterRating = dao.calculateMasterRating(con, appointment.getMaster());
 			dao.setMasterRating(con, appointment.getMaster(), newMasterRating);
 			con.commit();
-			logger.trace("transaction is commited");
+			logger.trace("transaction is committed");
 		} catch (SQLException |ClassNotFoundException e) {
 			logger.error(e.getMessage(), e, "transaction is cancelled");
 			try {
-				con.rollback();
+				if (con != null) {
+					con.rollback();
+				}
 			} catch (SQLException e1) {
 				logger.error(e.getMessage(), e1, "transaction cancelling failed");
 				throw new UpdatingAppointmentException("Cannot set feedback for appointment and update master: " + e.getMessage());
@@ -198,13 +200,12 @@ public class AppointmentManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		List<Appointment> appointments = new ArrayList<>();
+		List<Appointment> appointments;
 
 		try {
 			con = dao.getConnection();
 			appointments = dao.findByConditions(con, dateFrom, dateTo, master_id, user_id, service_id, isDone, isPaid,
 					isRating);
-			
 			return appointments;
 		} catch (SQLException |ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
@@ -218,13 +219,13 @@ public class AppointmentManager {
 		logger.trace("enter");
 
 		Connection con = null;
-		List<Integer> freeSlots = new ArrayList<>();
+		List<Integer> freeSlots;
 		try {
 			con = dao.getConnection();
 			freeSlots = dao.getMasterFreeSlots(con, date, master);
 		} catch (SQLException |ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
-			throw new FindingAppointmentException("Cannot find masterfree slots: " + e.getMessage());
+			throw new FindingAppointmentException("Cannot find master free slots: " + e.getMessage());
 		} finally {
 			DBConnection.close(con);
 		}
