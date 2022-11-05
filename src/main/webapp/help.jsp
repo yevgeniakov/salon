@@ -7,7 +7,7 @@
 <jsp:include page="header.jsp" />
 <head>
     <title>Best Beauty Salon</title>
-<link href="css/registration.css" rel="stylesheet">
+<link href="css/forms.css" rel="stylesheet">
 </head>
 <br>
 <div class="registration_data">

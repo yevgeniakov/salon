@@ -2,7 +2,6 @@ package service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -31,7 +30,11 @@ public class ServiceManager {
 		this.dao = ServiceDao.getInstance();
 	}
 
-	public Service findServiceByID(int id) throws Exception {
+	public ServiceManager(ServiceDao dao) {
+		this.dao = dao;
+	}
+
+	public Service findServiceByID(int id) throws FindingServiceException {
 		logger.trace("enter");
 
 		Connection con = null;
@@ -83,7 +86,7 @@ public class ServiceManager {
 		return services;
 	}
 
-	public TreeMap<Service, Integer> findAllServicesByMaster(int master_id) throws Exception {
+	public TreeMap<Service, Integer> findAllServicesByMaster(int master_id) throws FindingServiceException {
 		logger.trace("enter");
 
 		Connection con = null;

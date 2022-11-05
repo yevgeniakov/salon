@@ -8,7 +8,7 @@
 <head>
 
 <link href='css/jquery.rating.css' type="text/css" rel="stylesheet" />
-<link href="css/registration.css" rel="stylesheet">
+<link href="css/forms.css" rel="stylesheet">
 <title><fmt:message key="label.leave_feedback" /></title>
 </head>
 <div class="leave-feedback">

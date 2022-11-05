@@ -7,7 +7,7 @@
 <jsp:include page="header.jsp" />
 <head>
 <title>Create Service Page</title>
-<link href="css/registration.css" rel="stylesheet">
+<link href="css/forms.css" rel="stylesheet">
 </head>
 <div class="create-service">
 <h3><fmt:message key="label.create_service"/></h3>

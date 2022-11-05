@@ -6,7 +6,7 @@
 <body class="d-flex flex-column h-100">
 <jsp:include page="header.jsp" />
 <head>
-<link href="css/registration.css" rel="stylesheet">
+<link href="css/forms.css" rel="stylesheet">
 <title><fmt:message key="label.create_appointment"/></title>
 </head>
 

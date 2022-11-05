@@ -499,7 +499,6 @@ public class AppointmentDao implements Dao<Appointment> {
 			return appointments;
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e, dateFrom, dateTo, master_id, user_id, service_id, isDone, isPaid, isRating);
-			;
 			throw e;
 		} finally {
 			DBConnection.closeResultSet(rs);

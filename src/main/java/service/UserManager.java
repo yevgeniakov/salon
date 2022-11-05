@@ -4,7 +4,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.SortedMap;
@@ -39,6 +38,10 @@ public class UserManager {
 	private UserManager() {
 		this.dao = UserDao.getInstance();
 	}
+	
+    public UserManager(UserDao dao) {
+        this.dao = dao;
+    } 
 
 	public User findUserbyID(int id) throws FindingUserException {
 		logger.trace("enter");

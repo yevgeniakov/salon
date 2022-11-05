@@ -7,7 +7,7 @@
 <body class="d-flex flex-column h-100">
 <jsp:include page="header.jsp" />
 <head>
-<link href="css/registration.css" rel="stylesheet">
+<link href="css/forms.css" rel="stylesheet">
 <link href='css/jquery.rating.css' type="text/css" rel="stylesheet" />
 <title>User info</title>
 </head>

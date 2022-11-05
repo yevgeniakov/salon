@@ -8,7 +8,7 @@
 <head>
 <title><fmt:message key="label.appointment_info" /></title>
     <link href='css/jquery.rating.css' type="text/css" rel="stylesheet" />
-    <link href="css/registration.css" rel="stylesheet">
+    <link href="css/forms.css" rel="stylesheet">
 </head>
 <div class="appointment-info">
 <h3>

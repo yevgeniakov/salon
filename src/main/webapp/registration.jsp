@@ -8,7 +8,7 @@
 <head>
 
 <title><fmt:message key="label.registration_page" /></title>
-<link href="css/registration.css" rel="stylesheet">
+<link href="css/forms.css" rel="stylesheet">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>

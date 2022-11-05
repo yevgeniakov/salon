@@ -34,6 +34,10 @@ public class AppointmentManager {
 		this.dao = AppointmentDao.getInstance();
 	}
 
+	public AppointmentManager(AppointmentDao dao) {
+		this.dao = dao;
+	}
+
 	public Appointment findAppointmentByKey(int master_id, LocalDate date, int timeslot) throws FindingAppointmentException {
 		logger.trace("enter");
 
