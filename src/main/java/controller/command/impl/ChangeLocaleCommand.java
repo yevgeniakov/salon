@@ -13,7 +13,7 @@ import service.UserManager;
 
 public class ChangeLocaleCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateAppointmentCommand.class);
-
+	private UserManager manager;
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.trace("execute");
@@ -24,7 +24,7 @@ public class ChangeLocaleCommand implements Command {
 			logger.trace("locale is: " + locale);
 			
 			try {
-				UserManager manager = UserManager.getInstance();
+				//UserManager manager = UserManager.getInstance();
 				manager.setUserCurrentLang(loggedUser, locale);
 			} catch (UpdatingUserException e) {
 				logger.error(e.getMessage(), e);
@@ -32,6 +32,12 @@ public class ChangeLocaleCommand implements Command {
 		}
 		
 		return "/change_locale.jsp";
+	}
+	public ChangeLocaleCommand(UserManager manager) {
+		this.manager = manager;
+	}
+	public ChangeLocaleCommand() {
+		this.manager = UserManager.getInstance();
 	}
 
 }

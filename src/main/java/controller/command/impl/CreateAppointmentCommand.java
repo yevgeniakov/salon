@@ -23,6 +23,7 @@ import service.utils.ValidatorUtil;
 
 public class CreateAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateAppointmentCommand.class);
+	private AppointmentManager manager;
 	private static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.CLIENT));
 	private static final boolean IS_GUEST_ALLOWED = false;
@@ -69,7 +70,7 @@ public class CreateAppointmentCommand implements Command {
 			master.setId(master_id);
 			Service service = new Service();
 			service.setId(service_id);
-			AppointmentManager manager = AppointmentManager.getInstance();
+			//AppointmentManager manager = AppointmentManager.getInstance();
 			int sum = manager.getPriceByMasterAndService(master, service);
 			Appointment appointment = new Appointment(date, timeslot, master, user, service, sum, false, false, "", 0);
 			appointment = manager.createAppointment(appointment);
@@ -84,5 +85,10 @@ public class CreateAppointmentCommand implements Command {
 			return "/error.jsp";
 		}
 	}
-
+	public CreateAppointmentCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public CreateAppointmentCommand() {
+		this.manager = AppointmentManager.getInstance();
+	}
 }

@@ -19,6 +19,7 @@ import service.utils.ValidatorUtil;
 
 public class CreateServiceCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateServiceCommand.class);
+	private ServiceManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
@@ -47,7 +48,7 @@ public class CreateServiceCommand implements Command {
 				return "/error.jsp";
 			}
 			Service service = new Service(0, name, info);
-			ServiceManager manager = ServiceManager.getInstance();
+			//ServiceManager manager = ServiceManager.getInstance();
 			service = manager.createService(service);
 
 			if (service.getId() == 0) {
@@ -64,5 +65,10 @@ public class CreateServiceCommand implements Command {
 			return "/error.jsp";
 		}
 	}
-
+ 	public CreateServiceCommand(ServiceManager manager) {
+		this.manager = manager;
+	}
+ 	public CreateServiceCommand() {
+		this.manager = ServiceManager.getInstance();
+	}
 }
