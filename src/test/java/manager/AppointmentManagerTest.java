@@ -11,18 +11,13 @@ import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
-import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doThrow;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -32,7 +27,6 @@ import controller.exceptions.DeletingAppointmentException;
 import controller.exceptions.FindingAppointmentException;
 import controller.exceptions.UpdatingAppointmentException;
 import dao.impl.AppointmentDao;
-import entity.Role;
 import entity.Service;
 import entity.User;
 import entity.Appointment;
@@ -158,19 +152,19 @@ public class AppointmentManagerTest {
 		testAppointment.setDate(LocalDate.now());
 		testAppointment.setTimeslot(11);
 		
-		appointmentManager.setFeedbackForAppointmentandUpdateMaster(testAppointment, 2.78, "hhh");
+		appointmentManager.setFeedbackForAppointmentAndUpdateMaster(testAppointment, 2.78, "hhh");
 		verify(dao, times(1)).setFeedback(dao.getConnection(), testAppointment, "hhh", 2.78);
 	
 		doThrow(SQLException.class).when(dao).setFeedback(isA(Connection.class), isA(Appointment.class), isA(String.class), isA(Double.class));
 		try {
-			appointmentManager.setFeedbackForAppointmentandUpdateMaster(testAppointment, 2.78, "hhh");
+			appointmentManager.setFeedbackForAppointmentAndUpdateMaster(testAppointment, 2.78, "hhh");
 			fail();
 		} catch (UpdatingAppointmentException e) {
 			assertNotNull(e);
 		}
 		when(dao.getConnection()).thenThrow(ClassNotFoundException.class);
 		try {
-			appointmentManager.setFeedbackForAppointmentandUpdateMaster(testAppointment, 2.78, "hhh");
+			appointmentManager.setFeedbackForAppointmentAndUpdateMaster(testAppointment, 2.78, "hhh");
 			fail();
 		} catch (UpdatingAppointmentException e) {
 			assertNotNull(e);

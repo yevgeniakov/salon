@@ -21,6 +21,7 @@ import service.utils.ValidatorUtil;
 
 public class DeleteAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(DeleteAppointmentCommand.class);
+	private AppointmentManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
 
@@ -53,7 +54,7 @@ public class DeleteAppointmentCommand implements Command {
 			User master = new User();
 			master.setId(master_id);
 			Appointment appointment = new Appointment(date, timeslot, master, null, null, 0, false, false, "", 0);
-			AppointmentManager manager = AppointmentManager.getInstance();
+			//AppointmentManager manager = AppointmentManager.getInstance();
 			manager.deleteAppointment(appointment);
 			request.setAttribute("message", "appointment deleted");
 			logger.info("appointment deleted", master_id, date, timeslot);
@@ -65,5 +66,10 @@ public class DeleteAppointmentCommand implements Command {
 			return "/error.jsp";
 		}
 	}
-
+	public DeleteAppointmentCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public DeleteAppointmentCommand() {
+		this.manager = AppointmentManager.getInstance();
+	}
 }

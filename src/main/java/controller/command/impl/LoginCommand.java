@@ -14,6 +14,7 @@ import service.UserManager;
 
 public class LoginCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(LoginCommand.class);
+	private UserManager manager;
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -21,7 +22,7 @@ public class LoginCommand implements Command {
 		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		UserManager manager = UserManager.getInstance();
+		//UserManager manager = UserManager.getInstance();
 		User user = null;
 		try {
 			user = manager.checkCredentials(email, password);
@@ -41,5 +42,10 @@ public class LoginCommand implements Command {
 		request.setAttribute("error", "you are logged!");
 		return "/error.jsp";
 	}
-
+ 	public LoginCommand(UserManager manager) {
+		this.manager = manager;
+	}
+ 	public LoginCommand() {
+		this.manager = UserManager.getInstance();
+	}
 }

@@ -169,7 +169,7 @@ public class AppointmentManager {
 		}
 	}
 
-	public void setFeedbackForAppointmentandUpdateMaster(Appointment appointment, double rating, String feedback)
+	public void setFeedbackForAppointmentAndUpdateMaster(Appointment appointment, double rating, String feedback)
 			throws UpdatingAppointmentException {
 		logger.trace("enter");
 

@@ -21,6 +21,7 @@ import static service.utils.ValidatorUtil.*;
 
 public class CreateUserCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateUserCommand.class);
+	private UserManager userManager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = true;
@@ -77,7 +78,7 @@ public class CreateUserCommand implements Command {
 			}
 			logger.info(currentLang);
 			User user = new User(0, email, password, name, surname, tel, role, info, false, 0, currentLang);
-			UserManager userManager = UserManager.getInstance();
+			//UserManager userManager = UserManager.getInstance();
 			if (serviceMap.isEmpty()) {
 				user = userManager.createUser(user);
 			} else {
@@ -106,5 +107,10 @@ public class CreateUserCommand implements Command {
 			return "/error.jsp";
 		}
 	}
-
+ 	public CreateUserCommand(UserManager manager) {
+		this.userManager = manager;
+	}
+ 	public CreateUserCommand() {
+		this.userManager = UserManager.getInstance();
+	}
 }

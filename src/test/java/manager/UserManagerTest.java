@@ -353,7 +353,7 @@ public class UserManagerTest {
 		testUser.setPassword("12345");
 		userManager.addServicesToUser(testUser, services);
 		verify(dao, times(1)).setServicesForMaster(dao.getConnection(), 1, services);
-		doThrow(SQLException.class).when(dao).setServicesForMaster(isA(Connection.class), isA(Integer.class), isA(services.getClass()));
+		doThrow(SQLException.class).when(dao).setServicesForMaster(isA(Connection.class), isA(Integer.class), any());
 		try {
 			userManager.addServicesToUser(testUser, services);
 			fail();

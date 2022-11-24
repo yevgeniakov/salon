@@ -2,6 +2,11 @@ package command;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -20,6 +25,8 @@ import org.mockito.Mock;
 
 import controller.command.Command;
 import controller.command.impl.CreateAppointmentCommand;
+import controller.command.impl.DeleteAppointmentCommand;
+import controller.command.impl.LeaveFeedbackCommand;
 import controller.exceptions.CreatingUserException;
 import dao.impl.AppointmentDao;
 import entity.Appointment;
@@ -28,7 +35,7 @@ import entity.Service;
 import entity.User;
 import service.AppointmentManager;
 
-public class CreateAppointmentCommandTest {
+public class LeaveFeedbackCommandTest {
 	@Mock
 	private AppointmentDao dao;
 	@Mock
@@ -50,46 +57,46 @@ public class CreateAppointmentCommandTest {
 	}
 	
 	@Test
-	public void testCreateAppointmentCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
+	public void testLeaveFeedbackCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
 		Appointment testAppointment = new Appointment();
 		User master = new User();
 		master.setId(1);
-		testAppointment.setMaster(master);
 		User client = new User();
-		client.setId(2);
+		client.setId(14);
+		testAppointment.setMaster(master);
+		User loggedUser = new User();
+		loggedUser.setId(2);
 		
-		testAppointment.setUser(client);
+		testAppointment.setUser(loggedUser);
 		testAppointment.setDate(LocalDate.now());
 		testAppointment.setTimeslot(11);
-		when(dao.getPrice(any(Connection.class), any(User.class), any(Service.class))).thenReturn(200);
-		when(dao.save(any(Connection.class), any(Appointment.class))).thenReturn(testAppointment);
-		when(request.getParameter("service_id")).thenReturn("1");
+		testAppointment.setUser(client);
+		testAppointment.setIsDone(true);
 		when(request.getParameter("master_id")).thenReturn("1");
-		when(request.getParameter("user_id")).thenReturn("2");
 		when(request.getParameter("timeslot")).thenReturn("11");
 		when(request.getParameter("date")).thenReturn(LocalDate.now().toString());
+		when(request.getParameter("rating")).thenReturn("4");
+		when(request.getParameter("feedback")).thenReturn("super");
 		when(session.getAttribute("user")).thenReturn(null);
 		when(request.getSession()).thenReturn(session);
-		Command command = new CreateAppointmentCommand(appointmentManager);
+		when(dao.findByKey(any(Connection.class), anyInt(), any(LocalDate.class), anyInt())).thenReturn(testAppointment);
+
+		Command command = new LeaveFeedbackCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
-		when(session.getAttribute("user")).thenReturn(client);
-		command = new CreateAppointmentCommand(appointmentManager);
+		when(session.getAttribute("user")).thenReturn(loggedUser);
+		command = new LeaveFeedbackCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
-		client.setRole(Role.CLIENT);
-		command = new CreateAppointmentCommand(appointmentManager);
-		assertEquals(command.execute(request, response), "Controller?command=show_master_schedule&id=" + testAppointment.getMaster().getId() + "&date="
-				+ testAppointment.getDate());
-		when(dao.save(any(Connection.class), any(Appointment.class))).thenThrow(SQLException.class);
-		command = new CreateAppointmentCommand(appointmentManager);
+		loggedUser.setRole(Role.CLIENT);
+		command = new LeaveFeedbackCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
-		when(request.getParameter("timeslot")).thenReturn("353");
-		command = new CreateAppointmentCommand(appointmentManager);
+		loggedUser.setId(14);
+		command = new LeaveFeedbackCommand(appointmentManager);
+		assertEquals(command.execute(request, response), "Controller?command=show_appointment_info&master_id=" + testAppointment.getMaster().getId() + "&date=" + testAppointment.getDate() + "&timeslot=" + testAppointment.getTimeslot());
+
+		when(request.getParameter("rating")).thenReturn("353");
+		command = new LeaveFeedbackCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
-		when(request.getParameter("timeslot")).thenReturn("11");
-		when(request.getParameter("date")).thenReturn(LocalDate.now().minusDays(4).toString());
-		command = new CreateAppointmentCommand(appointmentManager);
-		assertEquals(command.execute(request, response), "/error.jsp");
-		
+
 	}
 }

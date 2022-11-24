@@ -22,6 +22,7 @@ import service.utils.ValidatorUtil;
 
 public class LeaveFeedbackCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(LeaveFeedbackCommand.class);
+	private AppointmentManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.CLIENT));
 	public static final boolean IS_GUEST_ALLOWED = false;
@@ -38,10 +39,7 @@ public class LeaveFeedbackCommand implements Command {
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
-		
 			int master_id = 0;
 			int timeslot = 0;
 			LocalDate date = null;
@@ -58,7 +56,7 @@ public class LeaveFeedbackCommand implements Command {
 			}
 			String feedback = request.getParameter("feedback");
 			try {
-			AppointmentManager manager = AppointmentManager.getInstance();
+			//AppointmentManager manager = AppointmentManager.getInstance();
 
 			Appointment appointment = manager.findAppointmentByKey(master_id, date, timeslot);
 
@@ -67,8 +65,7 @@ public class LeaveFeedbackCommand implements Command {
 				request.setAttribute("error", "You are not allowed to leave feedback for this appointment!");
 				return "/error.jsp";
 			}
-
-			manager.setFeedbackForAppointmentandUpdateMaster(appointment, rating, feedback);
+			manager.setFeedbackForAppointmentAndUpdateMaster(appointment, rating, feedback);
 			logger.info("added feedback for appointment", appointment.getMaster().getId(), appointment.getDate(), appointment.getTimeslot());
 			request.setAttribute("redirect", "redirect");
 			return "Controller?command=show_appointment_info&master_id=" + appointment.getMaster().getId() + "&date=" + appointment.getDate() + "&timeslot=" + appointment.getTimeslot();
@@ -77,5 +74,11 @@ public class LeaveFeedbackCommand implements Command {
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
+	}
+	public LeaveFeedbackCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public LeaveFeedbackCommand() {
+		this.manager = AppointmentManager.getInstance();
 	}
 }

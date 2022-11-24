@@ -20,6 +20,7 @@ import service.utils.ValidatorUtil;
 
 public class DeleteServiceFromMasterCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(DeleteServiceFromMasterCommand.class);
+	private UserManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
@@ -57,7 +58,7 @@ public class DeleteServiceFromMasterCommand implements Command {
 			Service service = new Service();
 			service.setId(service_id);
 
-			UserManager manager = UserManager.getInstance();
+			//UserManager manager = UserManager.getInstance();
 			manager.deleteServiceFromMaster(master, service);
 
 			request.setAttribute("message", "appointment deleted");
@@ -71,5 +72,10 @@ public class DeleteServiceFromMasterCommand implements Command {
 			return "/error.jsp";
 		}
 	}
-
+ 	public DeleteServiceFromMasterCommand(UserManager manager) {
+		this.manager = manager;
+	}
+ 	public DeleteServiceFromMasterCommand() {
+		this.manager = UserManager.getInstance();
+	}
 }

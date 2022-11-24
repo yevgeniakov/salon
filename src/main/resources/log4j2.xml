@@ -31,7 +31,7 @@
     </Appenders>
     <Loggers>
     	
-        <Root level="info" additivity="false">
+        <Root level="trace" additivity="false">
             <AppenderRef ref="console" />
             <AppenderRef ref="fileLogger" />
         </Root>

@@ -2,6 +2,7 @@ package command;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -17,17 +18,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import controller.command.Command;
-import controller.command.impl.CreateServiceCommand;
+import controller.command.impl.CreateUserCommand;
+import controller.command.impl.DeleteServiceFromMasterCommand;
 import controller.exceptions.CreatingUserException;
-import dao.impl.ServiceDao;
+import dao.impl.UserDao;
 import entity.Role;
 import entity.Service;
 import entity.User;
-import service.ServiceManager;
+import service.UserManager;
 
-public class CreateServiceCommandTest {
+public class DeleteServiceFromMasterCommandTest {
 	@Mock
-	private ServiceDao dao;
+	private UserDao dao;
 	@Mock
 	private HttpServletRequest request;
 	@Mock
@@ -35,47 +37,47 @@ public class CreateServiceCommandTest {
 	@Mock
 	private HttpSession session;
 	@InjectMocks
-	private ServiceManager serviceManager;
+	private UserManager userManager;
 
 	@Before
 	public void setUp() {
-		this.dao = mock(ServiceDao.class);
+		this.dao = mock(UserDao.class);
 		this.request = mock(HttpServletRequest.class); 
 		this.response = mock(HttpServletResponse.class);
 		this.session = mock(HttpSession.class);
-		this.serviceManager = new ServiceManager(dao);
+		this.userManager = new UserManager(dao);
 	}
 	
 	@Test
-	public void testCreateServiceCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
+	public void testDeleteServiceFromMasterCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
-		Service testService = new Service();
+		User testUser = new User();
 		
-		testService.setName("Haircut");
-		testService.setInfo("bnslbnsnb");
-		testService.setId(0);
+		testUser.setName("Ivan");
+		testUser.setSurname("Petrov");
+		testUser.setId(7);
 		User loggedUser = new User();
 		loggedUser.setId(1);
-		when(dao.save(any(Connection.class), any(Service.class))).thenReturn(testService);
-		when(request.getParameter("name")).thenReturn("hgh");
-		when(request.getParameter("info")).thenReturn("dfhd");
-		when(session.getAttribute("user")).thenReturn(null);
+		Service testService = new Service();
+		testService.setId(2);
+		testService.setName("Manicure");
+
+		when(request.getParameter("master_id")).thenReturn("7");
+		when(request.getParameter("service_id")).thenReturn("2");
 		when(request.getSession()).thenReturn(session);
-		Command command = new CreateServiceCommand(serviceManager);
+		Command command = new DeleteServiceFromMasterCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(session.getAttribute("user")).thenReturn(loggedUser);
-		command = new CreateServiceCommand(serviceManager);
+		command = new DeleteServiceFromMasterCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		loggedUser.setRole(Role.ADMIN);
-		command = new CreateServiceCommand(serviceManager);
+		command = new DeleteServiceFromMasterCommand(userManager);
+		assertEquals(command.execute(request, response), "Controller?command=show_user_info&id=" + testUser.getId());
+		doThrow(SQLException.class).when(dao).deleteServiceFromMaster(any(Connection.class), any(User.class), any(Service.class));
+		command = new DeleteServiceFromMasterCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
-		testService.setId(5);
-		assertEquals(command.execute(request, response), "Controller?command=show_service_list");
-		when(dao.save(any(Connection.class), any(Service.class))).thenThrow(SQLException.class);
-		command = new CreateServiceCommand(serviceManager);
-		assertEquals(command.execute(request, response), "/error.jsp");
-		when(request.getParameter("name")).thenReturn(null);
-		command = new CreateServiceCommand(serviceManager);
+		when(request.getParameter("master_id")).thenReturn(null);
+		command = new DeleteServiceFromMasterCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 	}
 }
