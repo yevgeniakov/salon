@@ -18,7 +18,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import controller.command.Command;
-import controller.command.impl.CreateUserCommand;
 import controller.command.impl.DeleteServiceFromMasterCommand;
 import controller.exceptions.CreatingUserException;
 import dao.impl.UserDao;

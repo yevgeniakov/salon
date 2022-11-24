@@ -21,11 +21,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import controller.command.Command;
-import controller.command.impl.CreateUserCommand;
 import controller.command.impl.LoginCommand;
 import controller.exceptions.CreatingUserException;
 import dao.impl.UserDao;
-import entity.Role;
 import entity.User;
 import service.UserManager;
 import service.utils.PasswordEncodingService;

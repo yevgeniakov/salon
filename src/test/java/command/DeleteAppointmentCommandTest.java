@@ -1,7 +1,6 @@
 package command;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -21,13 +20,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import controller.command.Command;
-import controller.command.impl.CreateAppointmentCommand;
 import controller.command.impl.DeleteAppointmentCommand;
 import controller.exceptions.CreatingUserException;
 import dao.impl.AppointmentDao;
 import entity.Appointment;
 import entity.Role;
-import entity.Service;
 import entity.User;
 import service.AppointmentManager;
 
