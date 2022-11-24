@@ -15,7 +15,6 @@ import org.mockito.Mock;
 
 import controller.command.Command;
 import controller.command.impl.LogOutCommand;
-import controller.command.impl.LoginCommand;
 import controller.exceptions.CreatingUserException;
 import entity.User;
 
@@ -27,23 +26,17 @@ public class LogOutCommandTest {
 	private HttpServletResponse response;
 	@Mock
 	private HttpSession session;
-
-
 	@Before
 	public void setUp() {
-		
 		this.request = mock(HttpServletRequest.class); 
 		this.response = mock(HttpServletResponse.class);
 		this.session = mock(HttpSession.class);
-
 	}
 	
 	@Test
 	public void testLogOutCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
-		
 		User testUser = new User();
 		testUser.setId(7);
-
 		when(request.getSession()).thenReturn(session);
 		when(session.getAttribute("user")).thenReturn(null);
 		Command command = new LogOutCommand();
