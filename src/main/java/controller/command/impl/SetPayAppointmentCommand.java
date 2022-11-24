@@ -22,6 +22,7 @@ import service.utils.ValidatorUtil;
 
 public class SetPayAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetPayAppointmentCommand.class);
+	private AppointmentManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
 
@@ -36,9 +37,7 @@ public class SetPayAppointmentCommand implements Command {
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
 		int master_id = 0;
 		int timeslot = 0;
 		LocalDate date = null;
@@ -52,7 +51,6 @@ public class SetPayAppointmentCommand implements Command {
 			return "/error.jsp";
 		}
 		try {
-			AppointmentManager manager = AppointmentManager.getInstance();
 			Appointment appointment = manager.findAppointmentByKey(master_id, date, timeslot);
 			manager.setPayAppointment(appointment, !appointment.getIsPaid());
 			appointment.setIsPaid(!appointment.getIsPaid());
@@ -66,5 +64,11 @@ public class SetPayAppointmentCommand implements Command {
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
+	}
+	public SetPayAppointmentCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public SetPayAppointmentCommand() {
+		this.manager = AppointmentManager.getInstance();
 	}
 }

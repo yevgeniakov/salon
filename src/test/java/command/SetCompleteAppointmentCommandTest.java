@@ -1,7 +1,9 @@
 package command;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -20,7 +22,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import controller.command.Command;
-import controller.command.impl.DeleteAppointmentCommand;
+import controller.command.impl.SetCompleteAppointmentCommand;
 import controller.exceptions.CreatingUserException;
 import dao.impl.AppointmentDao;
 import entity.Appointment;
@@ -28,7 +30,7 @@ import entity.Role;
 import entity.User;
 import service.AppointmentManager;
 
-public class DeleteAppointmentCommandTest {
+public class SetCompleteAppointmentCommandTest {
 	@Mock
 	private AppointmentDao dao;
 	@Mock
@@ -50,31 +52,35 @@ public class DeleteAppointmentCommandTest {
 	}
 	
 	@Test
-	public void testCreateAppointmentCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
+	public void testSetCompleteAppointmentCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
 		Appointment testAppointment = new Appointment();
 		User master = new User();
 		master.setId(1);
+		master.setRole(Role.HAIRDRESSER);
 		testAppointment.setMaster(master);
-		User loggedUser = new User();
-		loggedUser.setId(2);
-		testAppointment.setUser(loggedUser);
+		User client = new User();
+		client.setId(2);
+		client.setRole(Role.CLIENT);
+		
+		testAppointment.setUser(client);
 		testAppointment.setDate(LocalDate.now());
 		testAppointment.setTimeslot(11);
+		when(dao.findByKey(any(Connection.class), anyInt(), any(LocalDate.class), anyInt())).thenReturn(testAppointment);
 		when(request.getParameter("master_id")).thenReturn("1");
 		when(request.getParameter("timeslot")).thenReturn("11");
 		when(request.getParameter("date")).thenReturn(LocalDate.now().toString());
 		when(session.getAttribute("user")).thenReturn(null);
 		when(request.getSession()).thenReturn(session);
-		Command command = new DeleteAppointmentCommand(appointmentManager);
+		Command command = new SetCompleteAppointmentCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
-		when(session.getAttribute("user")).thenReturn(loggedUser);
+		when(session.getAttribute("user")).thenReturn(client);
 		assertEquals(command.execute(request, response), "/error.jsp");
-		loggedUser.setRole(Role.ADMIN);
-		assertEquals(command.execute(request, response), "Controller?command=show_master_schedule&id=" + "1" + "&date=" + LocalDate.now().toString());
+		when(session.getAttribute("user")).thenReturn(master);
+		assertEquals(command.execute(request, response), "Controller?command=show_appointment_info&master_id=" + testAppointment.getMaster().getId() + "&date=" + testAppointment.getDate() + "&timeslot=" + testAppointment.getTimeslot());
+		doThrow(SQLException.class).when(dao).setIsDone(any(Connection.class), any(Appointment.class), anyBoolean());
+		assertEquals(command.execute(request, response), "/error.jsp");
 		when(request.getParameter("timeslot")).thenReturn("353");
-		assertEquals(command.execute(request, response), "/error.jsp");
-		doThrow(SQLException.class).when(dao).delete(isA(Connection.class), isA(Appointment.class));
 		assertEquals(command.execute(request, response), "/error.jsp");
 	}
 }

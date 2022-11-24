@@ -51,7 +51,6 @@ public class DeleteServiceFromMasterCommandTest {
 	public void testDeleteServiceFromMasterCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
 		User testUser = new User();
-		
 		testUser.setName("Ivan");
 		testUser.setSurname("Petrov");
 		testUser.setId(7);
@@ -60,23 +59,18 @@ public class DeleteServiceFromMasterCommandTest {
 		Service testService = new Service();
 		testService.setId(2);
 		testService.setName("Manicure");
-
 		when(request.getParameter("master_id")).thenReturn("7");
 		when(request.getParameter("service_id")).thenReturn("2");
 		when(request.getSession()).thenReturn(session);
 		Command command = new DeleteServiceFromMasterCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(session.getAttribute("user")).thenReturn(loggedUser);
-		command = new DeleteServiceFromMasterCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		loggedUser.setRole(Role.ADMIN);
-		command = new DeleteServiceFromMasterCommand(userManager);
 		assertEquals(command.execute(request, response), "Controller?command=show_user_info&id=" + testUser.getId());
 		doThrow(SQLException.class).when(dao).deleteServiceFromMaster(any(Connection.class), any(User.class), any(Service.class));
-		command = new DeleteServiceFromMasterCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(request.getParameter("master_id")).thenReturn(null);
-		command = new DeleteServiceFromMasterCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 	}
 }

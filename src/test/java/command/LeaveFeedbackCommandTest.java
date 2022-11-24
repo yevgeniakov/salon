@@ -78,17 +78,12 @@ public class LeaveFeedbackCommandTest {
 		Command command = new LeaveFeedbackCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(session.getAttribute("user")).thenReturn(loggedUser);
-		command = new LeaveFeedbackCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		loggedUser.setRole(Role.CLIENT);
-		command = new LeaveFeedbackCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		loggedUser.setId(14);
-		command = new LeaveFeedbackCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "Controller?command=show_appointment_info&master_id=" + testAppointment.getMaster().getId() + "&date=" + testAppointment.getDate() + "&timeslot=" + testAppointment.getTimeslot());
-
 		when(request.getParameter("rating")).thenReturn("353");
-		command = new LeaveFeedbackCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 
 	}

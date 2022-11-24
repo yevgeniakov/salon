@@ -60,10 +60,8 @@ public class ChangeLocaleCommandTest {
 		Command command = new ChangeLocaleCommand(userManager);
 		assertEquals(command.execute(request, response), "/change_locale.jsp");
 		when(dao.setUserCurrentLang(any(Connection.class), any(User.class), anyString())).thenThrow(SQLException.class);
-		command = new ChangeLocaleCommand(userManager);
 		assertEquals(command.execute(request, response), "/change_locale.jsp");
 		when(session.getAttribute("user")).thenReturn(null);
-		command = new ChangeLocaleCommand(userManager);
 		assertEquals(command.execute(request, response), "/change_locale.jsp");
 	}
 }

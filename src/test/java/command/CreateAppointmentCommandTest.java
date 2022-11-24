@@ -58,7 +58,6 @@ public class CreateAppointmentCommandTest {
 		testAppointment.setMaster(master);
 		User client = new User();
 		client.setId(2);
-		
 		testAppointment.setUser(client);
 		testAppointment.setDate(LocalDate.now());
 		testAppointment.setTimeslot(11);
@@ -74,22 +73,16 @@ public class CreateAppointmentCommandTest {
 		Command command = new CreateAppointmentCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(session.getAttribute("user")).thenReturn(client);
-		command = new CreateAppointmentCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		client.setRole(Role.CLIENT);
-		command = new CreateAppointmentCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "Controller?command=show_master_schedule&id=" + testAppointment.getMaster().getId() + "&date="
 				+ testAppointment.getDate());
 		when(dao.save(any(Connection.class), any(Appointment.class))).thenThrow(SQLException.class);
-		command = new CreateAppointmentCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(request.getParameter("timeslot")).thenReturn("353");
-		command = new CreateAppointmentCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(request.getParameter("timeslot")).thenReturn("11");
 		when(request.getParameter("date")).thenReturn(LocalDate.now().minusDays(4).toString());
-		command = new CreateAppointmentCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
-		
 	}
 }

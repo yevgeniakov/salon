@@ -66,16 +66,12 @@ public class CreateUserCommandTest {
 		Command command = new CreateUserCommand(userManager);
 		assertEquals(command.execute(request, response), "index.jsp");
 		when(session.getAttribute("user")).thenReturn(loggedUser);
-		command = new CreateUserCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		loggedUser.setRole(Role.ADMIN);
-		command = new CreateUserCommand(userManager);
 		assertEquals(command.execute(request, response), "Controller?command=show_user_info&id=" + testUser.getId());
 		when(dao.save(any(Connection.class), any(User.class))).thenThrow(SQLException.class);
-		command = new CreateUserCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(request.getParameter("email")).thenReturn(null);
-		command = new CreateUserCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 	}
 }

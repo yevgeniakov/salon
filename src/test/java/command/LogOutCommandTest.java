@@ -42,7 +42,6 @@ public class LogOutCommandTest {
 		Command command = new LogOutCommand();
 		assertEquals(command.execute(request, response), "/index.jsp");
 		when(session.getAttribute("user")).thenReturn(testUser);
-		command = new LogOutCommand();
 		assertEquals(command.execute(request, response), "index.jsp");
 	}
 }

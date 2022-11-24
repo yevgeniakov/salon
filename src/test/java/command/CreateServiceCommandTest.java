@@ -50,7 +50,6 @@ public class CreateServiceCommandTest {
 	public void testCreateServiceCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
 		Service testService = new Service();
-		
 		testService.setName("Haircut");
 		testService.setInfo("bnslbnsnb");
 		testService.setId(0);
@@ -64,18 +63,14 @@ public class CreateServiceCommandTest {
 		Command command = new CreateServiceCommand(serviceManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(session.getAttribute("user")).thenReturn(loggedUser);
-		command = new CreateServiceCommand(serviceManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		loggedUser.setRole(Role.ADMIN);
-		command = new CreateServiceCommand(serviceManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		testService.setId(5);
 		assertEquals(command.execute(request, response), "Controller?command=show_service_list");
 		when(dao.save(any(Connection.class), any(Service.class))).thenThrow(SQLException.class);
-		command = new CreateServiceCommand(serviceManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(request.getParameter("name")).thenReturn(null);
-		command = new CreateServiceCommand(serviceManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 	}
 }

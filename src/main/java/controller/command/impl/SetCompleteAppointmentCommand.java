@@ -22,6 +22,7 @@ import service.utils.ValidatorUtil;
 
 public class SetCompleteAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetCompleteAppointmentCommand.class);
+	private AppointmentManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.HAIRDRESSER));
 	public static final boolean IS_GUEST_ALLOWED = false;
@@ -53,7 +54,6 @@ public class SetCompleteAppointmentCommand implements Command {
 			return "/error.jsp";
 		}
 			try {
-			AppointmentManager manager = AppointmentManager.getInstance();
 			Appointment appointment = manager.findAppointmentByKey(master_id, date, timeslot);
 			manager.setDoneAppointment(appointment, !appointment.getIsDone());
 			appointment.setIsDone(!appointment.getIsDone());
@@ -66,5 +66,10 @@ public class SetCompleteAppointmentCommand implements Command {
 			return "/error.jsp";
 		}
 	}
-
+	public SetCompleteAppointmentCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public SetCompleteAppointmentCommand() {
+		this.manager = AppointmentManager.getInstance();
+	}
 }

@@ -76,10 +76,8 @@ public class LoginCommandTest {
 		Command command = new LoginCommand(userManager);
 		assertEquals(command.execute(request, response), "change_locale.jsp?locale=" + testUser.getCurrentLang());
 		when(dao.findByEmail(any(Connection.class), anyString())).thenThrow(SQLException.class);
-		command = new LoginCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(request.getParameter("password")).thenReturn("125");
-		command = new LoginCommand(userManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 	}
 }
