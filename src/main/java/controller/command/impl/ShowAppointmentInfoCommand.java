@@ -19,8 +19,16 @@ import entity.User;
 import service.AppointmentManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Shows detailed info for the appointment
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class ShowAppointmentInfoCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowAppointmentInfoCommand.class);
+	private AppointmentManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
 	public static final boolean IS_GUEST_ALLOWED = false;
@@ -37,10 +45,7 @@ public class ShowAppointmentInfoCommand implements Command {
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
-		
 		int master_id = 0;
 		int timeslot = 0;
 		LocalDate date = null;
@@ -54,27 +59,29 @@ public class ShowAppointmentInfoCommand implements Command {
 			return "/error.jsp";
 		}
 			try {
-			AppointmentManager manager = AppointmentManager.getInstance();
 			Appointment appointment = new Appointment();
 			appointment = manager.findAppointmentByKey(master_id, date, timeslot);
-			
 			if (appointment == null || (!appointment.getUser().equals(loggedUser) && !appointment.getMaster().equals(loggedUser) && loggedUser.getRole() != Role.ADMIN)) {
 				logger.error("access denied", loggedUser, appointment);
 				request.setAttribute("error", "You are not allowed to see view this appointment info!");
 				return "/error.jsp";	
 			}
-
 			request.setAttribute("appointment", appointment);
 			request.setAttribute("master_id", master_id);
 			request.setAttribute("date", date);
 			request.setAttribute("timeslot", timeslot);
-
 			return "/appointment_info.jsp";
 		} catch (FindingAppointmentException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
+	}
+	public ShowAppointmentInfoCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public ShowAppointmentInfoCommand() {
+		this.manager = AppointmentManager.getInstance();
 	}
 
 }

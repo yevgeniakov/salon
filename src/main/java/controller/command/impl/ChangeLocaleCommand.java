@@ -11,6 +11,13 @@ import controller.exceptions.UpdatingUserException;
 import entity.User;
 import service.UserManager;
 
+/**
+ * Changes locale for current session and user
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class ChangeLocaleCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateAppointmentCommand.class);
 	private UserManager manager;
@@ -24,7 +31,6 @@ public class ChangeLocaleCommand implements Command {
 			logger.trace("locale is: " + locale);
 			
 			try {
-				//UserManager manager = UserManager.getInstance();
 				manager.setUserCurrentLang(loggedUser, locale);
 			} catch (UpdatingUserException e) {
 				logger.error(e.getMessage(), e);

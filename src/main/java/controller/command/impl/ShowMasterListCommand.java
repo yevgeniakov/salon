@@ -16,8 +16,15 @@ import entity.Role;
 import entity.User;
 import service.UserManager;
 
+/**
+ * Shows a list of users with the Hairdresser role
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 public class ShowMasterListCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowMasterListCommand.class);
+	private UserManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN, Role.CLIENT));
 	public static final boolean IS_GUEST_ALLOWED = true;
@@ -34,12 +41,8 @@ public class ShowMasterListCommand implements Command {
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
 		String sort = request.getParameter("sort");
-
-		UserManager manager = UserManager.getInstance();
 		List<User> users = new ArrayList<>();
 		try {
 			users = manager.findAllMasters();
@@ -48,18 +51,20 @@ public class ShowMasterListCommand implements Command {
 			request.setAttribute("error", "unable to get master list");
 			return "/error.jsp";
 		}
-
 		if (sort == null || "".equals(sort) || "surname".equals(sort)) {
 			users.sort(Comparator.comparing(User::getSurname));
 		}
-
 		if ("rating".equals(sort)) {
 			users.sort(Comparator.comparing(User::getRating).reversed().thenComparing(User::getSurname));
 		}
-
 		request.setAttribute("userlist", users);
 		request.setAttribute("sort", sort);
 		return "/master_list.jsp";
 	}
-
+ 	public ShowMasterListCommand(UserManager manager) {
+		this.manager = manager;
+	}
+ 	public ShowMasterListCommand() {
+		this.manager = UserManager.getInstance();
+	}
 }

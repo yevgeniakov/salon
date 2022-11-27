@@ -14,6 +14,13 @@ import dao.DBConnection;
 import dao.impl.ServiceDao;
 import entity.Service;
 
+/**
+ * provides operations with Service: creating, updating and representing information
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class ServiceManager {
 	private static ServiceManager instance;
 	private final ServiceDao dao;

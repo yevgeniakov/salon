@@ -20,6 +20,13 @@ import entity.User;
 import service.AppointmentManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Marks the appointment as complete/incomplete (Hairdresser only)
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class SetCompleteAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetCompleteAppointmentCommand.class);
 	private AppointmentManager manager;

@@ -12,6 +12,13 @@ import controller.exceptions.FindingAppointmentException;
 import entity.Appointment;
 import service.AppointmentManager;
 
+/**
+ * Tool for sending scheduled emails
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class EmailSender implements Runnable {
 	private static final Logger logger = LogManager.getLogger(ShowAppointmentInfoCommand.class);
 

@@ -6,11 +6,13 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Tag for displaying time in correct format depending on current locale
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 public class DisplayTimeTag extends TagSupport {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LogManager.getLogger(FreeSlotsListTag.class);
 	private int timeslot;
@@ -27,8 +29,6 @@ public class DisplayTimeTag extends TagSupport {
 	@Override
 	public int doStartTag() throws JspException {
 		logger.trace("enter");
-
-		
 		try {
 			if ("uk".equals(currentLang)) {
 				pageContext.getOut().write(timeslot + ":00");
@@ -38,12 +38,10 @@ public class DisplayTimeTag extends TagSupport {
 				if (timeslot == 12) pageContext.getOut().write("12 p.m.");
 				if (timeslot > 0 && timeslot < 12) pageContext.getOut().write(timeslot + " a.m.");
 				if (timeslot > 12 && timeslot < 23) pageContext.getOut().write(timeslot - 12  + " p.m.");
-			
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		
 		return SKIP_BODY;
 	}
 }

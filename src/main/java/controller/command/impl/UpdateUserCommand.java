@@ -21,6 +21,13 @@ import entity.User;
 import service.ServiceManager;
 import service.UserManager;
 
+/**
+ * Updating user info
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class UpdateUserCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(UpdateUserCommand.class);
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(

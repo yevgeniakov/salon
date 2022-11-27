@@ -19,6 +19,13 @@ import service.ServiceManager;
 import service.UserManager;
 import static service.utils.ValidatorUtil.*;
 
+/**
+ * Creates a new user (Admin or Guest only)
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class CreateUserCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateUserCommand.class);
 	private UserManager userManager;

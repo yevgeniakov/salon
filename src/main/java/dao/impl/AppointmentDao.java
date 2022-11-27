@@ -21,6 +21,13 @@ import entity.Service;
 import entity.User;
 import service.utils.PropertiesService;
 
+/**
+ * DAO class for database interacting for appointment-related operations
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class AppointmentDao implements Dao<Appointment> {
 	private static AppointmentDao instance;
 	private static final Logger logger = LogManager.getLogger(AppointmentDao.class);
@@ -33,46 +40,34 @@ public class AppointmentDao implements Dao<Appointment> {
 	}
 
 	private static final String GET_MASTER_SCHEDULE = getQueryForMasterShedule();
-
 	private static final String GET_MASTER_FREE_SLOTS = "select numbers.n AS timeslot "
 			+ ", appointments.user_id AS user_id " + "from numbers " + "left join appointments "
 			+ "on numbers.n = timeslot and date = ? and master_id = ? " + "where appointments.user_id is null";
-
 	private static final String CREATE_TABLE = "CREATE TEMPORARY TABLE numbers "
 			+ "SELECT n FROM generator_23 WHERE n >= " + PropertiesService.getProperty("firstWorkHour") + " AND n <= "
 			+ PropertiesService.getProperty("lastWorkHour");
-
 	private static final String DROP_TABLE = "drop temporary table if exists numbers";
-
 	private static final String FIND_APPOINTMENT_BY_KEY = getQueryForAppointment();
-
 	private static final String FIND_APPOINTMENTS_LIST = getQueryForAppointmentList();
-
 	private static final String GET_PRICE_FOR_APPOINTMENT = "select master_services.price from master_services where master_id=? and service_id=?";
-
 	private static final String INSERT_APPOINTMENT = "insert into appointments values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
 	private static final String DELETE_APPOINTMENT = "delete from appointments where date=? and timeslot=? and master_id=?";
-
 	private static final String FIND_ALL_APPOINTMENTS = "select * from appointments";
-
 	private static final String SET_ISPAID = "update appointments set isPaid=? where master_id=? and date=? and timeslot=?";
-
 	private static final String SET_ISDONE = "update appointments set isDone=? where master_id=? and date=? and timeslot=?";
-
 	private static final String SET_TIME = "update appointments set date=?, timeslot=? where master_id=? and date=? and timeslot=?";
-
 	private static final String SET_FEEDBACK = "update appointments set feedback=? , rating= ? where master_id=? and date=? and timeslot=?";
-
 	private static final String SET_MASTER_RATING = "update users set rating=? where id=?";
-
 	private static final String CALCULATE_MASTER_RATING = "select master_id, CAST(AVG(CAST(rating as DECIMAL(10,2))) AS DECIMAL(10,2)) AS rating from appointments where master_id =? and rating > 0 group by master_id";
 
 	public Connection getConnection() throws SQLException, ClassNotFoundException {
-
 		return DBConnection.getConnection();
 	}
-
+	
+	/**
+	* Returns the SQL query for receiving full appointment info
+	* 
+	*/
 	private static String getQueryForAppointment() {
 		return "select   " + "	appointments.date AS date  " + ", appointments.timeslot AS timeslot"
 				+ "	, appointments.user_id AS user_id  " + "	, appointments.master_id AS master_id  "
@@ -93,7 +88,11 @@ public class AppointmentDao implements Dao<Appointment> {
 				+ "	on appointments.service_id = services.id "
 				+ "                where master_id=? and date=? and timeslot=?";
 	}
-
+	
+	/**
+	* Returns the SQL query for receiving full info about master's schedule on certain date
+	* 
+	*/
 	private static String getQueryForMasterShedule() {
 		return "select numbers.n AS timeslot " + ", ? AS date " + ", appointments.user_id AS user_id "
 				+ ", ? AS master_id " + ", appointments.service_id AS service_id  " + ", appointments.isdone AS isdone "
@@ -111,7 +110,11 @@ public class AppointmentDao implements Dao<Appointment> {
 				+ "left join users AS u " + "on user_id = u.id " + "left join services "
 				+ "on service_id = services.id ORDER BY timeslot";
 	}
-
+	
+	/**
+	* Returns the SQL query for receiving info about appointments within the specified date interval
+	* 
+	*/
 	private static String getQueryForAppointmentList() {
 		return "select   " + "	appointments.date AS date  " + ", appointments.timeslot AS timeslot"
 				+ "	, appointments.user_id AS user_id  " + "	, appointments.master_id AS master_id  "
@@ -232,7 +235,11 @@ public class AppointmentDao implements Dao<Appointment> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-
+	
+	/**
+	* Returns the Appointment entity from ResultSet after executing the query
+	* 
+	*/
 	private Appointment extractAppointment(ResultSet rs) throws SQLException {
 		logger.trace("enter");
 
@@ -366,7 +373,6 @@ public class AppointmentDao implements Dao<Appointment> {
 		logger.trace("enter");
 
 		PreparedStatement stmt = null;
-
 		try {
 			stmt = con.prepareStatement(SET_ISPAID);
 			stmt.setBoolean(1, isPaid);
@@ -441,7 +447,11 @@ public class AppointmentDao implements Dao<Appointment> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-
+	
+	/**
+	* Calculating master's rating as average rating from all received feedbacks
+	* 
+	*/
 	public double calculateMasterRating(Connection con, User master) throws SQLException {
 		logger.trace("enter");
 
@@ -465,7 +475,11 @@ public class AppointmentDao implements Dao<Appointment> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-
+	
+	/**
+	* Returns the Appointment list that matches provided conditions.
+	* In case parameter is null - is ignored, otherwise is applied
+	*/
 	public List<Appointment> findByConditions(Connection con, LocalDate dateFrom, LocalDate dateTo, Integer master_id,
 			Integer user_id, Integer service_id, Boolean isDone, Boolean isPaid, Boolean isRating) throws SQLException {
 		logger.trace("enter");
@@ -505,7 +519,11 @@ public class AppointmentDao implements Dao<Appointment> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-
+	
+	/**
+	* Complements the SQL query for appointments list with conditions
+	* 
+	*/
 	private String addConditionsToSQL(String sql) {
 		logger.trace("enter");
 

@@ -18,6 +18,13 @@ import entity.User;
 import service.UserManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Shows a list of users, matching provided filters (Admin only)
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class ShowUserListCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowUserListCommand.class);
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(

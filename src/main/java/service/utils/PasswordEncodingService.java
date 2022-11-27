@@ -8,6 +8,13 @@ import java.security.spec.InvalidKeySpecException;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+/**
+ * Tool for encoding/validation passwords using PBKDF2WithHmacSHA1 algorithm
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class PasswordEncodingService {
 	 public static String generateStorngPasswordHash(String password) 
 		    throws NoSuchAlgorithmException, InvalidKeySpecException
@@ -15,10 +22,8 @@ public class PasswordEncodingService {
 		    int iterations = 1000;
 		    char[] chars = password.toCharArray();
 		    byte[] salt = getSalt();
-
 		    PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
 		    SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-
 		    byte[] hash = skf.generateSecret(spec).getEncoded();
 		    return iterations + ":" + toHex(salt) + ":" + toHex(hash);
 		}

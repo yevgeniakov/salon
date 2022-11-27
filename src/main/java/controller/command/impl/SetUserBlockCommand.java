@@ -17,6 +17,13 @@ import entity.User;
 import service.UserManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Marks user as blocked/unblocked (Admin only)
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class SetUserBlockCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetUserBlockCommand.class);
 	private UserManager manager;

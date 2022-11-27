@@ -8,8 +8,16 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
 
+/**
+ * Tool for working with Properties
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class PropertiesService {
 	private static final Logger logger = LogManager.getLogger(PropertiesService.class);
+	
 	public static String getProperty(String key) {
 		String rootPath = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("")).getPath();
 		Properties appProps = new Properties();

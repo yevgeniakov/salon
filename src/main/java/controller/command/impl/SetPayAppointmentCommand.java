@@ -1,9 +1,9 @@
 package controller.command.impl;
 
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,6 +19,13 @@ import entity.Role;
 import entity.User;
 import service.AppointmentManager;
 import service.utils.ValidatorUtil;
+
+/**
+ * Marks the appointment as paid/unpaid (Admin only)
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 
 public class SetPayAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetPayAppointmentCommand.class);

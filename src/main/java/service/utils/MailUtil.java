@@ -10,11 +10,15 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * provides functionality for sending email via SMTP
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 public class MailUtil {
 	
 	public static void sendMessage(String address, String subject, String body) throws AddressException, MessagingException  {
-		
-		
 	    String username = "yevheniia.kov@ukr.net";
 	    String password = "jS4gAP9k7ZdQ4toP";
 	    Properties props = getProps();

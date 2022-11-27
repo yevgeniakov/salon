@@ -17,6 +17,14 @@ import entity.User;
 import service.ServiceManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Creates a new service (Admin only).
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
+
 public class CreateServiceCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateServiceCommand.class);
 	private ServiceManager manager;

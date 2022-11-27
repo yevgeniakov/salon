@@ -11,11 +11,14 @@ import org.apache.logging.log4j.Logger;
 import entity.User;
 import service.UserManager;
 
-public class MasterListTag extends TagSupport {
+/**
+ * Tag for receiving list of all masters from database
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 
-	/**
-	 * 
-	 */
+public class MasterListTag extends TagSupport {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LogManager.getLogger(MasterListTag.class);
 

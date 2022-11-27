@@ -21,6 +21,12 @@ import service.AppointmentManager;
 import service.UserManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Shows a schedule of certain master for the certain day
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 public class ShowMasterScheduleCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowMasterScheduleCommand.class);
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(

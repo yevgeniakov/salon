@@ -18,6 +18,14 @@ import entity.User;
 import service.UserManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Deletes a service from Masters list. Means that master does not provide this service anymore.
+ * (Admin only)
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class DeleteServiceFromMasterCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(DeleteServiceFromMasterCommand.class);
 	private UserManager manager;

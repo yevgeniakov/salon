@@ -16,6 +16,13 @@ import entity.Service;
 import entity.User;
 import service.ServiceManager;
 
+/**
+ * Shows a list of all providing services
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class ShowServiceListCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowServiceListCommand.class);
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(

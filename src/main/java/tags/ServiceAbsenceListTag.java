@@ -12,11 +12,14 @@ import org.apache.logging.log4j.Logger;
 import entity.Service;
 import service.ServiceManager;
 
-public class ServiceAbsenceListTag extends TagSupport {
+/**
+ * Tag for receiving services, that are not provided via certain master
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 
-	/**
-	 * 
-	 */
+public class ServiceAbsenceListTag extends TagSupport {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LogManager.getLogger(ServiceAbsenceListTag.class);
 	private int master_id;
@@ -30,7 +33,6 @@ public class ServiceAbsenceListTag extends TagSupport {
 		logger.trace("enter");
 
 		ServiceManager manager = ServiceManager.getInstance();
-
 		if (master_id != 0) {
 			List<Service> serviceList = new ArrayList<>();
 			try {

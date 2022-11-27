@@ -18,6 +18,13 @@ import entity.Appointment;
 import entity.Service;
 import entity.User;
 
+/**
+ * provides operations with Appointment: creating, updating and representing information
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class AppointmentManager {
 	private static AppointmentManager instance;
 	private AppointmentDao dao;

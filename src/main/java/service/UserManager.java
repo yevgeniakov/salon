@@ -22,6 +22,13 @@ import entity.Service;
 import entity.User;
 import service.utils.PasswordEncodingService;
 
+/**
+ * provides operations with User: creating, updating and representing information
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class UserManager {
 
 	private static UserManager instance;

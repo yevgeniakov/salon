@@ -5,9 +5,14 @@ import java.time.format.DateTimeParseException;
 import controller.exceptions.IncorrectParamException;
 import entity.Role;
 
-public class ValidatorUtil {
-	
+/**
+ * Class for validating data, received from Front-end
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 
+public class ValidatorUtil {
     private static final String NAME_REGEX = "^[\\D ,.'-]+$";
 	private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
 	private static final String EMAIL_REGEX = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-zA-Z]{2,})$";

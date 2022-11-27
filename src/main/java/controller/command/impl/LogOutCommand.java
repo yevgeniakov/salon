@@ -9,6 +9,12 @@ import org.apache.logging.log4j.Logger;
 import controller.command.Command;
 import entity.User;
 
+/**
+ * Makes log-out for logged user
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 public class LogOutCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(LogOutCommand.class);
 	

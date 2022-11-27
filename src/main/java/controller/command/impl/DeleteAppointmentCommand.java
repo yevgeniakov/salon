@@ -19,6 +19,13 @@ import entity.User;
 import service.AppointmentManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Deletes an appointment (Admin only)
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class DeleteAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(DeleteAppointmentCommand.class);
 	private AppointmentManager manager;

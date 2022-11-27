@@ -20,6 +20,13 @@ import entity.User;
 import service.AppointmentManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Leaves a feedback for the appointment (Client only)
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class LeaveFeedbackCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(LeaveFeedbackCommand.class);
 	private AppointmentManager manager;

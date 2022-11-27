@@ -19,6 +19,12 @@ import service.ServiceManager;
 import service.UserManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Shows masters, that provide a certain service
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 public class ShowMasterOfServiceCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowMasterOfServiceCommand.class);
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(

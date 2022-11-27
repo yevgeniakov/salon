@@ -12,6 +12,12 @@ import controller.exceptions.FindingUserException;
 import entity.User;
 import service.UserManager;
 
+/**
+ * Makes log-in for user with provided login/password
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 public class LoginCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(LoginCommand.class);
 	private UserManager manager;

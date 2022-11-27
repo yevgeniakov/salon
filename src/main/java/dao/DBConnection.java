@@ -11,6 +11,12 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
 import controller.listeners.ContextListener;
 
+/**
+ * Providing connection pool with BasicDataSource
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 public class DBConnection {
 
 	private static final Logger logger = LogManager.getLogger(ContextListener.class);

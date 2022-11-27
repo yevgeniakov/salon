@@ -12,11 +12,14 @@ import entity.User;
 import service.AppointmentManager;
 import service.UserManager;
 
-public class FreeSlotsListTag extends TagSupport {
+/**
+ * Tag for receiving free time slots on certain date and master
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 
-	/**
-	 * 
-	 */
+public class FreeSlotsListTag extends TagSupport {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LogManager.getLogger(FreeSlotsListTag.class);
 	private int master_id;

@@ -21,6 +21,14 @@ import entity.User;
 import service.AppointmentManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Creates a new appointment (Client only)
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
+
 public class CreateAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateAppointmentCommand.class);
 	private AppointmentManager manager;

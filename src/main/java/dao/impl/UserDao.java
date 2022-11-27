@@ -21,6 +21,13 @@ import entity.Role;
 import entity.Service;
 import entity.User;
 
+/**
+ * DAO class for database interacting for user-related operations
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class UserDao implements Dao<User> {
 	private static UserDao instance;
 	private static final Logger logger = LogManager.getLogger(UserDao.class);
@@ -33,15 +40,10 @@ public class UserDao implements Dao<User> {
 	}
 
 	private static final String FIND_USER_BY_ID = "select * from users where id=?";
-
 	private static final String FIND_USER_BY_EMAIL = "select * from users where email=?";
-
 	private static final String INSERT_USER = "insert into users values (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
 	private static final String FIND_ALL_USERS = "select * from users";
-
 	private static final String FIND_ALL_MASTERS = "select * from users where role=" + "'" + Role.HAIRDRESSER + "'";
-
 	private static final String FIND_ALL_MASTERS_BY_SERVICES = "select master_services.id AS master_services_id "
 			+ ", master_services.master_id AS master_service_id " + ", master_services.price AS price "
 			+ ", users.id AS id " + ", users.info AS info " + ", users.name AS name " + ", users.surname AS surname "
@@ -50,17 +52,12 @@ public class UserDao implements Dao<User> {
 			+ ", users.rating AS rating " + "from master_services " + "left join users "
 			+ "on master_services.master_id = users.id " + "where service_id=? AND users.role=" + "'" + Role.HAIRDRESSER
 			+ "'";
-
 	private static final String UPDATE_USER = "update users set name=?, surname=?, tel=?, email=?, info=? where id=?";
-
 	private static final String SET_USER_BLOCK = "update users set isblocked=? where id=?";
-
 	private static final String SET_USER_CURR_LANG = "update users set currentlang=? where id=?";
-
 	private static final String DELETE_SERVICE = "delete from master_services where master_id=? and service_id=?";
 
 	public Connection getConnection() throws SQLException, ClassNotFoundException {
-
 		return DBConnection.getConnection();
 	}
 
@@ -97,7 +94,6 @@ public class UserDao implements Dao<User> {
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(FIND_ALL_USERS);
-
 			while (rs.next()) {
 				users.add(extractUser(rs));
 			}
@@ -173,7 +169,11 @@ public class UserDao implements Dao<User> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-
+	
+	/**
+	* Returns the Map of masters that provide certain service with their price
+	* 
+	*/
 	public SortedMap<User, Integer> findAllMastersByService(Connection con, int service_id, String sort)
 			throws SQLException {
 		logger.trace("enter");
@@ -318,6 +318,10 @@ public class UserDao implements Dao<User> {
 		}
 	}
 
+	/**
+	* Returns the User list that matches provided conditions.
+	* In case parameter is null - is ignored, otherwise is applied
+	*/
 	public List<User> findAllByConditions(Connection con, Boolean isBlocked, Role role, String searchValue)
 			throws SQLException {
 		logger.trace("enter");
@@ -358,6 +362,10 @@ public class UserDao implements Dao<User> {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	* Complements the SQL query for user list with conditions
+	* 
+	*/
 	private String addConditionsToSQL(String sql) {
 		logger.trace("enter");
 
@@ -382,7 +390,11 @@ public class UserDao implements Dao<User> {
 		logger.trace(sql);
 		return sql.toString();
 	}
-
+	
+	/**
+	* Returns the User entity from ResultSet after executing the query
+	* 
+	*/
 	private User extractUser(ResultSet rs) throws SQLException {
 		logger.trace("enter");
 

@@ -19,6 +19,13 @@ import service.ServiceManager;
 import service.UserManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Shows detailed info for user
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class ShowUserInfoCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowUserInfoCommand.class);
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(

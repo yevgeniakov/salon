@@ -20,6 +20,13 @@ import entity.User;
 import service.AppointmentManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Changes the date and time for the appointment (Admin only)
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class SetTimeAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetTimeAppointmentCommand.class);
 	private AppointmentManager manager;

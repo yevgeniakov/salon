@@ -13,11 +13,14 @@ import org.apache.logging.log4j.Logger;
 import entity.Service;
 import service.ServiceManager;
 
-public class ServiceListTag extends TagSupport {
+/**
+ * Tag for receiving a list of services, provided by certain master
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
 
-	/**
-	 * 
-	 */
+public class ServiceListTag extends TagSupport {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LogManager.getLogger(ServiceListTag.class);
 	private int master_id;

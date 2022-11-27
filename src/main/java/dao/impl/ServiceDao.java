@@ -16,6 +16,13 @@ import dao.DBConnection;
 import dao.Dao;
 import entity.Service;
 
+/**
+ * DAO class for database interacting for service-related operations
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class ServiceDao implements Dao<Service> {
 	private static ServiceDao instance;
 	private static final Logger logger = LogManager.getLogger(ServiceDao.class);
@@ -28,11 +35,8 @@ public class ServiceDao implements Dao<Service> {
 	}
 
 	private static final String FIND_SERVICE_BY_ID = "select * from services where id=?";
-
 	private static final String FIND_SERVICE_BY_NAME = "select * from services where name=?";
-
 	private static final String INSERT_SERVICE = "insert into services values (DEFAULT, ?, ?)";
-
 	private static final String FIND_ALL_SERVICES = "select * from services";
 	private static final String FIND_ALL_SERVICES_BY_MASTER = "select master_services.id AS master_services_id "
 			+ ", master_services.service_id AS id " + ", master_services.price AS price " + ", services.info AS info "
@@ -45,7 +49,6 @@ public class ServiceDao implements Dao<Service> {
 			+ "where master_services.id is null";
 
 	public Connection getConnection() throws SQLException, ClassNotFoundException {
-
 		return DBConnection.getConnection();
 	}
 
@@ -198,7 +201,11 @@ public class ServiceDao implements Dao<Service> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-
+	
+	/**
+	* Returns the Service entity from ResultSet after executing the query
+	* 
+	*/
 	private Service extractService(ResultSet rs) throws SQLException {
 		logger.trace("enter");
 

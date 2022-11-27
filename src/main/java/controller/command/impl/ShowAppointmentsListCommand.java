@@ -19,8 +19,16 @@ import entity.User;
 import service.AppointmentManager;
 import service.utils.ValidatorUtil;
 
+/**
+ * Shows the list of appointments, matching provided filters
+ * 
+ * @author yevgenia.kovalova
+ *
+ */
+
 public class ShowAppointmentsListCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowAppointmentsListCommand.class);
+	private AppointmentManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
 	public static final boolean IS_GUEST_ALLOWED = false;
@@ -33,14 +41,10 @@ public class ShowAppointmentsListCommand implements Command {
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
 			logger.info("Access denied.", loggedUser,
 					loggedUser == null ? "GUEST" : loggedUser.getRole());
-			
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
-		
 			LocalDate dateFrom = null;
 			LocalDate dateTo = null;
 			Integer service_id = null;
@@ -96,7 +100,6 @@ public class ShowAppointmentsListCommand implements Command {
 				master_id = loggedUser.getId();
 			}
 			try {
-			AppointmentManager manager = AppointmentManager.getInstance();
 			List<Appointment> appointmentsList = new ArrayList<>();
 			appointmentsList = manager.findAppointmentsByConditions(dateFrom, dateTo, master_id, user_id, service_id,
 					isDone, isPaid, isRating);
@@ -130,5 +133,10 @@ public class ShowAppointmentsListCommand implements Command {
 			return "/error.jsp";
 		}
 	}
-
+	public ShowAppointmentsListCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public ShowAppointmentsListCommand() {
+		this.manager = AppointmentManager.getInstance();
+	}
 }
