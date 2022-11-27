@@ -19,6 +19,7 @@ import service.utils.ValidatorUtil;
 
 public class SetUserBlockCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetUserBlockCommand.class);
+	private UserManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
@@ -37,9 +38,7 @@ public class SetUserBlockCommand implements Command {
 		}
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
 		User user = new User();
-		
 			int id;
 			boolean isBlocked;
 			try {
@@ -51,9 +50,7 @@ public class SetUserBlockCommand implements Command {
 				return "/error.jsp";
 			}
 			try {
-			UserManager manager = UserManager.getInstance();
 			user = manager.setUserBlock(id, isBlocked);
-
 			if (user.getId() != 0) {
 				logger.info("user set blocked = " + isBlocked, id);
 				request.setAttribute("redirect", "redirect");
@@ -67,5 +64,11 @@ public class SetUserBlockCommand implements Command {
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
+	}
+ 	public SetUserBlockCommand(UserManager manager) {
+		this.manager = manager;
+	}
+ 	public SetUserBlockCommand() {
+		this.manager = UserManager.getInstance();
 	}
 }

@@ -22,6 +22,7 @@ import service.utils.ValidatorUtil;
 
 public class SetTimeAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetTimeAppointmentCommand.class);
+	private AppointmentManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
@@ -40,8 +41,6 @@ public class SetTimeAppointmentCommand implements Command {
 		}
 
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
-		
 			LocalDate date = null;
 			LocalDate newDate = null;
 			Integer master_id = 0;
@@ -58,10 +57,8 @@ public class SetTimeAppointmentCommand implements Command {
 				request.setAttribute("error", e.getMessage());
 				return "/error.jsp";
 			}
-
 			try {
 			Appointment appointment = null;
-			AppointmentManager manager = AppointmentManager.getInstance();
 			appointment = manager.findAppointmentByKey(master_id, date, timeslot);
 			manager.setTimeAppointment(appointment, newDate, newTimeslot);
 			appointment = manager.findAppointmentByKey(master_id, newDate, newTimeslot);
@@ -75,5 +72,10 @@ public class SetTimeAppointmentCommand implements Command {
 			return "/error.jsp";
 		}
 	}
-
+	public SetTimeAppointmentCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public SetTimeAppointmentCommand() {
+		this.manager = AppointmentManager.getInstance();
+	}
 }
