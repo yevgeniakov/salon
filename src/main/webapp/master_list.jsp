@@ -30,7 +30,7 @@
 </c:if>
 <form action="Controller" name="formSearch" method="get">
 
-<div class="col-sm-1 w-so">
+<div class="col-sm-2 w-so">
 <strong><fmt:message key="label.sortby"/></strong>
 <select name="sort" class="form-select" onchange="document.formSearch.submit();">
 		<option value="surname" <c:if test="${sort == 'surname' || sort == null}"> selected </c:if>><fmt:message key="option.surname"/></option>

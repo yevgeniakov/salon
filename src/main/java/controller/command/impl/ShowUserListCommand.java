@@ -120,7 +120,7 @@ public class ShowUserListCommand implements Command {
 		request.setAttribute("sort", sort);
 		request.setAttribute("sortorder", sortorder);
 		request.setAttribute("isBlocked", isBlocked);
-		request.setAttribute("role", role);
+		request.setAttribute("role", role);	
 		request.setAttribute("searchValue", searchValue);
 		return "/user_list.jsp";
 	}

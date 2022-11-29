@@ -19,11 +19,11 @@
 
 <div class="row">
 <div class="col-sm"><p class="text-center"><fmt:message key="label.sortby"/></p></div>
+<div class="col-sm"><p class="text-center"><fmt:message key="label.sortorder"/></p></div>
 <div class="col-sm"><p class="text-center"><fmt:message key="label.role" /></p></div>
 <div class="col-sm"><p class="text-center"><fmt:message key="label.status"/></p></div>
 <div class="col-sm"><p class="text-center"><fmt:message key="label.searchbyvalue" /></p></div>
 <div class="w-100"></div>
-<div class="col-sm row">
 <div class="col-sm">
 	<select name="sort" class="form-select" onchange="document.formSearch.submit();">
 		<option value="id"
@@ -44,7 +44,7 @@
 				key="option.descending" /></option>
 	</select>
 </div>
-</div>
+
 <div class="col-sm">
 	<select name="role" class="form-select" onchange="document.formSearch.submit();">
 		<option value="null"
@@ -76,20 +76,26 @@
 </div>
 
 <div class="col-sm">
-<input	class="search_field1" name="searchvalue" onchange="document.formSearch.submit();" value="${searchValue == null ? '': searchValue }">
-	<input type="hidden" name="page" value="1"> <input
-		type="hidden" name="command" value="show_user_list">
-
-</div>
-<div class="w-100"></div>
-<div class="col-sm"><fmt:message key="label.itemsperpage" /> <input	name="itemsperpage" onchange="document.formSearch.submit();"
-		value="${itemsPerPage == null ? 10 : itemsPerPage }" size=2> <br>
+<input	class="form-control" name="searchvalue" onchange="document.formSearch.submit();" value="${searchValue == null ? '': searchValue }">
 
 	<input type="hidden" name="page" value="1"> <input
 		type="hidden" name="command" value="show_user_list">
-</div>
 
 </div>
+</div>
+<div class="row justify-content-end">
+<div class="col-sm-2">
+<fmt:message key="label.itemsperpage" />
+</div>
+<div class="col-sm-1">
+
+<input class="form-control" name="itemsperpage" onchange="document.formSearch.submit();"
+		value="${itemsPerPage == null ? 10 : itemsPerPage }" size=2>
+		</div>
+		</div>
+	<input type="hidden" name="page" value="1"> <input
+		type="hidden" name="command" value="show_user_list">
+		
     </form>
 </div>
 
@@ -190,19 +196,19 @@
 	<ul class="pagination">
 		<li class="page-item ${page != 1? '' : 'disabled' }"><a
 			class="page-link"
-			href="Controller?command=show_user_list&sort=${sort}&sortorder=${sortorder}&isblocked=${isBlocked == null? 'null' : isBlocked}&searchvalue=${searchValue == null ? '': searchValue}&itemsperpage=${itemsPerPage}&page=${page - 1}
+			href="Controller?command=show_user_list&sort=${sort}&sortorder=${sortorder}&role=${role == null? 'null' : role}&isblocked=${isBlocked == null? 'null' : isBlocked}&searchvalue=${searchValue == null ? '': searchValue}&itemsperpage=${itemsPerPage}&page=${page - 1}
 ">&laquo;</a>
 		</li>
 		<c:forEach begin="1" end="${pagesTotal}" var="i">
 			<li class="page-item ${page eq i? 'active' : '' }"><a
 				class="page-link"
-				href="Controller?command=show_user_list&sort=${sort}&sortorder=${sortorder}&isblocked=${isBlocked == null? 'null' : isBlocked}&searchvalue=${searchValue == null ? '': searchValue}&itemsperpage=${itemsPerPage}&page=${i}
+				href="Controller?command=show_user_list&sort=${sort}&sortorder=${sortorder}&role=${role == null? 'null' : role}&isblocked=${isBlocked == null? 'null' : isBlocked}&searchvalue=${searchValue == null ? '': searchValue}&itemsperpage=${itemsPerPage}&page=${i}
 ">${i}</a>
 			</li>
 		</c:forEach>
 		<li class="page-item ${page lt pagesTotal? '' : 'disabled' }"><a
 			class="page-link"
-			href="Controller?command=show_user_list&sort=${sort}&sortorder=${sortorder}&isblocked=${isBlocked == null? 'null' : isBlocked}&searchvalue=${searchValue == null ? '': searchValue}&itemsperpage=${itemsPerPage}&page=${page + 1}
+			href="Controller?command=show_user_list&sort=${sort}&sortorder=${sortorder}&role=${role == null? 'null' : role}&isblocked=${isBlocked == null? 'null' : isBlocked}&searchvalue=${searchValue == null ? '': searchValue}&itemsperpage=${itemsPerPage}&page=${page + 1}
 ">&raquo;</a>
 		</li>
 	</ul>

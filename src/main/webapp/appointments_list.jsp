@@ -17,20 +17,36 @@
 <h3 align="center">
 	<fmt:message key="label.appointments_list" />
 </h3>
-<br>
-
+<div class="table-list">
+<nav class="navbar bg-light">
+  <div class="container-fluid">
 <form action="Controller" name="formSearch" method="get">
-	<strong><fmt:message key="label.date_from" /></strong><input
+
+<div class="row">
+<div class="col-sm"><p class="text-center"><fmt:message key="label.date_from"/></p></div>
+<div class="col-sm"><p class="text-center"><fmt:message key="label.date_to"/></p></div>
+<c:if test="${sessionScope.user.role != 'HAIRDRESSER'}">
+<div class="col-sm"><p class="text-center"><fmt:message key="label.master" /></p></div>
+</c:if>
+<div class="col-sm"><p class="text-center"><fmt:message key="label.service"/></p></div>
+<div class="col-sm"><p class="text-center"><fmt:message key="label.status" /></p></div>
+<div class="col-sm"><p class="text-center"><fmt:message key="label.payment" /></p></div>
+<div class="col-sm"><p class="text-center"><fmt:message key="label.feedback" /></p></div>
+<div class="w-100"></div>
+<div class="col-sm">
+	<input class="form-control"
 		type="date" name="datefrom" onchange="document.formSearch.submit();"
 		value="${datefrom != null? datefrom : LocalDate.now().plusDays(-7)}">
-	<strong><fmt:message key="label.date_to" /></strong><input type="date"
+		</div>
+	<div class="col-sm"><input class="form-control" type="date"
 		name="dateto" onchange="document.formSearch.submit();"
 		value="${dateto != null? dateto : LocalDate.now().plusDays(7)}">
+		</div>
 
 	<c:if test="${sessionScope.user.role != 'HAIRDRESSER'}">
 		<my:getmasters />
-		<strong><fmt:message key="label.master" /></strong>
-		<select name="master_id" onchange="document.formSearch.submit();">
+		<div class="col-sm">
+		<select class="form-select" name="master_id" onchange="document.formSearch.submit();">
 			<option value="null"
 				<c:if test="${master_id == null}"> selected </c:if>><fmt:message
 					key="option.all" /></option>
@@ -40,12 +56,13 @@
 					${item.surname}</option>
 			</c:forEach>
 		</select>
+		</div>
 	</c:if>
 
 
 	<my:getservices master_id="0" />
 
-	<strong><fmt:message key="label.service" /></strong> <select
+	<div class="col-sm"><select class="form-select"
 		name="service_id" onchange="document.formSearch.submit();">
 		<option value="null"
 			<c:if test="${service_id == null}"> selected </c:if>><fmt:message
@@ -54,7 +71,9 @@
 			<option value="${item.id}"
 				<c:if test="${service_id == item.id}"> selected </c:if>>${item.name}</option>
 		</c:forEach>
-	</select> <strong><fmt:message key="label.status" /></strong> <select
+	</select> 
+	</div>
+	<div class="col-sm"> <select class="form-select"
 		name="isdone" onchange="document.formSearch.submit();">
 		<option value="null" <c:if test="${isDone == null}"> selected </c:if>><fmt:message
 				key="option.all" /></option>
@@ -64,7 +83,9 @@
 		<option value=false
 			<c:if test="${isDone != null && !isDone}"> selected </c:if>><fmt:message
 				key="option.incomplete" /></option>
-	</select> <strong><fmt:message key="label.payment" /></strong> <select
+	</select> 
+	</div>
+	<div class="col-sm"><select class="form-select"
 		name="ispaid" onchange="document.formSearch.submit();">
 		<option value="null" <c:if test="${isPaid == null}"> selected </c:if>><fmt:message
 				key="option.all" /></option>
@@ -74,7 +95,9 @@
 		<option value=false
 			<c:if test="${isPaid != null && !isPaid}"> selected </c:if>><fmt:message
 				key="option.unpaid" /></option>
-	</select> <strong><fmt:message key="label.feedback" /></strong> <select
+	</select>
+	</div>
+	<div class="col-sm"><select class="form-select"
 		name="israting" onchange="document.formSearch.submit();">
 		<option value="null"
 			<c:if test="${isRating == null}"> selected </c:if>><fmt:message
@@ -86,7 +109,8 @@
 			<c:if test="${isRating != null && !isRating}"> selected </c:if>><fmt:message
 				key="option.feedback_not_left" /></option>
 	</select>
-
+	</div>
+</div>
 
 	<c:if test="${sessionScope.user.role == 'HAIRDRESSER'}">
 
@@ -111,18 +135,24 @@
 
 	<input type="hidden" name="command" value="show_appointments_list">
 
-	<hr>
+	<div class="row justify-content-end">
+<div class="col-sm-2">
+<fmt:message key="label.itemsperpage" />
+</div>
+<div class="col-sm-1">
 
-	<strong><fmt:message key="label.itemsperpage" /></strong> <input
-		name="itemsperpage" onchange="document.formSearch.submit();"
-		value="${itemsPerPage == null ? 10 : itemsPerPage }" size=2> <br>
-	<input type="hidden" name="page" value="1">
+<input class="form-control" name="itemsperpage" onchange="document.formSearch.submit();"
+		value="${itemsPerPage == null ? 10 : itemsPerPage }" size=2>
+		</div>
+		</div>
+	<input type="hidden" name="page" value="1"> <input
+		type="hidden" name="command" value="show_user_list">
+		
 
 </form>
+</div>
+</nav>
 
-<hr>
-
-<div class="table-list">
 	<table class="table table-striped">
 
 		<tr>
@@ -227,7 +257,6 @@
 </nav>
 
 </div>
-
 <footer class="footer mt-auto py-3 bg-dark">
 	<div class="container">
 		<span class="text-light">Beauty Salon © 2022</span>
