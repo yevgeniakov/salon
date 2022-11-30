@@ -46,7 +46,7 @@ After providing services, the Client leaves feedback. The offer to leave feedbac
 
     <footer class="footer mt-auto py-3 bg-dark">
       <div class="container">
-        <span class="text-light">Beauty Salon © 2022</span>
+        <span class="text-light"><fmt:message key="label.footer" /></span>
       </div>
     </footer>
 </body>

@@ -8,8 +8,6 @@ import static org.mockito.Mockito.when;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +18,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import controller.command.Command;
-import controller.command.impl.CreateUserCommand;
 import controller.command.impl.ShowMasterListCommand;
 import controller.exceptions.CreatingUserException;
 import dao.impl.UserDao;

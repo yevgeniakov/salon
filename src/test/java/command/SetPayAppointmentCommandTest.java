@@ -22,7 +22,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import controller.command.Command;
-import controller.command.impl.SetCompleteAppointmentCommand;
 import controller.command.impl.SetPayAppointmentCommand;
 import controller.exceptions.CreatingUserException;
 import dao.impl.AppointmentDao;
