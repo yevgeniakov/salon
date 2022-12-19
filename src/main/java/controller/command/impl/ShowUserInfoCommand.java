@@ -28,9 +28,20 @@ import service.utils.ValidatorUtil;
 
 public class ShowUserInfoCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowUserInfoCommand.class);
+	private UserManager userManager;
+	private ServiceManager serviceManager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
 	public static final boolean IS_GUEST_ALLOWED = true;
+	
+ 	public ShowUserInfoCommand(UserManager userManager, ServiceManager serviceManager) {
+		this.userManager = userManager;
+		this.serviceManager = serviceManager;
+	}
+ 	public ShowUserInfoCommand() {
+ 		this.userManager = UserManager.getInstance();
+ 		this.serviceManager = ServiceManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -40,15 +51,11 @@ public class ShowUserInfoCommand implements Command {
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
 			logger.info("Access denied.", loggedUser,
 					loggedUser == null ? "GUEST" : loggedUser.getRole());
-			
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
 		int id = 0;
-
 		if (!(request.getParameter("id") == null)) {
 			try {
 				id = ValidatorUtil.parseIntParameter(request.getParameter("id"));
@@ -58,19 +65,15 @@ public class ShowUserInfoCommand implements Command {
 				return "/error.jsp";
 			}
 		} else {
-				
 			if (!(loggedUser == null)) {
 				id = loggedUser.getId();
 			}
 		}
-
 		if (id == 0) {
 			logger.error("unable to find user");
 			request.setAttribute("error", "unable to find user!");
 			return "/error.jsp";
 		}
-
-		UserManager userManager = UserManager.getInstance();
 		User user = new User();
 		try {
 			user = userManager.findUserbyID(id);
@@ -79,7 +82,6 @@ public class ShowUserInfoCommand implements Command {
 			request.setAttribute("error", "unable to find user!");
 			return "/error.jsp";
 		}
-		
 		if (!(user.getRole() == Role.HAIRDRESSER 
 				|| (loggedUser != null
 						&& (loggedUser.getId() == user.getId() || loggedUser.getRole() != Role.CLIENT)))) {
@@ -87,9 +89,6 @@ public class ShowUserInfoCommand implements Command {
 			request.setAttribute("error", "You are not allowed to see this user info!");
 			return "/error.jsp";
 		}
-		
-
-		ServiceManager serviceManager = ServiceManager.getInstance();
 		TreeMap<Service, Integer> services = new TreeMap<>();
 		if (user.getRole() == Role.HAIRDRESSER) {
 			services = new TreeMap<>();
@@ -102,10 +101,8 @@ public class ShowUserInfoCommand implements Command {
 				return "/error.jsp";
 			}
 		} 
-
 		request.setAttribute("services", services);
 		request.setAttribute("showuser", user);
 		return "/user_info.jsp";
 	}
-
 }

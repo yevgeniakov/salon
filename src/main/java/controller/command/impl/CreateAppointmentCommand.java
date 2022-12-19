@@ -35,6 +35,13 @@ public class CreateAppointmentCommand implements Command {
 	private static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.CLIENT));
 	private static final boolean IS_GUEST_ALLOWED = false;
+	
+	public CreateAppointmentCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public CreateAppointmentCommand() {
+		this.manager = AppointmentManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -92,11 +99,5 @@ public class CreateAppointmentCommand implements Command {
 			request.setAttribute("error", "Something wrong. try once more.");
 			return "/error.jsp";
 		}
-	}
-	public CreateAppointmentCommand(AppointmentManager manager) {
-		this.manager = manager;
-	}
-	public CreateAppointmentCommand() {
-		this.manager = AppointmentManager.getInstance();
 	}
 }

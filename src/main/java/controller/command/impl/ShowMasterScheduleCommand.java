@@ -29,9 +29,20 @@ import service.utils.ValidatorUtil;
  */
 public class ShowMasterScheduleCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowMasterScheduleCommand.class);
+	private UserManager userManager;
+	private AppointmentManager appointmentManager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
 	public static final boolean IS_GUEST_ALLOWED = false;
+	
+ 	public ShowMasterScheduleCommand(UserManager userManager, AppointmentManager appointmentManager) {
+		this.userManager = userManager;
+		this.appointmentManager = appointmentManager;
+	}
+ 	public ShowMasterScheduleCommand() {
+ 		this.userManager = UserManager.getInstance();
+ 		this.appointmentManager = AppointmentManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -45,10 +56,7 @@ public class ShowMasterScheduleCommand implements Command {
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
-		
 			int id = 0;
 			LocalDate date = null;
 			try {
@@ -60,22 +68,17 @@ public class ShowMasterScheduleCommand implements Command {
 				return "/error.jsp";
 			}
 			try {
-			UserManager userManager = UserManager.getInstance();
 			User master = userManager.findUserbyID(id);
-
-			AppointmentManager manager = AppointmentManager.getInstance();
-			List<Appointment> appointments = manager.getMasterSchedule(date, master);
+			List<Appointment> appointments = appointmentManager.getMasterSchedule(date, master);
 			request.setAttribute("schedule", appointments);
 			request.setAttribute("master", master);
 			request.setAttribute("id", id);
 			request.setAttribute("date", date);
 			return "/master_schedule.jsp";
-
 		} catch (FindingUserException | FindingAppointmentException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
 	}
-
 }

@@ -28,6 +28,13 @@ public class ShowMasterListCommand implements Command {
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN, Role.CLIENT));
 	public static final boolean IS_GUEST_ALLOWED = true;
+	
+ 	public ShowMasterListCommand(UserManager manager) {
+		this.manager = manager;
+	}
+ 	public ShowMasterListCommand() {
+		this.manager = UserManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -60,11 +67,5 @@ public class ShowMasterListCommand implements Command {
 		request.setAttribute("userlist", users);
 		request.setAttribute("sort", sort);
 		return "/master_list.jsp";
-	}
- 	public ShowMasterListCommand(UserManager manager) {
-		this.manager = manager;
-	}
- 	public ShowMasterListCommand() {
-		this.manager = UserManager.getInstance();
 	}
 }

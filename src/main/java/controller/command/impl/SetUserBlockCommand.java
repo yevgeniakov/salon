@@ -30,6 +30,13 @@ public class SetUserBlockCommand implements Command {
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
+	
+ 	public SetUserBlockCommand(UserManager manager) {
+		this.manager = manager;
+	}
+ 	public SetUserBlockCommand() {
+		this.manager = UserManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -71,11 +78,5 @@ public class SetUserBlockCommand implements Command {
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
-	}
- 	public SetUserBlockCommand(UserManager manager) {
-		this.manager = manager;
-	}
- 	public SetUserBlockCommand() {
-		this.manager = UserManager.getInstance();
 	}
 }

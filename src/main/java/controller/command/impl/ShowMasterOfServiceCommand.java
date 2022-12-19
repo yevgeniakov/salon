@@ -27,9 +27,20 @@ import service.utils.ValidatorUtil;
  */
 public class ShowMasterOfServiceCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowMasterOfServiceCommand.class);
+	private UserManager userManager;
+	private ServiceManager serviceManager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN, Role.CLIENT));
 	public static final boolean IS_GUEST_ALLOWED = true;
+	
+ 	public ShowMasterOfServiceCommand(UserManager userManager, ServiceManager serviceManager) {
+		this.userManager = userManager;
+		this.serviceManager = serviceManager;
+	}
+ 	public ShowMasterOfServiceCommand() {
+ 		this.userManager = UserManager.getInstance();
+ 		this.serviceManager = ServiceManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -39,17 +50,12 @@ public class ShowMasterOfServiceCommand implements Command {
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
 			logger.info("Access denied.", loggedUser,
 					loggedUser == null ? "GUEST" : loggedUser.getRole());
-			
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
-		UserManager userManager = UserManager.getInstance();
 		SortedMap<User, Integer> masters = null;
 		String sort = request.getParameter("sort");
-		
 		int service_id = 0;
 		try {
 			service_id = ValidatorUtil.parseIntParameter(request.getParameter("service_id"));
@@ -60,16 +66,12 @@ public class ShowMasterOfServiceCommand implements Command {
 		}
 		try {
 			masters = userManager.findAllMastersByService(service_id, sort);
-
 		} catch (FindingUserException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", "unable to get master list");
 			return "/error.jsp";
 		}
-
-		ServiceManager serviceManager = ServiceManager.getInstance();
 		Service service = new Service();
-
 		try {
 			service = serviceManager.findServiceByID(service_id);
 		} catch (Exception e) {
@@ -77,7 +79,6 @@ public class ShowMasterOfServiceCommand implements Command {
 			request.setAttribute("error", "unable to obtain service by ID");
 			return "/error.jsp";
 		}
-
 		request.setAttribute("masters", masters);
 		request.setAttribute("sort", sort);
 		request.setAttribute("service_id", service_id);

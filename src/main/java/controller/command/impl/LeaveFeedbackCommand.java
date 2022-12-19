@@ -34,6 +34,12 @@ public class LeaveFeedbackCommand implements Command {
 	        List.of(Role.CLIENT));
 	public static final boolean IS_GUEST_ALLOWED = false;
 
+	public LeaveFeedbackCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public LeaveFeedbackCommand() {
+		this.manager = AppointmentManager.getInstance();
+	}
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.trace("execute");
@@ -81,11 +87,5 @@ public class LeaveFeedbackCommand implements Command {
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
-	}
-	public LeaveFeedbackCommand(AppointmentManager manager) {
-		this.manager = manager;
-	}
-	public LeaveFeedbackCommand() {
-		this.manager = AppointmentManager.getInstance();
 	}
 }

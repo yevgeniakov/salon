@@ -32,6 +32,13 @@ public class DeleteServiceFromMasterCommand implements Command {
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
+	
+ 	public DeleteServiceFromMasterCommand(UserManager manager) {
+		this.manager = manager;
+	}
+ 	public DeleteServiceFromMasterCommand() {
+		this.manager = UserManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -79,11 +86,5 @@ public class DeleteServiceFromMasterCommand implements Command {
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
-	}
- 	public DeleteServiceFromMasterCommand(UserManager manager) {
-		this.manager = manager;
-	}
- 	public DeleteServiceFromMasterCommand() {
-		this.manager = UserManager.getInstance();
 	}
 }

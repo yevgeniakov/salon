@@ -32,6 +32,13 @@ public class CreateUserCommand implements Command {
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = true;
+	
+ 	public CreateUserCommand(UserManager manager) {
+		this.userManager = manager;
+	}
+ 	public CreateUserCommand() {
+		this.userManager = UserManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -113,11 +120,5 @@ public class CreateUserCommand implements Command {
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
-	}
- 	public CreateUserCommand(UserManager manager) {
-		this.userManager = manager;
-	}
- 	public CreateUserCommand() {
-		this.userManager = UserManager.getInstance();
 	}
 }

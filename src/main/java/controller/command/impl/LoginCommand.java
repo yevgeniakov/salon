@@ -22,6 +22,12 @@ public class LoginCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(LoginCommand.class);
 	private UserManager manager;
 
+ 	public LoginCommand(UserManager manager) {
+		this.manager = manager;
+	}
+ 	public LoginCommand() {
+		this.manager = UserManager.getInstance();
+	}
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.trace("execute");
@@ -47,11 +53,5 @@ public class LoginCommand implements Command {
 		logger.error("user is logged already. ");
 		request.setAttribute("error", "you are logged!");
 		return "/error.jsp";
-	}
- 	public LoginCommand(UserManager manager) {
-		this.manager = manager;
-	}
- 	public LoginCommand() {
-		this.manager = UserManager.getInstance();
 	}
 }

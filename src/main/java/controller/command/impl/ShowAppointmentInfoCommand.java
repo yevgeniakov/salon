@@ -32,6 +32,13 @@ public class ShowAppointmentInfoCommand implements Command {
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
 	public static final boolean IS_GUEST_ALLOWED = false;
+	
+	public ShowAppointmentInfoCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public ShowAppointmentInfoCommand() {
+		this.manager = AppointmentManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -77,11 +84,4 @@ public class ShowAppointmentInfoCommand implements Command {
 			return "/error.jsp";
 		}
 	}
-	public ShowAppointmentInfoCommand(AppointmentManager manager) {
-		this.manager = manager;
-	}
-	public ShowAppointmentInfoCommand() {
-		this.manager = AppointmentManager.getInstance();
-	}
-
 }

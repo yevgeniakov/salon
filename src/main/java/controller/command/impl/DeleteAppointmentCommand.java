@@ -31,6 +31,13 @@ public class DeleteAppointmentCommand implements Command {
 	private AppointmentManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
+	
+	public DeleteAppointmentCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public DeleteAppointmentCommand() {
+		this.manager = AppointmentManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -72,11 +79,5 @@ public class DeleteAppointmentCommand implements Command {
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
-	}
-	public DeleteAppointmentCommand(AppointmentManager manager) {
-		this.manager = manager;
-	}
-	public DeleteAppointmentCommand() {
-		this.manager = AppointmentManager.getInstance();
 	}
 }

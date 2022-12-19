@@ -30,9 +30,17 @@ import service.UserManager;
 
 public class UpdateUserCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(UpdateUserCommand.class);
+	private UserManager userManager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
 	public static final boolean IS_GUEST_ALLOWED = false;
+	
+ 	public UpdateUserCommand(UserManager userManager) {
+		this.userManager = userManager;
+	}
+ 	public UpdateUserCommand() {
+ 		this.userManager = UserManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -42,14 +50,10 @@ public class UpdateUserCommand implements Command {
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
 			logger.info("Access denied.", loggedUser,
 					loggedUser == null ? "GUEST" : loggedUser.getRole());
-			
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
-			
 			int id = 0;
 			try {
 				id = parseIntParameter(request.getParameter("id"));
@@ -63,11 +67,9 @@ public class UpdateUserCommand implements Command {
 			String email = request.getParameter("email");
 			String tel = request.getParameter("tel");
 			String info = request.getParameter("info");
-			
 			logger.trace(isValidName(name));
 			logger.trace(isValidName(surname));
 			logger.trace(isValidEmail(email));
-			
 			if (!isValidName(name)
 					||!isValidName(surname) 
 					|| !isValidEmail(email)) {
@@ -75,16 +77,13 @@ public class UpdateUserCommand implements Command {
 				request.setAttribute("error", "Can't update user. Invalid input data.");
 				return "/error.jsp";
 			}
-			
 			if (loggedUser.getRole() != Role.ADMIN) {
 				id = loggedUser.getId();
 			}
-			
 			try {
 			int i = 1;
 			ServiceManager serviceManager = ServiceManager.getInstance();
 			HashMap<Integer, Integer> serviceMap = new HashMap<>();
-
 			while (request.getParameter("service" + i) != null) {
 				String sumParam = request.getParameter("sum" + i);
 				int sum = (sumParam == "") ? 0 : Integer.parseInt(request.getParameter("sum" + i));
@@ -94,16 +93,11 @@ public class UpdateUserCommand implements Command {
 				i++;
 			}
 			User user = new User(id, email, "", name, surname, tel, null, info, false, 0, "");
-
-			UserManager userManager = UserManager.getInstance();
 			user = userManager.updateUser(user);
-
 			if (!serviceMap.isEmpty()) {
 				user = userManager.addServicesToUser(user, serviceMap);
 			}
-
 			if (user.getId() != 0) {
-				
 				if (loggedUser.getId() == user.getId()) {
 					loggedUser.setEmail(user.getEmail());
 					loggedUser.setName(user.getName());
@@ -112,7 +106,6 @@ public class UpdateUserCommand implements Command {
 					loggedUser.setInfo(user.getInfo());
 					request.getSession().setAttribute("user", loggedUser);
 				}
-
 				if (loggedUser.getRole() != Role.ADMIN) {
 					logger.info("user updated his info", id);
 					request.setAttribute("redirect", "redirect");
@@ -133,5 +126,4 @@ public class UpdateUserCommand implements Command {
 			return "/error.jsp";
 		}
 	}
-
 }

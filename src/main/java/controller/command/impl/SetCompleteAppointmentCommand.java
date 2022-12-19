@@ -33,6 +33,13 @@ public class SetCompleteAppointmentCommand implements Command {
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.HAIRDRESSER));
 	public static final boolean IS_GUEST_ALLOWED = false;
+	
+	public SetCompleteAppointmentCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public SetCompleteAppointmentCommand() {
+		this.manager = AppointmentManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -72,11 +79,5 @@ public class SetCompleteAppointmentCommand implements Command {
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
-	}
-	public SetCompleteAppointmentCommand(AppointmentManager manager) {
-		this.manager = manager;
-	}
-	public SetCompleteAppointmentCommand() {
-		this.manager = AppointmentManager.getInstance();
 	}
 }

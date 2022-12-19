@@ -27,9 +27,17 @@ import service.utils.ValidatorUtil;
 
 public class ShowUserListCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowUserListCommand.class);
+	private UserManager userManager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
+	
+ 	public ShowUserListCommand(UserManager userManager) {
+		this.userManager = userManager;
+	}
+ 	public ShowUserListCommand() {
+ 		this.userManager = UserManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -39,13 +47,10 @@ public class ShowUserListCommand implements Command {
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
 			logger.info("Access denied.", loggedUser,
 					loggedUser == null ? "GUEST" : loggedUser.getRole());
-			
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-		
 		String sort = request.getParameter("sort");
 		String sortorder = request.getParameter("sortorder");
 		if (sortorder != null && !ValidatorUtil.isValidSortOrder(sortorder)) {
@@ -82,23 +87,18 @@ public class ShowUserListCommand implements Command {
 			return "/error.jsp";
 		}
 		String searchValue = request.getParameter("searchvalue");
-		
-		UserManager manager = UserManager.getInstance();
 		List<User> users = new ArrayList<>();
-
 		try {
-			users = manager.findUsersByConditions(isBlocked, role, searchValue);
+			users = userManager.findUsersByConditions(isBlocked, role, searchValue);
 		} catch (FindingUserException e) {
 			logger.info(e.getMessage(), e);
 			request.setAttribute("error", "unable to get user list");
 			return "/error.jsp";
 		}
-
 		if ("id".equals(sort)) {
 			users.sort("desc".equals(sortorder) ? Comparator.comparing(User::getId).reversed()
 					: Comparator.comparing(User::getId));
 		}
-
 		if ("surname".equals(sort)) {
 			users.sort("desc".equals(sortorder) ? Comparator.comparing(User::getSurname).reversed()
 					: Comparator.comparing(User::getSurname));
@@ -112,7 +112,6 @@ public class ShowUserListCommand implements Command {
 		int indexTo = itemsPerPage * page;
 		int indexFrom = indexTo - itemsPerPage;
 		List<User> subUsers = users.subList(indexFrom, Math.min(indexTo, itemsAmount));
-
 		request.setAttribute("userlist", subUsers);
 		request.setAttribute("page", page);
 		request.setAttribute("pagesTotal", pagesTotal);
@@ -124,5 +123,4 @@ public class ShowUserListCommand implements Command {
 		request.setAttribute("searchValue", searchValue);
 		return "/user_list.jsp";
 	}
-
 }

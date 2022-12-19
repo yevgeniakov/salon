@@ -33,6 +33,13 @@ public class SetTimeAppointmentCommand implements Command {
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
 	        List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
+	
+	public SetTimeAppointmentCommand(AppointmentManager manager) {
+		this.manager = manager;
+	}
+	public SetTimeAppointmentCommand() {
+		this.manager = AppointmentManager.getInstance();
+	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -78,11 +85,5 @@ public class SetTimeAppointmentCommand implements Command {
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
-	}
-	public SetTimeAppointmentCommand(AppointmentManager manager) {
-		this.manager = manager;
-	}
-	public SetTimeAppointmentCommand() {
-		this.manager = AppointmentManager.getInstance();
 	}
 }
