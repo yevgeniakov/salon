@@ -1,7 +1,5 @@
 package controller;
 
-
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -26,19 +24,17 @@ public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LogManager.getLogger(Controller.class);
 
-    public Controller() {
-        
-    }
+	public Controller() {
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		logger.trace("doGet");
+
 		String address = "error.jsp";
 		String commandName = request.getParameter("command");
 		logger.trace("commandName ==> " + commandName);
-
 		Command command = CommandContainer.getCommand(commandName);
 		try {
 			address = command.execute(request, response);
@@ -47,28 +43,23 @@ public class Controller extends HttpServlet {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", "Unable to do action. Try again.");
 		}
-		
 		if (request.getAttribute("redirect") != null) {
 			logger.trace("sending redirect in controller");
 			response.sendRedirect(address);
 		} else {
 			logger.trace("sending forward in controller");
 			ServletContext servletContext = getServletContext();
-	        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(address);
-	        requestDispatcher.forward(request, response);	
-		
+			RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(address);
+			requestDispatcher.forward(request, response);
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		logger.trace("doPost");
 		String address = "/error.jsp";
 		String commandName = request.getParameter("command");
 		logger.trace("commandName ==> " + commandName);
-
 		Command command = CommandContainer.getCommand(commandName);
 		try {
 			address = command.execute(request, response);
@@ -77,17 +68,14 @@ public class Controller extends HttpServlet {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", "Unable to do action. Try again.");
 		}
-
 		if (request.getAttribute("redirect") != null) {
 			logger.trace("sending redirect in controller");
 			response.sendRedirect(address);
 		} else {
 			logger.trace("sending forward in controller");
 			ServletContext servletContext = getServletContext();
-	        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(address);
-	        requestDispatcher.forward(request, response);	
-		
+			RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(address);
+			requestDispatcher.forward(request, response);
 		}
 	}
-
 }

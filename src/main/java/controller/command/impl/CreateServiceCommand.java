@@ -24,36 +24,32 @@ import service.utils.ValidatorUtil;
  *
  */
 
-
 public class CreateServiceCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateServiceCommand.class);
 	private ServiceManager manager;
-	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
-	        List.of(Role.ADMIN));
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
-	
- 	public CreateServiceCommand(ServiceManager manager) {
+
+	public CreateServiceCommand(ServiceManager manager) {
 		this.manager = manager;
 	}
- 	public CreateServiceCommand() {
+
+	public CreateServiceCommand() {
 		this.manager = ServiceManager.getInstance();
 	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.trace("execute");
-		
+
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
-			logger.info("Access denied.", loggedUser,
-					loggedUser == null ? "GUEST" : loggedUser.getRole());
-			
+			logger.info("Access denied.", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
+
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-		
 		try {
 			String name = request.getParameter("name");
 			String info = request.getParameter("info");
@@ -63,13 +59,11 @@ public class CreateServiceCommand implements Command {
 				return "/error.jsp";
 			}
 			Service service = new Service(0, name, info);
-			//ServiceManager manager = ServiceManager.getInstance();
 			service = manager.createService(service);
-
 			if (service.getId() == 0) {
 				logger.error("Service is not created");
 				request.setAttribute("error", "Can't create service");
-				return "/error.jsp";	
+				return "/error.jsp";
 			}
 			logger.info("new service created", service.getId(), name);
 			request.setAttribute("redirect", "redirect");

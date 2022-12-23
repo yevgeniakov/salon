@@ -22,19 +22,20 @@ public class LoginCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(LoginCommand.class);
 	private UserManager manager;
 
- 	public LoginCommand(UserManager manager) {
+	public LoginCommand(UserManager manager) {
 		this.manager = manager;
 	}
- 	public LoginCommand() {
+
+	public LoginCommand() {
 		this.manager = UserManager.getInstance();
 	}
+
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.trace("execute");
-		
+
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		//UserManager manager = UserManager.getInstance();
 		User user = null;
 		try {
 			user = manager.checkCredentials(email, password);

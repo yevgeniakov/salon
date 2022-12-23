@@ -29,13 +29,13 @@ import service.utils.ValidatorUtil;
 public class ShowAppointmentInfoCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowAppointmentInfoCommand.class);
 	private AppointmentManager manager;
-	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
-	        List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
 	public static final boolean IS_GUEST_ALLOWED = false;
-	
+
 	public ShowAppointmentInfoCommand(AppointmentManager manager) {
 		this.manager = manager;
 	}
+
 	public ShowAppointmentInfoCommand() {
 		this.manager = AppointmentManager.getInstance();
 	}
@@ -43,12 +43,10 @@ public class ShowAppointmentInfoCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.trace("execute");
-		
+
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
-			logger.info("Access denied.", loggedUser,
-					loggedUser == null ? "GUEST" : loggedUser.getRole());
-			
+			logger.info("Access denied.", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
@@ -65,13 +63,14 @@ public class ShowAppointmentInfoCommand implements Command {
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
-			try {
+		try {
 			Appointment appointment = new Appointment();
 			appointment = manager.findAppointmentByKey(master_id, date, timeslot);
-			if (appointment == null || (!appointment.getUser().equals(loggedUser) && !appointment.getMaster().equals(loggedUser) && loggedUser.getRole() != Role.ADMIN)) {
+			if (appointment == null || (!appointment.getUser().equals(loggedUser)
+					&& !appointment.getMaster().equals(loggedUser) && loggedUser.getRole() != Role.ADMIN)) {
 				logger.error("access denied", loggedUser, appointment);
 				request.setAttribute("error", "You are not allowed to see view this appointment info!");
-				return "/error.jsp";	
+				return "/error.jsp";
 			}
 			request.setAttribute("appointment", appointment);
 			request.setAttribute("master_id", master_id);

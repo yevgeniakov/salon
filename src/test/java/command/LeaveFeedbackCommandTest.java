@@ -43,12 +43,12 @@ public class LeaveFeedbackCommandTest {
 	@Before
 	public void setUp() {
 		this.dao = mock(AppointmentDao.class);
-		this.request = mock(HttpServletRequest.class); 
+		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
 		this.session = mock(HttpSession.class);
 		this.appointmentManager = new AppointmentManager(dao);
 	}
-	
+
 	@Test
 	public void testLeaveFeedbackCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -60,7 +60,7 @@ public class LeaveFeedbackCommandTest {
 		testAppointment.setMaster(master);
 		User loggedUser = new User();
 		loggedUser.setId(2);
-		
+
 		testAppointment.setUser(loggedUser);
 		testAppointment.setDate(LocalDate.now());
 		testAppointment.setTimeslot(11);
@@ -73,8 +73,8 @@ public class LeaveFeedbackCommandTest {
 		when(request.getParameter("feedback")).thenReturn("super");
 		when(session.getAttribute("user")).thenReturn(null);
 		when(request.getSession()).thenReturn(session);
-		when(dao.findByKey(any(Connection.class), anyInt(), any(LocalDate.class), anyInt())).thenReturn(testAppointment);
-
+		when(dao.findByKey(any(Connection.class), anyInt(), any(LocalDate.class), anyInt()))
+				.thenReturn(testAppointment);
 		Command command = new LeaveFeedbackCommand(appointmentManager);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(session.getAttribute("user")).thenReturn(loggedUser);
@@ -82,7 +82,9 @@ public class LeaveFeedbackCommandTest {
 		loggedUser.setRole(Role.CLIENT);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		loggedUser.setId(14);
-		assertEquals(command.execute(request, response), "Controller?command=show_appointment_info&master_id=" + testAppointment.getMaster().getId() + "&date=" + testAppointment.getDate() + "&timeslot=" + testAppointment.getTimeslot());
+		assertEquals(command.execute(request, response),
+				"Controller?command=show_appointment_info&master_id=" + testAppointment.getMaster().getId() + "&date="
+						+ testAppointment.getDate() + "&timeslot=" + testAppointment.getTimeslot());
 		when(request.getParameter("rating")).thenReturn("353");
 		assertEquals(command.execute(request, response), "/error.jsp");
 

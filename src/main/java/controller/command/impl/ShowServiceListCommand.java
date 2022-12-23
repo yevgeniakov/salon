@@ -26,25 +26,24 @@ import service.ServiceManager;
 public class ShowServiceListCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowServiceListCommand.class);
 	private ServiceManager serviceManager;
-	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
-	        List.of(Role.ADMIN, Role.CLIENT));
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN, Role.CLIENT));
 	public static final boolean IS_GUEST_ALLOWED = true;
-	
- 	public ShowServiceListCommand(ServiceManager serviceManager) {
+
+	public ShowServiceListCommand(ServiceManager serviceManager) {
 		this.serviceManager = serviceManager;
 	}
- 	public ShowServiceListCommand() {
+
+	public ShowServiceListCommand() {
 		this.serviceManager = ServiceManager.getInstance();
 	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.trace("execute");
-		
+
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
-			logger.info("Access denied.", loggedUser,
-					loggedUser == null ? "GUEST" : loggedUser.getRole());
+			logger.info("Access denied.", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}

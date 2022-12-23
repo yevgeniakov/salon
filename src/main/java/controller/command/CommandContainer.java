@@ -5,10 +5,9 @@ import java.util.Map;
 
 import controller.command.impl.*;
 
-
 public class CommandContainer {
-private static final Map<String, Command> commands;
-	
+	private static final Map<String, Command> commands;
+
 	static {
 		commands = new HashMap<>();
 
@@ -20,7 +19,7 @@ private static final Map<String, Command> commands;
 		commands.put("show_user_list", new ShowUserListCommand());
 		commands.put("show_master_list", new ShowMasterListCommand());
 		commands.put("show_service_list", new ShowServiceListCommand());
-		commands.put("create_service", new CreateServiceCommand());	
+		commands.put("create_service", new CreateServiceCommand());
 		commands.put("show_masters_of_service", new ShowMasterOfServiceCommand());
 		commands.put("delete_service_from_master", new DeleteServiceFromMasterCommand());
 		commands.put("update_user", new UpdateUserCommand());
@@ -42,5 +41,4 @@ private static final Map<String, Command> commands;
 	public static Command getCommand(String commandName) {
 		return commands.get(commandName);
 	}
-
 }

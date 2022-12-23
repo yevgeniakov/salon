@@ -42,7 +42,6 @@ public class ServiceListTag extends TagSupport {
 				logger.error(e.getMessage(), e);
 			}
 			pageContext.setAttribute("servicelist", serviceList);
-
 		} else {
 			TreeMap<Service, Integer> serviceMap = new TreeMap<>();
 			try {

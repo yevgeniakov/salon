@@ -43,12 +43,12 @@ public class CreateAppointmentCommandTest {
 	@Before
 	public void setUp() {
 		this.dao = mock(AppointmentDao.class);
-		this.request = mock(HttpServletRequest.class); 
+		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
 		this.session = mock(HttpSession.class);
 		this.appointmentManager = new AppointmentManager(dao);
 	}
-	
+
 	@Test
 	public void testCreateAppointmentCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -75,8 +75,8 @@ public class CreateAppointmentCommandTest {
 		when(session.getAttribute("user")).thenReturn(client);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		client.setRole(Role.CLIENT);
-		assertEquals(command.execute(request, response), "Controller?command=show_master_schedule&id=" + testAppointment.getMaster().getId() + "&date="
-				+ testAppointment.getDate());
+		assertEquals(command.execute(request, response), "Controller?command=show_master_schedule&id="
+				+ testAppointment.getMaster().getId() + "&date=" + testAppointment.getDate());
 		when(dao.save(any(Connection.class), any(Appointment.class))).thenThrow(SQLException.class);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(request.getParameter("timeslot")).thenReturn("353");

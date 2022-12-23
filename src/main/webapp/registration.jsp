@@ -17,7 +17,6 @@
 		<fmt:message key="label.provide_your_data" />
 	</h3>
 	<br>
-
 	<form action="Controller" id="registration_form"
 		name="registration_form" method=post>
 		<div class="mb-3 row">
@@ -28,7 +27,6 @@
 				<span id="error_email" class="error" aria-live="polite"></span>
 			</div>
 		</div>
-
 		<div class="mb-3 row">
 			<label for="password" class="col-sm-2 col-form-label"><fmt:message
 					key="label.password" /></label>
@@ -71,7 +69,6 @@
 					id="error_tel" class="error" aria-live="polite"></span>
 			</div>
 		</div>
-
 		<input type="hidden" name="current_lang" value="en"> <input
 			type="hidden" name="role" value="CLIENT"> <input
 			type="hidden" name="command" value="create_user">
@@ -79,17 +76,18 @@
 			<button class="w-70 btn btn-lg btn-primary text-nowrap" type="submit">
 				<fmt:message key="button.register" />
 			</button>
-			<button class="w-50 btn btn-lg btn-secondary text-nowrap" type="reset">
+			<button class="w-50 btn btn-lg btn-secondary text-nowrap"
+				type="reset">
 				<fmt:message key="button.reset" />
 			</button>
 		</div>
 	</form>
 </div>
-    <footer class="footer mt-auto py-3 bg-dark">
-      <div class="container">
-        <span class="text-light"><fmt:message key="label.footer" /></span>
-      </div>
-    </footer>
+<footer class="footer mt-auto py-3 bg-dark">
+	<div class="container">
+		<span class="text-light"><fmt:message key="label.footer" /></span>
+	</div>
+</footer>
 <script src="${pageContext.request.contextPath}/js/registration.js"></script>
 </body>
 </html>

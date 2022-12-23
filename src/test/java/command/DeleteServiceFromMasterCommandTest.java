@@ -41,14 +41,15 @@ public class DeleteServiceFromMasterCommandTest {
 	@Before
 	public void setUp() {
 		this.dao = mock(UserDao.class);
-		this.request = mock(HttpServletRequest.class); 
+		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
 		this.session = mock(HttpSession.class);
 		this.userManager = new UserManager(dao);
 	}
-	
+
 	@Test
-	public void testDeleteServiceFromMasterCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
+	public void testDeleteServiceFromMasterCommand()
+			throws ClassNotFoundException, CreatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
 		User testUser = new User();
 		testUser.setName("Ivan");
@@ -68,7 +69,8 @@ public class DeleteServiceFromMasterCommandTest {
 		assertEquals(command.execute(request, response), "/error.jsp");
 		loggedUser.setRole(Role.ADMIN);
 		assertEquals(command.execute(request, response), "Controller?command=show_user_info&id=" + testUser.getId());
-		doThrow(SQLException.class).when(dao).deleteServiceFromMaster(any(Connection.class), any(User.class), any(Service.class));
+		doThrow(SQLException.class).when(dao).deleteServiceFromMaster(any(Connection.class), any(User.class),
+				any(Service.class));
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(request.getParameter("master_id")).thenReturn(null);
 		assertEquals(command.execute(request, response), "/error.jsp");

@@ -32,10 +32,11 @@ public class SetPayAppointmentCommand implements Command {
 	private AppointmentManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
-	
+
 	public SetPayAppointmentCommand(AppointmentManager manager) {
 		this.manager = manager;
 	}
+
 	public SetPayAppointmentCommand() {
 		this.manager = AppointmentManager.getInstance();
 	}
@@ -47,7 +48,6 @@ public class SetPayAppointmentCommand implements Command {
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
 			logger.info("Access denied.", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
@@ -72,7 +72,8 @@ public class SetPayAppointmentCommand implements Command {
 			logger.info("set appointment payment", appointment.getIsPaid(), appointment.getMaster().getId(),
 					appointment.getDate(), appointment.getTimeslot());
 			request.setAttribute("redirect", "redirect");
-			return "Controller?command=show_appointment_info&master_id=" + appointment.getMaster().getId() + "&date=" + appointment.getDate() + "&timeslot=" + appointment.getTimeslot();
+			return "Controller?command=show_appointment_info&master_id=" + appointment.getMaster().getId() + "&date="
+					+ appointment.getDate() + "&timeslot=" + appointment.getTimeslot();
 		} catch (FindingAppointmentException | UpdatingAppointmentException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());

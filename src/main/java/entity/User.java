@@ -3,7 +3,7 @@ package entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class User implements Serializable{
+public class User implements Serializable {
 	/**
 	 * 
 	 */
@@ -15,16 +15,16 @@ public class User implements Serializable{
 	private String surname;
 	private String tel;
 	private Role role;
-	private String info; 
+	private String info;
 	private boolean isBlocked;
 	private double rating;
 	private String currentLang;
-	
+
 	public User() {
 	}
-	
-	
-	public User(int id, String email, String password, String name, String surname, String tel, Role role, String info, boolean isBlocked, double rating, String currentLang) {
+
+	public User(int id, String email, String password, String name, String surname, String tel, Role role, String info,
+			boolean isBlocked, double rating, String currentLang) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
@@ -37,49 +37,63 @@ public class User implements Serializable{
 		this.rating = rating;
 		this.currentLang = currentLang;
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getSurname() {
 		return surname;
 	}
+
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
 	public String getTel() {
 		return tel;
 	}
+
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
+
 	public Role getRole() {
 		return role;
 	}
+
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	
+
 	public String getInfo() {
 		return info;
 	}
@@ -88,48 +102,40 @@ public class User implements Serializable{
 		this.info = info;
 	}
 
-
 	public boolean getIsBlocked() {
 		return isBlocked;
 	}
-
 
 	public void setBlocked(boolean isBlocked) {
 		this.isBlocked = isBlocked;
 	}
 
-
 	public double getRating() {
 		return rating;
 	}
-
 
 	public void setRating(double rating) {
 		this.rating = rating;
 	}
 
-
 	public String getCurrentLang() {
 		return currentLang;
 	}
-
 
 	public void setCurrentLang(String currentLang) {
 		this.currentLang = currentLang;
 	}
 
-
 	@Override
 	public String toString() {
-		return "User [email=" + email + ", name=" + name + ", surname=" + surname + ", role=" + role + " " + (isBlocked ? "BLOCKED" : "") + "]";
+		return "User [email=" + email + ", name=" + name + ", surname=" + surname + ", role=" + role + " "
+				+ (isBlocked ? "BLOCKED" : "") + "]";
 	}
-
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -143,9 +149,4 @@ public class User implements Serializable{
 		return id == other.id;
 	}
 
-
-
-
-	
-	
 }

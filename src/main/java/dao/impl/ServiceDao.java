@@ -176,7 +176,7 @@ public class ServiceDao implements Dao<Service> {
 
 	@Override
 	public void delete(Connection con, Service t) {
-		throw new UnsupportedOperationException(); 
+		throw new UnsupportedOperationException();
 	}
 
 	public List<Service> findAllAbsentByMaster(Connection con, int master_id) throws SQLException {
@@ -201,11 +201,11 @@ public class ServiceDao implements Dao<Service> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-	
+
 	/**
-	* Returns the Service entity from ResultSet after executing the query
-	* 
-	*/
+	 * Returns the Service entity from ResultSet after executing the query
+	 * 
+	 */
 	private Service extractService(ResultSet rs) throws SQLException {
 		logger.trace("enter");
 

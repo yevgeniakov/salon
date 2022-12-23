@@ -15,7 +15,8 @@ import dao.impl.ServiceDao;
 import entity.Service;
 
 /**
- * provides operations with Service: creating, updating and representing information
+ * provides operations with Service: creating, updating and representing
+ * information
  * 
  * @author yevgenia.kovalova
  *
@@ -49,13 +50,12 @@ public class ServiceManager {
 		try {
 			con = dao.getConnection();
 			service = dao.findById(con, id);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new FindingServiceException("Cannot find service by id: " + e.getMessage());
 		} finally {
 			DBConnection.close(con);
 		}
-
 		return service;
 	}
 
@@ -67,7 +67,7 @@ public class ServiceManager {
 		try {
 			con = dao.getConnection();
 			service = dao.findByName(con, name);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new FindingServiceException("Cannot find service by name: " + e.getMessage());
 		} finally {
@@ -84,7 +84,7 @@ public class ServiceManager {
 		try {
 			con = dao.getConnection();
 			services = dao.findAll(con);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new FindingServiceException("Cannot find all services: " + e.getMessage());
 		} finally {
@@ -101,7 +101,7 @@ public class ServiceManager {
 		try {
 			con = dao.getConnection();
 			services = dao.findAllbyMaster(con, master_id);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new FindingServiceException("Cannot find all services by master: " + e.getMessage());
 		} finally {
@@ -117,7 +117,7 @@ public class ServiceManager {
 		try {
 			con = dao.getConnection();
 			service = dao.save(con, service);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new CreatingServiceException("Cannot create service: " + e.getMessage());
 		} finally {
@@ -134,7 +134,7 @@ public class ServiceManager {
 		try {
 			con = dao.getConnection();
 			services = dao.findAllAbsentByMaster(con, master_id);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new FindingServiceException("Cannot find all services absent by master: " + e.getMessage());
 		} finally {
@@ -142,5 +142,4 @@ public class ServiceManager {
 		}
 		return services;
 	}
-
 }

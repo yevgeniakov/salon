@@ -17,22 +17,20 @@ import entity.User;
  */
 public class LogOutCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(LogOutCommand.class);
-	
+
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.trace("execute");
-		
+
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (loggedUser == null) {
 			logger.info("user is not logged in, but trying to log out");
 			return "/index.jsp";
 		}
-		
 		request.getSession().removeAttribute("user");
-		request.getSession().invalidate();  
+		request.getSession().invalidate();
 		logger.info("user logged out successfully", loggedUser.getId());
 		request.setAttribute("redirect", "redirect");
 		return "index.jsp";
 	}
-
 }

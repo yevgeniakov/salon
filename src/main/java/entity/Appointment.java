@@ -14,11 +14,10 @@ public class Appointment {
 	private boolean isPaid;
 	private String feedback;
 	private double rating;
-	
-	public Appointment(LocalDate date, int timeslot, User master, User user, Service service, int sum, boolean isDone, boolean isPaid, 
-			String feedback, double rating) {
-		
-		
+
+	public Appointment(LocalDate date, int timeslot, User master, User user, Service service, int sum, boolean isDone,
+			boolean isPaid, String feedback, double rating) {
+
 		this.date = date;
 		this.timeslot = timeslot;
 		this.master = master;
@@ -34,7 +33,6 @@ public class Appointment {
 	public Appointment() {
 
 	}
-
 
 	public LocalDate getDate() {
 		return date;
@@ -107,8 +105,6 @@ public class Appointment {
 	public void setIsPaid(boolean isPaid) {
 		this.isPaid = isPaid;
 	}
-	
-	
 
 	public double getRating() {
 		return rating;
@@ -120,8 +116,8 @@ public class Appointment {
 
 	@Override
 	public String toString() {
-		return "Appointment [date=" + date + ", timeslot=" + timeslot + ", master=" + master + ", user="
-				+ user + ", service=" + service + ", sum=" + sum + ", feedback=" + feedback + "]";
+		return "Appointment [date=" + date + ", timeslot=" + timeslot + ", master=" + master + ", user=" + user
+				+ ", service=" + service + ", sum=" + sum + ", feedback=" + feedback + "]";
 	}
 
 	@Override
@@ -140,6 +136,5 @@ public class Appointment {
 		Appointment other = (Appointment) obj;
 		return Objects.equals(date, other.date) && Objects.equals(master, other.master) && timeslot == other.timeslot;
 	}
-	
-	
+
 }

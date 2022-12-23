@@ -27,43 +27,41 @@ import service.utils.ValidatorUtil;
 public class SetUserBlockCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetUserBlockCommand.class);
 	private UserManager manager;
-	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
-	        List.of(Role.ADMIN));
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
-	
- 	public SetUserBlockCommand(UserManager manager) {
+
+	public SetUserBlockCommand(UserManager manager) {
 		this.manager = manager;
 	}
- 	public SetUserBlockCommand() {
+
+	public SetUserBlockCommand() {
 		this.manager = UserManager.getInstance();
 	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.trace("execute");
-		
+
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
-			logger.info("Access denied.", loggedUser,
-					loggedUser == null ? "GUEST" : loggedUser.getRole());
-			
+			logger.info("Access denied.", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
+
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 		User user = new User();
-			int id;
-			boolean isBlocked;
-			try {
-				id = ValidatorUtil.parseIntParameter(request.getParameter("id"));
-				isBlocked = ValidatorUtil.parseBooleanParameter(request.getParameter("isBlocked"));
-			} catch (IncorrectParamException e) {
-				logger.error(e.getMessage(), e);
-				request.setAttribute("error", e.getMessage());
-				return "/error.jsp";
-			}
-			try {
+		int id;
+		boolean isBlocked;
+		try {
+			id = ValidatorUtil.parseIntParameter(request.getParameter("id"));
+			isBlocked = ValidatorUtil.parseBooleanParameter(request.getParameter("isBlocked"));
+		} catch (IncorrectParamException e) {
+			logger.error(e.getMessage(), e);
+			request.setAttribute("error", e.getMessage());
+			return "/error.jsp";
+		}
+		try {
 			user = manager.setUserBlock(id, isBlocked);
 			if (user.getId() != 0) {
 				logger.info("user set blocked = " + isBlocked, id);

@@ -58,9 +58,9 @@ public class AppointmentManagerTest {
 		testAppointment.setTimeslot(11);
 		when(dao.save(any(Connection.class), any(Appointment.class))).thenReturn(testAppointment);
 		Appointment appointment = new Appointment();
-		
+
 		assertEquals(appointmentManager.createAppointment(appointment).getMaster(), master);
-		
+
 		when(dao.save(any(Connection.class), any(Appointment.class))).thenThrow(SQLException.class);
 		try {
 			assertEquals(appointmentManager.createAppointment(appointment).getMaster(), master);
@@ -90,9 +90,10 @@ public class AppointmentManagerTest {
 		testAppointment.setDate(LocalDate.now());
 		testAppointment.setTimeslot(11);
 		appointmentManager.setPayAppointment(testAppointment, false);
-		verify(dao, times(1)).setIsPaid(dao.getConnection(),testAppointment, false);
-	
-		doThrow(SQLException.class).when(dao).setIsPaid(isA(Connection.class), isA(Appointment.class), isA(Boolean.class));
+		verify(dao, times(1)).setIsPaid(dao.getConnection(), testAppointment, false);
+
+		doThrow(SQLException.class).when(dao).setIsPaid(isA(Connection.class), isA(Appointment.class),
+				isA(Boolean.class));
 		try {
 			appointmentManager.setPayAppointment(testAppointment, false);
 			fail();
@@ -107,7 +108,7 @@ public class AppointmentManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testSetAppointmentDone() throws ClassNotFoundException, UpdatingAppointmentException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -121,9 +122,9 @@ public class AppointmentManagerTest {
 		testAppointment.setDate(LocalDate.now());
 		testAppointment.setTimeslot(11);
 		appointmentManager.setDoneAppointment(testAppointment, false);
-		verify(dao, times(1)).setIsDone(dao.getConnection(),testAppointment, false);
-	
-		doThrow(SQLException.class).when(dao).setIsDone(isA(Connection.class), isA(Appointment.class), isA(Boolean.class));
+		verify(dao, times(1)).setIsDone(dao.getConnection(), testAppointment, false);
+		doThrow(SQLException.class).when(dao).setIsDone(isA(Connection.class), isA(Appointment.class),
+				isA(Boolean.class));
 		try {
 			appointmentManager.setDoneAppointment(testAppointment, false);
 			fail();
@@ -138,7 +139,7 @@ public class AppointmentManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testSetAppointmentFeedback() throws ClassNotFoundException, UpdatingAppointmentException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -151,11 +152,10 @@ public class AppointmentManagerTest {
 		testAppointment.setUser(client);
 		testAppointment.setDate(LocalDate.now());
 		testAppointment.setTimeslot(11);
-		
 		appointmentManager.setFeedbackForAppointmentAndUpdateMaster(testAppointment, 2.78, "hhh");
 		verify(dao, times(1)).setFeedback(dao.getConnection(), testAppointment, "hhh", 2.78);
-	
-		doThrow(SQLException.class).when(dao).setFeedback(isA(Connection.class), isA(Appointment.class), isA(String.class), isA(Double.class));
+		doThrow(SQLException.class).when(dao).setFeedback(isA(Connection.class), isA(Appointment.class),
+				isA(String.class), isA(Double.class));
 		try {
 			appointmentManager.setFeedbackForAppointmentAndUpdateMaster(testAppointment, 2.78, "hhh");
 			fail();
@@ -170,7 +170,7 @@ public class AppointmentManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testSetAppointmentTime() throws ClassNotFoundException, UpdatingAppointmentException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -185,8 +185,8 @@ public class AppointmentManagerTest {
 		testAppointment.setTimeslot(11);
 		appointmentManager.setTimeAppointment(testAppointment, LocalDate.now(), 12);
 		verify(dao, times(1)).setTime(dao.getConnection(), testAppointment, LocalDate.now(), 12);
-	
-		doThrow(SQLException.class).when(dao).setTime(isA(Connection.class), isA(Appointment.class), isA(LocalDate.class), isA(Integer.class));
+		doThrow(SQLException.class).when(dao).setTime(isA(Connection.class), isA(Appointment.class),
+				isA(LocalDate.class), isA(Integer.class));
 		try {
 			appointmentManager.setTimeAppointment(testAppointment, LocalDate.now(), 12);
 			fail();
@@ -214,9 +214,11 @@ public class AppointmentManagerTest {
 		testAppointment.setUser(client);
 		testAppointment.setDate(LocalDate.now());
 		testAppointment.setTimeslot(11);
-		when(dao.findByKey(any(Connection.class), anyInt(), any(LocalDate.class), anyInt())).thenReturn(testAppointment);
+		when(dao.findByKey(any(Connection.class), anyInt(), any(LocalDate.class), anyInt()))
+				.thenReturn(testAppointment);
 		assertEquals(appointmentManager.findAppointmentByKey(1, LocalDate.now(), 11), testAppointment);
-		when(dao.findByKey(any(Connection.class), anyInt(), any(LocalDate.class), anyInt())).thenThrow(SQLException.class);
+		when(dao.findByKey(any(Connection.class), anyInt(), any(LocalDate.class), anyInt()))
+				.thenThrow(SQLException.class);
 		try {
 			assertEquals(appointmentManager.findAppointmentByKey(1, LocalDate.now(), 11), testAppointment);
 			fail();
@@ -231,7 +233,7 @@ public class AppointmentManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testFindAllAppointments() throws ClassNotFoundException, FindingAppointmentException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -257,36 +259,42 @@ public class AppointmentManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
-	
+
 	@Test
-	public void testFindAppointmentsByConditions() throws ClassNotFoundException, FindingAppointmentException, SQLException {
+	public void testFindAppointmentsByConditions()
+			throws ClassNotFoundException, FindingAppointmentException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
 		List<Appointment> appointments = new ArrayList<>();
 		for (int i = 0; i < 4; i++) {
 			Appointment testAppointment = new Appointment();
 			appointments.add(testAppointment);
 		}
-		when(dao.findByConditions(any(Connection.class), any(LocalDate.class), any(LocalDate.class), anyInt(), anyInt(), anyInt(), anyBoolean(), anyBoolean(),  anyBoolean())).thenReturn(appointments);
-		assertEquals(appointmentManager.findAppointmentsByConditions(LocalDate.now(), LocalDate.now(), 3, 6, 7, true, true, true), appointments);
-		when(dao.findByConditions(any(Connection.class), any(LocalDate.class), any(LocalDate.class), anyInt(), anyInt(), anyInt(), anyBoolean(), anyBoolean(),  anyBoolean())).thenThrow(SQLException.class);
+		when(dao.findByConditions(any(Connection.class), any(LocalDate.class), any(LocalDate.class), anyInt(), anyInt(),
+				anyInt(), anyBoolean(), anyBoolean(), anyBoolean())).thenReturn(appointments);
+		assertEquals(appointmentManager.findAppointmentsByConditions(LocalDate.now(), LocalDate.now(), 3, 6, 7, true,
+				true, true), appointments);
+		when(dao.findByConditions(any(Connection.class), any(LocalDate.class), any(LocalDate.class), anyInt(), anyInt(),
+				anyInt(), anyBoolean(), anyBoolean(), anyBoolean())).thenThrow(SQLException.class);
 		try {
-			assertEquals(appointmentManager.findAppointmentsByConditions(LocalDate.now(), LocalDate.now(), 3, 6, 7, true, true, true), appointments);
+			assertEquals(appointmentManager.findAppointmentsByConditions(LocalDate.now(), LocalDate.now(), 3, 6, 7,
+					true, true, true), appointments);
 			fail();
 		} catch (FindingAppointmentException e) {
 			assertNotNull(e);
 		}
 		when(dao.getConnection()).thenThrow(ClassNotFoundException.class);
 		try {
-			assertEquals(appointmentManager.findAppointmentsByConditions(LocalDate.now(), LocalDate.now(), 3, 6, 7, true, true, true), appointments);
+			assertEquals(appointmentManager.findAppointmentsByConditions(LocalDate.now(), LocalDate.now(), 3, 6, 7,
+					true, true, true), appointments);
 			fail();
 		} catch (FindingAppointmentException e) {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
-	public void testGetPriceByMasterAndService() throws ClassNotFoundException, FindingAppointmentException, SQLException {
+	public void testGetPriceByMasterAndService()
+			throws ClassNotFoundException, FindingAppointmentException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
 		User master = new User();
 		master.setId(1);
@@ -308,28 +316,32 @@ public class AppointmentManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testGetMaserFreeSlots() throws ClassNotFoundException, FindingAppointmentException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
 		User master = new User();
 		master.setId(1);
-		when(dao.getMasterFreeSlots(any(Connection.class), any(LocalDate.class), any(User.class))).thenReturn(List.of(13, 14, 17, 18));
+		when(dao.getMasterFreeSlots(any(Connection.class), any(LocalDate.class), any(User.class)))
+				.thenReturn(List.of(13, 14, 17, 18));
 		assertEquals(appointmentManager.getMasterFreeSlots(LocalDate.now(), master).size(), 4);
-		when(dao.getMasterFreeSlots(any(Connection.class), any(LocalDate.class), any(User.class))).thenThrow(SQLException.class);
+		when(dao.getMasterFreeSlots(any(Connection.class), any(LocalDate.class), any(User.class)))
+				.thenThrow(SQLException.class);
 		try {
-			assertEquals(appointmentManager.getMasterFreeSlots(LocalDate.now(), master).size(), 4);			fail();
+			assertEquals(appointmentManager.getMasterFreeSlots(LocalDate.now(), master).size(), 4);
+			fail();
 		} catch (FindingAppointmentException e) {
 			assertNotNull(e);
 		}
 		when(dao.getConnection()).thenThrow(ClassNotFoundException.class);
 		try {
-			assertEquals(appointmentManager.getMasterFreeSlots(LocalDate.now(), master).size(), 4);			fail();
+			assertEquals(appointmentManager.getMasterFreeSlots(LocalDate.now(), master).size(), 4);
+			fail();
 		} catch (FindingAppointmentException e) {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testGetMaserShedule() throws ClassNotFoundException, FindingAppointmentException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -340,24 +352,26 @@ public class AppointmentManagerTest {
 			Appointment testAppointment = new Appointment();
 			appointments.add(testAppointment);
 		}
-		when(dao.getMasterSchedule(any(Connection.class), any(LocalDate.class), any(User.class))).thenReturn(appointments);
+		when(dao.getMasterSchedule(any(Connection.class), any(LocalDate.class), any(User.class)))
+				.thenReturn(appointments);
 		assertEquals(appointmentManager.getMasterSchedule(LocalDate.now(), master).size(), 4);
-		when(dao.getMasterSchedule(any(Connection.class), any(LocalDate.class), any(User.class))).thenThrow(SQLException.class);
+		when(dao.getMasterSchedule(any(Connection.class), any(LocalDate.class), any(User.class)))
+				.thenThrow(SQLException.class);
 		try {
-			assertEquals(appointmentManager.getMasterSchedule(LocalDate.now(), master).size(), 4);			
+			assertEquals(appointmentManager.getMasterSchedule(LocalDate.now(), master).size(), 4);
 			fail();
 		} catch (FindingAppointmentException e) {
 			assertNotNull(e);
 		}
 		when(dao.getConnection()).thenThrow(ClassNotFoundException.class);
 		try {
-			assertEquals(appointmentManager.getMasterSchedule(LocalDate.now(), master).size(), 4);			
+			assertEquals(appointmentManager.getMasterSchedule(LocalDate.now(), master).size(), 4);
 			fail();
 		} catch (FindingAppointmentException e) {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testDeleteAppointment() throws ClassNotFoundException, SQLException, DeletingAppointmentException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -372,7 +386,6 @@ public class AppointmentManagerTest {
 		testAppointment.setTimeslot(11);
 		appointmentManager.deleteAppointment(testAppointment);
 		verify(dao, times(1)).delete(dao.getConnection(), testAppointment);
-	
 		doThrow(SQLException.class).when(dao).delete(isA(Connection.class), isA(Appointment.class));
 		try {
 			appointmentManager.deleteAppointment(testAppointment);
@@ -388,12 +401,12 @@ public class AppointmentManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testGetInstanse() {
 		AppointmentManager manager1 = AppointmentManager.getInstance();
 		AppointmentManager manager2 = AppointmentManager.getInstance();
-		
+
 		assertEquals(manager1, manager2);
 	}
 }

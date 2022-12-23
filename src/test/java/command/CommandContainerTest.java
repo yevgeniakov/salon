@@ -12,26 +12,27 @@ import controller.command.CommandContainer;
 public class CommandContainerTest {
 	@Test
 	public void testValidCommand() {
-		Command command = CommandContainer.getCommand("show_appointment_info");	
+		Command command = CommandContainer.getCommand("show_appointment_info");
 		assertThat(command, instanceOf(Command.class));
-		command = CommandContainer.getCommand("show_master_schedule");	
+		command = CommandContainer.getCommand("show_master_schedule");
 		assertThat(command, instanceOf(Command.class));
-		command = CommandContainer.getCommand("update_user");	
+		command = CommandContainer.getCommand("update_user");
 		assertThat(command, instanceOf(Command.class));
-		command = CommandContainer.getCommand("show_user_list");	
+		command = CommandContainer.getCommand("show_user_list");
 		assertThat(command, instanceOf(Command.class));
-		command = CommandContainer.getCommand("login");	
+		command = CommandContainer.getCommand("login");
 		assertThat(command, instanceOf(Command.class));
 	}
+
 	@Test
 	public void testInValidCommand() {
-		Command command = CommandContainer.getCommand("show_appointment");	
+		Command command = CommandContainer.getCommand("show_appointment");
 		assertNull(command);
-		command = CommandContainer.getCommand("show_appoin");	
+		command = CommandContainer.getCommand("show_appoin");
 		assertNull(command);
-		command = CommandContainer.getCommand("loginn");	
+		command = CommandContainer.getCommand("loginn");
 		assertNull(command);
-		command = CommandContainer.getCommand("");	
+		command = CommandContainer.getCommand("");
 		assertNull(command);
 	}
 }

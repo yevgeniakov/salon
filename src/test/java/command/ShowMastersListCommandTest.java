@@ -40,12 +40,12 @@ public class ShowMastersListCommandTest {
 	@Before
 	public void setUp() {
 		this.dao = mock(UserDao.class);
-		this.request = mock(HttpServletRequest.class); 
+		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
 		this.session = mock(HttpSession.class);
 		this.userManager = new UserManager(dao);
 	}
-	
+
 	@Test
 	public void testShowMastersListCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));

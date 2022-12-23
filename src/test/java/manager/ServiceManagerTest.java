@@ -46,9 +46,9 @@ public class ServiceManagerTest {
 		service.setId(1);
 		service.setName("Tratata");
 		service.setInfo("Trata tata taaa");
-		
+
 		assertEquals(serviceManager.createService(service).getId(), 1);
-		
+
 		when(dao.save(any(Connection.class), any(Service.class))).thenThrow(SQLException.class);
 		try {
 			assertEquals(serviceManager.createService(service).getId(), 1);
@@ -66,8 +66,6 @@ public class ServiceManagerTest {
 
 	}
 
-	
-
 	@Test
 	public void testFindAllServices() throws ClassNotFoundException, FindingServiceException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -78,7 +76,7 @@ public class ServiceManagerTest {
 		}
 		when(dao.findAll(any(Connection.class))).thenReturn(services);
 		assertEquals(serviceManager.findAllservices().size(), 4);
-		
+
 		when(dao.findAll(any(Connection.class))).thenThrow(SQLException.class);
 		try {
 			assertEquals(serviceManager.findAllservices().size(), 4);
@@ -94,7 +92,7 @@ public class ServiceManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testFindAllServicesByMasters() throws ClassNotFoundException, SQLException, FindingServiceException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -119,7 +117,7 @@ public class ServiceManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testFindServiceById() throws ClassNotFoundException, FindingServiceException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -145,7 +143,7 @@ public class ServiceManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testFindServiceByName() throws ClassNotFoundException, FindingServiceException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -171,7 +169,7 @@ public class ServiceManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testFindServicesAbsentByMaster() throws ClassNotFoundException, FindingServiceException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -197,12 +195,12 @@ public class ServiceManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testGetInstanse() {
 		ServiceManager manager1 = ServiceManager.getInstance();
 		ServiceManager manager2 = ServiceManager.getInstance();
-		
+
 		assertEquals(manager1, manager2);
 	}
 }

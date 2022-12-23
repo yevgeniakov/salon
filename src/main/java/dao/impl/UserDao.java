@@ -169,11 +169,11 @@ public class UserDao implements Dao<User> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-	
+
 	/**
-	* Returns the Map of masters that provide certain service with their price
-	* 
-	*/
+	 * Returns the Map of masters that provide certain service with their price
+	 * 
+	 */
 	public SortedMap<User, Integer> findAllMastersByService(Connection con, int service_id, String sort)
 			throws SQLException {
 		logger.trace("enter");
@@ -319,9 +319,9 @@ public class UserDao implements Dao<User> {
 	}
 
 	/**
-	* Returns the User list that matches provided conditions.
-	* In case parameter is null - is ignored, otherwise is applied
-	*/
+	 * Returns the User list that matches provided conditions. In case parameter is
+	 * null - is ignored, otherwise is applied
+	 */
 	public List<User> findAllByConditions(Connection con, Boolean isBlocked, Role role, String searchValue)
 			throws SQLException {
 		logger.trace("enter");
@@ -356,21 +356,21 @@ public class UserDao implements Dao<User> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-	
+
 	@Override
 	public void delete(Connection con, User t) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
-	* Complements the SQL query for user list with conditions
-	* 
-	*/
+	 * Complements the SQL query for user list with conditions
+	 * 
+	 */
 	private String addConditionsToSQL(String sql) {
 		logger.trace("enter");
 
-		return sql + " where " + "(isBlocked=? or ?)" + " and (users.role=? or ?)" +
-				" and (? or (users.name like ? or users.surname like ? or users.email like ? or users.tel like ? ))";
+		return sql + " where " + "(isBlocked=? or ?)" + " and (users.role=? or ?)"
+				+ " and (? or (users.name like ? or users.surname like ? or users.email like ? or users.tel like ? ))";
 	}
 
 	private String getSqlForMasterServices(int id, HashMap<Integer, Integer> serviceMap) {
@@ -390,11 +390,11 @@ public class UserDao implements Dao<User> {
 		logger.trace(sql);
 		return sql.toString();
 	}
-	
+
 	/**
-	* Returns the User entity from ResultSet after executing the query
-	* 
-	*/
+	 * Returns the User entity from ResultSet after executing the query
+	 * 
+	 */
 	private User extractUser(ResultSet rs) throws SQLException {
 		logger.trace("enter");
 

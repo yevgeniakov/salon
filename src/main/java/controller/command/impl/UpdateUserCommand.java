@@ -31,56 +31,53 @@ import service.UserManager;
 public class UpdateUserCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(UpdateUserCommand.class);
 	private UserManager userManager;
-	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
-	        List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
 	public static final boolean IS_GUEST_ALLOWED = false;
-	
- 	public UpdateUserCommand(UserManager userManager) {
+
+	public UpdateUserCommand(UserManager userManager) {
 		this.userManager = userManager;
 	}
- 	public UpdateUserCommand() {
- 		this.userManager = UserManager.getInstance();
+
+	public UpdateUserCommand() {
+		this.userManager = UserManager.getInstance();
 	}
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.trace("execute");
-		
+
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
-			logger.info("Access denied.", loggedUser,
-					loggedUser == null ? "GUEST" : loggedUser.getRole());
+			logger.info("Access denied.", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-			int id = 0;
-			try {
-				id = parseIntParameter(request.getParameter("id"));
-			} catch (IncorrectParamException e) {
-				logger.error(e.getMessage(), e);
-				request.setAttribute("error", e.getMessage());
-				return "/error.jsp";
-			}
-			String name = request.getParameter("name");
-			String surname = request.getParameter("surname");
-			String email = request.getParameter("email");
-			String tel = request.getParameter("tel");
-			String info = request.getParameter("info");
-			logger.trace(isValidName(name));
-			logger.trace(isValidName(surname));
-			logger.trace(isValidEmail(email));
-			if (!isValidName(name)
-					||!isValidName(surname) 
-					|| !isValidEmail(email)) {
-				logger.error("Invalid parameters", name, surname, email);
-				request.setAttribute("error", "Can't update user. Invalid input data.");
-				return "/error.jsp";
-			}
-			if (loggedUser.getRole() != Role.ADMIN) {
-				id = loggedUser.getId();
-			}
-			try {
+		int id = 0;
+		try {
+			id = parseIntParameter(request.getParameter("id"));
+		} catch (IncorrectParamException e) {
+			logger.error(e.getMessage(), e);
+			request.setAttribute("error", e.getMessage());
+			return "/error.jsp";
+		}
+		String name = request.getParameter("name");
+		String surname = request.getParameter("surname");
+		String email = request.getParameter("email");
+		String tel = request.getParameter("tel");
+		String info = request.getParameter("info");
+		logger.trace(isValidName(name));
+		logger.trace(isValidName(surname));
+		logger.trace(isValidEmail(email));
+		if (!isValidName(name) || !isValidName(surname) || !isValidEmail(email)) {
+			logger.error("Invalid parameters", name, surname, email);
+			request.setAttribute("error", "Can't update user. Invalid input data.");
+			return "/error.jsp";
+		}
+		if (loggedUser.getRole() != Role.ADMIN) {
+			id = loggedUser.getId();
+		}
+		try {
 			int i = 1;
 			ServiceManager serviceManager = ServiceManager.getInstance();
 			HashMap<Integer, Integer> serviceMap = new HashMap<>();

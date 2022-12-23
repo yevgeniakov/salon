@@ -21,14 +21,15 @@ import service.UserManager;
 public class ChangeLocaleCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(CreateAppointmentCommand.class);
 	private UserManager manager;
-	
+
 	public ChangeLocaleCommand(UserManager manager) {
 		this.manager = manager;
 	}
+
 	public ChangeLocaleCommand() {
 		this.manager = UserManager.getInstance();
 	}
-	
+
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		logger.trace("execute");

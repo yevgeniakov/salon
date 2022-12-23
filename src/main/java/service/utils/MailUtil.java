@@ -17,33 +17,31 @@ import javax.mail.internet.MimeMessage;
  *
  */
 public class MailUtil {
-	
-	public static void sendMessage(String address, String subject, String body) throws AddressException, MessagingException  {
-	    String username = "yevheniia.kov@ukr.net";
-	    String password = "jS4gAP9k7ZdQ4toP";
-	    Properties props = getProps();
-	    // set any other needed mail.smtp.* properties here
-	    Session session = Session.getInstance(props);
-	    MimeMessage msg = new MimeMessage(session);
-	    msg.setFrom(new InternetAddress("yevheniia.kov@ukr.net"));
-	    msg.setRecipient(Message.RecipientType.TO, new InternetAddress(address));
-	    msg.setSubject(subject);
-	    msg.setText(body);
-	    // set the message content here
-	    Transport.send(msg, username, password);
+
+	public static void sendMessage(String address, String subject, String body)
+			throws AddressException, MessagingException {
+		String username = "yevheniia.kov@ukr.net";
+		String password = "jS4gAP9k7ZdQ4toP";
+		Properties props = getProps();
+		Session session = Session.getInstance(props);
+		MimeMessage msg = new MimeMessage(session);
+		msg.setFrom(new InternetAddress("yevheniia.kov@ukr.net"));
+		msg.setRecipient(Message.RecipientType.TO, new InternetAddress(address));
+		msg.setSubject(subject);
+		msg.setText(body);
+		Transport.send(msg, username, password);
 	}
 
 	private static Properties getProps() {
 		Properties props = new Properties();
-	    props.setProperty("mail.smtp.ssl.enable", "true");
-	    props.setProperty("mail.smtp.starttls.enable", "true");
-	    props.setProperty("mail.smtp.host", "smtp.ukr.net");
-	    props.setProperty("mail.smtp.port", "2525");
-	    props.setProperty("mail.smtp.ssl.trust", "*");
-	    props.setProperty("mail.smtp.socketFactory.port", "587");
-	    props.setProperty("mail.smtp.starttls.required", "true");
-	    props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+		props.setProperty("mail.smtp.ssl.enable", "true");
+		props.setProperty("mail.smtp.starttls.enable", "true");
+		props.setProperty("mail.smtp.host", "smtp.ukr.net");
+		props.setProperty("mail.smtp.port", "2525");
+		props.setProperty("mail.smtp.ssl.trust", "*");
+		props.setProperty("mail.smtp.socketFactory.port", "587");
+		props.setProperty("mail.smtp.starttls.required", "true");
+		props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
 		return props;
 	}
-
 }

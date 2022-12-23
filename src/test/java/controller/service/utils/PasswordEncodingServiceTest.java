@@ -24,20 +24,18 @@ public class PasswordEncodingServiceTest {
 				assertFalse(PasswordEncodingService.validatePassword(pass + pass, hashPass));
 				assertFalse(PasswordEncodingService.validatePassword(pass + "0", hashPass));
 				assertFalse(PasswordEncodingService.validatePassword("a" + pass, hashPass));
-				
 			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 				fail();
 			}
 			try {
 				String hashPass = PasswordEncodingService.generateStorngPasswordHash(pass);
 				assertFalse(PasswordEncodingService.validatePassword(hashPass, pass));
-			} catch (NoSuchAlgorithmException |InvalidKeySpecException e) {
+			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 				fail();
-			} catch ( NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				assertNotNull(e);
 			}
 		});
 	}
-
 
 }

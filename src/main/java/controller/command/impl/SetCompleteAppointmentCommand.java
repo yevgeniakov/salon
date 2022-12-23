@@ -30,13 +30,13 @@ import service.utils.ValidatorUtil;
 public class SetCompleteAppointmentCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(SetCompleteAppointmentCommand.class);
 	private AppointmentManager manager;
-	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
-	        List.of(Role.HAIRDRESSER));
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.HAIRDRESSER));
 	public static final boolean IS_GUEST_ALLOWED = false;
-	
+
 	public SetCompleteAppointmentCommand(AppointmentManager manager) {
 		this.manager = manager;
 	}
+
 	public SetCompleteAppointmentCommand() {
 		this.manager = AppointmentManager.getInstance();
 	}
@@ -47,13 +47,11 @@ public class SetCompleteAppointmentCommand implements Command {
 
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
-			logger.info("Access denied.", loggedUser,
-					loggedUser == null ? "GUEST" : loggedUser.getRole());
-			
+			logger.info("Access denied.", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
+
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 		int master_id = 0;
 		int timeslot = 0;
@@ -67,13 +65,15 @@ public class SetCompleteAppointmentCommand implements Command {
 			request.setAttribute("error", e.getMessage());
 			return "/error.jsp";
 		}
-			try {
+		try {
 			Appointment appointment = manager.findAppointmentByKey(master_id, date, timeslot);
 			manager.setDoneAppointment(appointment, !appointment.getIsDone());
 			appointment.setIsDone(!appointment.getIsDone());
-			logger.info("set appointment complete", appointment.getIsDone(), appointment.getMaster().getId(), appointment.getDate(), appointment.getTimeslot());
+			logger.info("set appointment complete", appointment.getIsDone(), appointment.getMaster().getId(),
+					appointment.getDate(), appointment.getTimeslot());
 			request.setAttribute("redirect", "redirect");
-			return "Controller?command=show_appointment_info&master_id=" + appointment.getMaster().getId() + "&date=" + appointment.getDate() + "&timeslot=" + appointment.getTimeslot();
+			return "Controller?command=show_appointment_info&master_id=" + appointment.getMaster().getId() + "&date="
+					+ appointment.getDate() + "&timeslot=" + appointment.getTimeslot();
 		} catch (FindingAppointmentException | UpdatingAppointmentException e) {
 			logger.error(e.getMessage(), e);
 			request.setAttribute("error", e.getMessage());

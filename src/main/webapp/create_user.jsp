@@ -17,7 +17,6 @@
 	</h3>
 	<br>
 	<form action="Controller" id="registration_form" method=post>
-
 		<div class="mb-3 row">
 			<label for="email" class="col-sm-2 col-form-label"><fmt:message
 					key="label.login" /></label>
@@ -26,7 +25,6 @@
 				<span id="error_email" class="error" aria-live="polite"></span>
 			</div>
 		</div>
-
 		<div class="mb-3 row">
 			<label for="password" class="col-sm-2 col-form-label"><fmt:message
 					key="label.password" /></label>
@@ -69,7 +67,6 @@
 					id="error_tel" class="error" aria-live="polite"></span>
 			</div>
 		</div>
-
 		<strong><fmt:message key="label.role" /></strong> <br> <input
 			class="form-check-input" type="radio" name="role" id="select_role"
 			onchange="change_master_options()" value="CLIENT" checked />
@@ -85,9 +82,7 @@
 		<div id="master_options" style="display: none;">
 			<strong><fmt:message key="label.master_info" /></strong> <br>
 			<textarea class="form-control" rows="10" cols="60" name="info"></textarea>
-
 			<my:getservices master_id="0" />
-
 			<br> <strong><fmt:message key="label.service" /></strong> <br>
 			<div class="row">
 				<c:set var="count" value="0" scope="page" />
@@ -104,30 +99,28 @@
 						<fmt:message key="label.hrn" />
 					</div>
 					<div class="w-100"></div>
-
 				</c:forEach>
 			</div>
 		</div>
 		<br> <input type="hidden" name="command" value="create_user">
-
-
 		<div class="btn-group registration-btns">
-			<button class="w-100 btn btn-lg btn-primary text-nowrap" type="submit">
+			<button class="w-100 btn btn-lg btn-primary text-nowrap"
+				type="submit">
 				<fmt:message key="button.create_user" />
 			</button>
-			<button class="w-100 btn btn-lg btn-secondary text-nowrap" type="reset">
+			<button class="w-100 btn btn-lg btn-secondary text-nowrap"
+				type="reset">
 				<fmt:message key="button.reset" />
 			</button>
 		</div>
-
 	</form>
 </div>
 
-    <footer class="footer mt-auto py-3 bg-dark">
-      <div class="container">
-        <span class="text-light"><fmt:message key="label.footer" /></span>
-      </div>
-    </footer>
+<footer class="footer mt-auto py-3 bg-dark">
+	<div class="container">
+		<span class="text-light"><fmt:message key="label.footer" /></span>
+	</div>
+</footer>
 <script src="${pageContext.request.contextPath}/js/create_user.js"></script>
 </body>
 </html>

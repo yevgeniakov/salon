@@ -26,13 +26,14 @@ public class LogOutCommandTest {
 	private HttpServletResponse response;
 	@Mock
 	private HttpSession session;
+
 	@Before
 	public void setUp() {
-		this.request = mock(HttpServletRequest.class); 
+		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
 		this.session = mock(HttpSession.class);
 	}
-	
+
 	@Test
 	public void testLogOutCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
 		User testUser = new User();

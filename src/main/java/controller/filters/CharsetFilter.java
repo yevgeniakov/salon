@@ -15,28 +15,23 @@ import org.apache.logging.log4j.Logger;
 
 @WebFilter("/*")
 public class CharsetFilter implements Filter {
-	private static final Logger logger = LogManager.getLogger(CharsetFilter.class);     
-    
+	private static final Logger logger = LogManager.getLogger(CharsetFilter.class);
+
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		logger.trace("init");
 	}
 
-    public void doFilter(ServletRequest request,
-                         ServletResponse response, FilterChain chain)
-        throws IOException, ServletException {
-    	       
-    	String encoding = request.getCharacterEncoding();
-    	
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		String encoding = request.getCharacterEncoding();
 		if (encoding == null) {
 			request.setCharacterEncoding("UTF-8");
 		}
-		
 		chain.doFilter(request, response);
-    }
+	}
 
-    public void destroy() {
-    }
-
+	public void destroy() {
+	}
 
 }

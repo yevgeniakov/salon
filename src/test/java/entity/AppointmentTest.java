@@ -39,14 +39,14 @@ public class AppointmentTest {
 		assertEquals(appointment.getIsDone(), true);
 		assertEquals(appointment.getIsPaid(), false);
 		assertEquals(appointment.getFeedback(), "Perfect!");
-		assertEquals(String.valueOf(appointment.getRating()),"5.0");		
-		assertEquals(appointment.toString(), "Appointment [date=2022-09-22, timeslot=14, master=User [email=null, name=null, surname=null, role=null ], user=User [email=null, name=null, surname=null, role=null ], service=Service [name=serv], sum=350, feedback=Perfect!]");
+		assertEquals(String.valueOf(appointment.getRating()), "5.0");
+		assertEquals(appointment.toString(),
+				"Appointment [date=2022-09-22, timeslot=14, master=User [email=null, name=null, surname=null, role=null ], user=User [email=null, name=null, surname=null, role=null ], service=Service [name=serv], sum=350, feedback=Perfect!]");
 		Appointment appointment2 = new Appointment();
 		assertNotEquals(appointment, appointment2);
 		appointment2.setDate(appointment.getDate());
 		appointment2.setMaster(appointment.getMaster());
 		appointment2.setTimeslot(appointment.getTimeslot());
 		assertEquals(appointment, appointment2);
-		
 	}
 }

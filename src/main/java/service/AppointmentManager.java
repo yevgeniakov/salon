@@ -19,7 +19,8 @@ import entity.Service;
 import entity.User;
 
 /**
- * provides operations with Appointment: creating, updating and representing information
+ * provides operations with Appointment: creating, updating and representing
+ * information
  * 
  * @author yevgenia.kovalova
  *
@@ -45,7 +46,8 @@ public class AppointmentManager {
 		this.dao = dao;
 	}
 
-	public Appointment findAppointmentByKey(int master_id, LocalDate date, int timeslot) throws FindingAppointmentException {
+	public Appointment findAppointmentByKey(int master_id, LocalDate date, int timeslot)
+			throws FindingAppointmentException {
 		logger.trace("enter");
 
 		Connection con = null;
@@ -53,7 +55,7 @@ public class AppointmentManager {
 		try {
 			con = dao.getConnection();
 			appointment = dao.findByKey(con, master_id, date, timeslot);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new FindingAppointmentException("Cannot find appointment by key: " + e.getMessage());
 		} finally {
@@ -70,8 +72,7 @@ public class AppointmentManager {
 		try {
 			con = dao.getConnection();
 			services = dao.findAll(con);
-
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new FindingAppointmentException("Cannot find all appointments: " + e.getMessage());
 		} finally {
@@ -88,13 +89,12 @@ public class AppointmentManager {
 		try {
 			con = dao.getConnection();
 			appointments = dao.getMasterSchedule(con, date, master);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new FindingAppointmentException("Cannot get masters schedule: " + e.getMessage());
 		} finally {
 			DBConnection.close(con);
 		}
-
 		return appointments;
 	}
 
@@ -105,7 +105,7 @@ public class AppointmentManager {
 		try {
 			con = dao.getConnection();
 			appointment = dao.save(con, appointment);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new CreatingAppointmentException("Cannot create appointment: " + e.getMessage());
 		} finally {
@@ -122,7 +122,7 @@ public class AppointmentManager {
 		try {
 			con = dao.getConnection();
 			price = dao.getPrice(con, master, service);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new FindingAppointmentException("Cannot get price: " + e.getMessage());
 		} finally {
@@ -138,7 +138,7 @@ public class AppointmentManager {
 		try {
 			con = dao.getConnection();
 			dao.delete(con, appointment);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new DeletingAppointmentException("Cannot delete appointment: " + e.getMessage());
 		} finally {
@@ -153,7 +153,7 @@ public class AppointmentManager {
 		try {
 			con = dao.getConnection();
 			dao.setIsPaid(con, appointment, isPaid);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new UpdatingAppointmentException("Cannot set payment for appointment: " + e.getMessage());
 		} finally {
@@ -168,7 +168,7 @@ public class AppointmentManager {
 		try {
 			con = dao.getConnection();
 			dao.setIsDone(con, appointment, isDone);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new UpdatingAppointmentException("Cannot set done for appointment: " + e.getMessage());
 		} finally {
@@ -189,7 +189,7 @@ public class AppointmentManager {
 			dao.setMasterRating(con, appointment.getMaster(), newMasterRating);
 			con.commit();
 			logger.trace("transaction is committed");
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e, "transaction is cancelled");
 			try {
 				if (con != null) {
@@ -197,27 +197,29 @@ public class AppointmentManager {
 				}
 			} catch (SQLException e1) {
 				logger.error(e.getMessage(), e1, "transaction cancelling failed");
-				throw new UpdatingAppointmentException("Cannot set feedback for appointment and update master: " + e.getMessage());
+				throw new UpdatingAppointmentException(
+						"Cannot set feedback for appointment and update master: " + e.getMessage());
 			}
-			throw new UpdatingAppointmentException("Cannot set feedback for appointment and update master: " + e.getMessage());
+			throw new UpdatingAppointmentException(
+					"Cannot set feedback for appointment and update master: " + e.getMessage());
 		} finally {
 			DBConnection.close(con);
 		}
 	}
 
 	public List<Appointment> findAppointmentsByConditions(LocalDate dateFrom, LocalDate dateTo, Integer master_id,
-			Integer user_id, Integer service_id, Boolean isDone, Boolean isPaid, Boolean isRating) throws FindingAppointmentException {
+			Integer user_id, Integer service_id, Boolean isDone, Boolean isPaid, Boolean isRating)
+			throws FindingAppointmentException {
 		logger.trace("enter");
 
 		Connection con = null;
 		List<Appointment> appointments;
-
 		try {
 			con = dao.getConnection();
 			appointments = dao.findByConditions(con, dateFrom, dateTo, master_id, user_id, service_id, isDone, isPaid,
 					isRating);
 			return appointments;
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new FindingAppointmentException("Cannot find all appointments by conditions: " + e.getMessage());
 		} finally {
@@ -233,7 +235,7 @@ public class AppointmentManager {
 		try {
 			con = dao.getConnection();
 			freeSlots = dao.getMasterFreeSlots(con, date, master);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new FindingAppointmentException("Cannot find master free slots: " + e.getMessage());
 		} finally {
@@ -242,14 +244,15 @@ public class AppointmentManager {
 		return freeSlots;
 	}
 
-	public void setTimeAppointment(Appointment appointment, LocalDate newDate, Integer newTimeslot) throws UpdatingAppointmentException {
+	public void setTimeAppointment(Appointment appointment, LocalDate newDate, Integer newTimeslot)
+			throws UpdatingAppointmentException {
 		logger.trace("enter");
 
 		Connection con = null;
 		try {
 			con = dao.getConnection();
 			dao.setTime(con, appointment, newDate, newTimeslot);
-		} catch (SQLException |ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new UpdatingAppointmentException("Cannot set time for appointment: " + e.getMessage());
 		} finally {

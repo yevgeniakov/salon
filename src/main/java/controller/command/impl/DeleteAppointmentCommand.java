@@ -31,10 +31,11 @@ public class DeleteAppointmentCommand implements Command {
 	private AppointmentManager manager;
 	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN));
 	public static final boolean IS_GUEST_ALLOWED = false;
-	
+
 	public DeleteAppointmentCommand(AppointmentManager manager) {
 		this.manager = manager;
 	}
+
 	public DeleteAppointmentCommand() {
 		this.manager = AppointmentManager.getInstance();
 	}
@@ -49,9 +50,7 @@ public class DeleteAppointmentCommand implements Command {
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
-
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-
 		int master_id = 0;
 		int timeslot = 0;
 		LocalDate date = null;
@@ -68,7 +67,6 @@ public class DeleteAppointmentCommand implements Command {
 			User master = new User();
 			master.setId(master_id);
 			Appointment appointment = new Appointment(date, timeslot, master, null, null, 0, false, false, "", 0);
-			//AppointmentManager manager = AppointmentManager.getInstance();
 			manager.deleteAppointment(appointment);
 			request.setAttribute("message", "appointment deleted");
 			logger.info("appointment deleted", master_id, date, timeslot);

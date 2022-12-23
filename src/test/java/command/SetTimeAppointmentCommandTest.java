@@ -44,12 +44,12 @@ public class SetTimeAppointmentCommandTest {
 	@Before
 	public void setUp() {
 		this.dao = mock(AppointmentDao.class);
-		this.request = mock(HttpServletRequest.class); 
+		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
 		this.session = mock(HttpSession.class);
 		this.appointmentManager = new AppointmentManager(dao);
 	}
-	
+
 	@Test
 	public void testSetTimeAppointmentCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -67,7 +67,8 @@ public class SetTimeAppointmentCommandTest {
 		testAppointment.setUser(client);
 		testAppointment.setDate(LocalDate.now());
 		testAppointment.setTimeslot(11);
-		when(dao.findByKey(any(Connection.class), anyInt(), any(LocalDate.class), anyInt())).thenReturn(testAppointment);
+		when(dao.findByKey(any(Connection.class), anyInt(), any(LocalDate.class), anyInt()))
+				.thenReturn(testAppointment);
 		when(request.getParameter("master_id")).thenReturn("1");
 		when(request.getParameter("timeslot")).thenReturn("11");
 		when(request.getParameter("newtimeslot")).thenReturn("12");
@@ -80,12 +81,13 @@ public class SetTimeAppointmentCommandTest {
 		when(session.getAttribute("user")).thenReturn(client);
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(session.getAttribute("user")).thenReturn(admin);
-		assertEquals(command.execute(request, response), "Controller?command=show_master_schedule&id=" + testAppointment.getMaster().getId() + "&date="
-				+ testAppointment.getDate());
-		doThrow(SQLException.class).when(dao).setTime(any(Connection.class), any(Appointment.class), any(LocalDate.class), anyInt());
+		assertEquals(command.execute(request, response), "Controller?command=show_master_schedule&id="
+				+ testAppointment.getMaster().getId() + "&date=" + testAppointment.getDate());
+		doThrow(SQLException.class).when(dao).setTime(any(Connection.class), any(Appointment.class),
+				any(LocalDate.class), anyInt());
 		assertEquals(command.execute(request, response), "/error.jsp");
 		when(request.getParameter("timeslot")).thenReturn("sd4");
 		assertEquals(command.execute(request, response), "/error.jsp");
-		
+
 	}
 }

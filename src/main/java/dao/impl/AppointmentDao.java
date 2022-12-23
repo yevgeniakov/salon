@@ -63,11 +63,11 @@ public class AppointmentDao implements Dao<Appointment> {
 	public Connection getConnection() throws SQLException, ClassNotFoundException {
 		return DBConnection.getConnection();
 	}
-	
+
 	/**
-	* Returns the SQL query for receiving full appointment info
-	* 
-	*/
+	 * Returns the SQL query for receiving full appointment info
+	 * 
+	 */
 	private static String getQueryForAppointment() {
 		return "select   " + "	appointments.date AS date  " + ", appointments.timeslot AS timeslot"
 				+ "	, appointments.user_id AS user_id  " + "	, appointments.master_id AS master_id  "
@@ -88,11 +88,12 @@ public class AppointmentDao implements Dao<Appointment> {
 				+ "	on appointments.service_id = services.id "
 				+ "                where master_id=? and date=? and timeslot=?";
 	}
-	
+
 	/**
-	* Returns the SQL query for receiving full info about master's schedule on certain date
-	* 
-	*/
+	 * Returns the SQL query for receiving full info about master's schedule on
+	 * certain date
+	 * 
+	 */
 	private static String getQueryForMasterShedule() {
 		return "select numbers.n AS timeslot " + ", ? AS date " + ", appointments.user_id AS user_id "
 				+ ", ? AS master_id " + ", appointments.service_id AS service_id  " + ", appointments.isdone AS isdone "
@@ -110,11 +111,12 @@ public class AppointmentDao implements Dao<Appointment> {
 				+ "left join users AS u " + "on user_id = u.id " + "left join services "
 				+ "on service_id = services.id ORDER BY timeslot";
 	}
-	
+
 	/**
-	* Returns the SQL query for receiving info about appointments within the specified date interval
-	* 
-	*/
+	 * Returns the SQL query for receiving info about appointments within the
+	 * specified date interval
+	 * 
+	 */
 	private static String getQueryForAppointmentList() {
 		return "select   " + "	appointments.date AS date  " + ", appointments.timeslot AS timeslot"
 				+ "	, appointments.user_id AS user_id  " + "	, appointments.master_id AS master_id  "
@@ -145,7 +147,6 @@ public class AppointmentDao implements Dao<Appointment> {
 			stmt.setInt(1, master_id);
 			stmt.setDate(2, Date.valueOf(date));
 			stmt.setInt(3, timeslot);
-
 			try {
 				rs = stmt.executeQuery();
 			} catch (SQLException e) {
@@ -157,7 +158,6 @@ public class AppointmentDao implements Dao<Appointment> {
 			}
 			logger.trace("no result.", master_id, date, timeslot);
 			return null;
-
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 			throw e;
@@ -235,11 +235,11 @@ public class AppointmentDao implements Dao<Appointment> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-	
+
 	/**
-	* Returns the Appointment entity from ResultSet after executing the query
-	* 
-	*/
+	 * Returns the Appointment entity from ResultSet after executing the query
+	 * 
+	 */
 	private Appointment extractAppointment(ResultSet rs) throws SQLException {
 		logger.trace("enter");
 
@@ -447,11 +447,11 @@ public class AppointmentDao implements Dao<Appointment> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-	
+
 	/**
-	* Calculating master's rating as average rating from all received feedbacks
-	* 
-	*/
+	 * Calculating master's rating as average rating from all received feedbacks
+	 * 
+	 */
 	public double calculateMasterRating(Connection con, User master) throws SQLException {
 		logger.trace("enter");
 
@@ -475,11 +475,11 @@ public class AppointmentDao implements Dao<Appointment> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-	
+
 	/**
-	* Returns the Appointment list that matches provided conditions.
-	* In case parameter is null - is ignored, otherwise is applied
-	*/
+	 * Returns the Appointment list that matches provided conditions. In case
+	 * parameter is null - is ignored, otherwise is applied
+	 */
 	public List<Appointment> findByConditions(Connection con, LocalDate dateFrom, LocalDate dateTo, Integer master_id,
 			Integer user_id, Integer service_id, Boolean isDone, Boolean isPaid, Boolean isRating) throws SQLException {
 		logger.trace("enter");
@@ -519,11 +519,11 @@ public class AppointmentDao implements Dao<Appointment> {
 			DBConnection.closeStatement(stmt);
 		}
 	}
-	
+
 	/**
-	* Complements the SQL query for appointments list with conditions
-	* 
-	*/
+	 * Complements the SQL query for appointments list with conditions
+	 * 
+	 */
 	private String addConditionsToSQL(String sql) {
 		logger.trace("enter");
 
@@ -532,7 +532,6 @@ public class AppointmentDao implements Dao<Appointment> {
 				.append(" and (isDone=? or ?)").append(" and (isPaid=? or ?)")
 				.append(" and (appointments.rating>0 or ?)").append(" and (appointments.rating=0 or ?)")
 				.append(" order by appointments.date, appointments.timeslot");
-
 		logger.trace(str);
 		return str.toString();
 	}

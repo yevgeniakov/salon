@@ -81,9 +81,7 @@ public class UserManagerTest {
 		} catch (CreatingUserException e) {
 			assertNotNull(e);
 		}
-		
-		
-		
+
 	}
 
 	@Test
@@ -99,7 +97,7 @@ public class UserManagerTest {
 		user.setEmail("ivan.petrov@bestemail.com");
 		user.setPassword("12345");
 		assertEquals(userManager.updateUser(user).getSurname(), "Petrov");
-		
+
 		when(dao.update(any(Connection.class), any(User.class))).thenThrow(SQLException.class);
 		try {
 			assertEquals(userManager.updateUser(user).getSurname(), "Petrov");
@@ -115,7 +113,7 @@ public class UserManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testSetUserBlock() throws ClassNotFoundException, UpdatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -131,7 +129,7 @@ public class UserManagerTest {
 		user.setEmail("ivan.petrov@bestemail.com");
 		user.setPassword("12345");
 		assertEquals(userManager.setUserBlock(user.getId(), true).getId(), 1);
-		
+
 		when(dao.setUserBlock(any(Connection.class), any(User.class), anyBoolean())).thenThrow(SQLException.class);
 		try {
 			assertEquals(userManager.setUserBlock(user.getId(), true).getId(), 1);
@@ -147,7 +145,7 @@ public class UserManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testSetCurrentLang() throws ClassNotFoundException, UpdatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -161,7 +159,7 @@ public class UserManagerTest {
 		user.setEmail("ivan.petrov@bestemail.com");
 		user.setPassword("12345");
 		userManager.setUserCurrentLang(user, "uk");
-		verify(dao, times(1)).setUserCurrentLang(dao.getConnection(),user, "uk");
+		verify(dao, times(1)).setUserCurrentLang(dao.getConnection(), user, "uk");
 
 		when(dao.getConnection()).thenThrow(ClassNotFoundException.class);
 		try {
@@ -170,7 +168,7 @@ public class UserManagerTest {
 		} catch (UpdatingUserException e) {
 			assertNotNull(e);
 		}
-	}	
+	}
 
 	@Test
 	public void testFindAllUsers() throws ClassNotFoundException, FindingUserException, SQLException {
@@ -182,7 +180,7 @@ public class UserManagerTest {
 		}
 		when(dao.findAll(any(Connection.class))).thenReturn(users);
 		assertEquals(userManager.findAllUsers().size(), 4);
-		
+
 		when(dao.findAll(any(Connection.class))).thenThrow(SQLException.class);
 		try {
 			assertEquals(userManager.findAllUsers().size(), 4);
@@ -198,7 +196,7 @@ public class UserManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testFindAllMasters() throws ClassNotFoundException, FindingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -224,7 +222,7 @@ public class UserManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testFindUserById() throws ClassNotFoundException, FindingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -251,7 +249,7 @@ public class UserManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testFindUsersByConditions() throws ClassNotFoundException, FindingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -260,9 +258,11 @@ public class UserManagerTest {
 			User testUser = new User();
 			users.add(testUser);
 		}
-		when(dao.findAllByConditions(any(Connection.class), anyBoolean(), any(Role.class), anyString())).thenReturn(users);
+		when(dao.findAllByConditions(any(Connection.class), anyBoolean(), any(Role.class), anyString()))
+				.thenReturn(users);
 		assertEquals(userManager.findUsersByConditions(true, Role.CLIENT, ""), users);
-		when(dao.findAllByConditions(any(Connection.class), anyBoolean(), any(Role.class), anyString())).thenThrow(SQLException.class);
+		when(dao.findAllByConditions(any(Connection.class), anyBoolean(), any(Role.class), anyString()))
+				.thenThrow(SQLException.class);
 		try {
 			assertEquals(userManager.findUsersByConditions(true, Role.CLIENT, ""), users);
 			fail();
@@ -277,8 +277,7 @@ public class UserManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
-	
+
 	@Test
 	public void testfindAllMastersByService() throws ClassNotFoundException, FindingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -308,7 +307,7 @@ public class UserManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testCreateUserWithServices() throws SQLException, CreatingUserException, ClassNotFoundException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -338,7 +337,7 @@ public class UserManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testAddServicesToUser() throws SQLException, ClassNotFoundException, UpdatingUserException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -368,7 +367,7 @@ public class UserManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testDeleteServiceFromMaster() throws SQLException, ClassNotFoundException, UpdatingUserException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
@@ -380,7 +379,8 @@ public class UserManagerTest {
 		testUser.setPassword("12345");
 		userManager.deleteServiceFromMaster(testUser, service);
 		verify(dao, times(1)).deleteServiceFromMaster(dao.getConnection(), testUser, service);
-		doThrow(SQLException.class).when(dao).deleteServiceFromMaster(isA(Connection.class), isA(User.class), isA(Service.class));
+		doThrow(SQLException.class).when(dao).deleteServiceFromMaster(isA(Connection.class), isA(User.class),
+				isA(Service.class));
 		try {
 			userManager.deleteServiceFromMaster(testUser, service);
 			fail();
@@ -395,12 +395,12 @@ public class UserManagerTest {
 			assertNotNull(e);
 		}
 	}
-	
+
 	@Test
 	public void testGetInstanse() {
 		UserManager manager1 = UserManager.getInstance();
 		UserManager manager2 = UserManager.getInstance();
-		
+
 		assertEquals(manager1, manager2);
 	}
 }

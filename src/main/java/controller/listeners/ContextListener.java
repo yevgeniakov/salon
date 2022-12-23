@@ -22,39 +22,33 @@ import service.utils.EmailSender;
 public class ContextListener implements ServletContextListener {
 	private static final Logger logger = LogManager.getLogger(ContextListener.class);
 
-    private ScheduledExecutorService scheduler;
+	private ScheduledExecutorService scheduler;
 
-    @Override
-    public void contextInitialized(ServletContextEvent event) {
-    	
+	@Override
+	public void contextInitialized(ServletContextEvent event) {
 
-    	ServletContext context = event.getServletContext();
-    	String localesFileName = context.getInitParameter("locales");
-    	String localesFileRealPath = context.getRealPath(localesFileName);
-
-    	Properties locales = new Properties();
-    	try {
+		ServletContext context = event.getServletContext();
+		String localesFileName = context.getInitParameter("locales");
+		String localesFileRealPath = context.getRealPath(localesFileName);
+		Properties locales = new Properties();
+		try {
 			locales.load(Files.newInputStream(Paths.get(localesFileRealPath)));
 		} catch (IOException e) {
 			logger.error("can't load locales properties");
 		}
-    	
-    	context.setAttribute("locales", locales);
-    	locales.list(System.out);
+		context.setAttribute("locales", locales);
+		locales.list(System.out);
+		logger.trace("contextInitialized");
+		scheduler = Executors.newSingleThreadScheduledExecutor();
+		scheduler.scheduleAtFixedRate(new EmailSender(), 0, 1, TimeUnit.DAYS);
+		logger.info("set scheduler for email reminders");
 
-    	logger.trace("contextInitialized");
-    	
-        scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new EmailSender(), 0, 1, TimeUnit.DAYS);
-        
-        logger.info("set scheduler for email reminders");
-        
-    }
+	}
 
-    @Override
-    public void contextDestroyed(ServletContextEvent event) {
-    	logger.trace("contextDestroyed");
-        scheduler.shutdownNow();
-    }
+	@Override
+	public void contextDestroyed(ServletContextEvent event) {
+		logger.trace("contextDestroyed");
+		scheduler.shutdownNow();
+	}
 
 }

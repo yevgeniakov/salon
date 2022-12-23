@@ -23,7 +23,8 @@ import entity.User;
 import service.utils.PasswordEncodingService;
 
 /**
- * provides operations with User: creating, updating and representing information
+ * provides operations with User: creating, updating and representing
+ * information
  * 
  * @author yevgenia.kovalova
  *
@@ -45,10 +46,10 @@ public class UserManager {
 	private UserManager() {
 		this.dao = UserDao.getInstance();
 	}
-	
-    public UserManager(UserDao dao) {
-        this.dao = dao;
-    } 
+
+	public UserManager(UserDao dao) {
+		this.dao = dao;
+	}
 
 	public User findUserbyID(int id) throws FindingUserException {
 		logger.trace("enter");
@@ -81,7 +82,6 @@ public class UserManager {
 		} finally {
 			DBConnection.close(con);
 		}
-
 		return users;
 	}
 
@@ -111,7 +111,7 @@ public class UserManager {
 			con = dao.getConnection();
 			masters = dao.findAllMastersByService(con, service_id, sort);
 		} catch (SQLException | ClassNotFoundException e) {
-			
+
 			logger.error(e.getMessage(), e);
 			throw new FindingUserException("Cannot find all masters By service: " + e.getMessage());
 		} finally {
@@ -134,12 +134,10 @@ public class UserManager {
 		} finally {
 			DBConnection.close(con);
 		}
-
 		if (user == null) {
 			logger.info("user login failed. No such user", email);
 			throw new CheckCredentialsException("no such user");
 		}
-
 		try {
 			if (!PasswordEncodingService.validatePassword(password, user.getPassword())) {
 				logger.info("user login failed. wrong password", email);
@@ -150,7 +148,6 @@ public class UserManager {
 			throw new CheckCredentialsException("problem with password encoding");
 
 		}
-
 		if (user.getIsBlocked()) {
 			logger.info("user login failed. User is blocked. " + email);
 			throw new CheckCredentialsException("user is blocked");
@@ -167,7 +164,6 @@ public class UserManager {
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			throw new CreatingUserException("Cannot create user: " + e.getMessage());
 		}
-
 		try {
 			con = dao.getConnection();
 			User exUser = dao.findByEmail(con, user.getEmail());
@@ -175,7 +171,6 @@ public class UserManager {
 				throw new CreatingUserException("Cannot create user: " + "this e-mail is already registered!");
 			}
 			user = dao.save(con, user);
-
 		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new CreatingUserException("Cannot create user: " + e.getMessage());
@@ -210,7 +205,6 @@ public class UserManager {
 			con = dao.getConnection();
 			user = dao.findById(con, id);
 			user = dao.setUserBlock(con, user, isBlocked);
-
 		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new UpdatingUserException("Cannot set user block" + e.getMessage());
@@ -273,7 +267,6 @@ public class UserManager {
 		try {
 			con = dao.getConnection();
 			dao.setServicesForMaster(con, user.getId(), serviceMap);
-
 		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new UpdatingUserException("Cannot add services to user: " + e.getMessage());
@@ -296,10 +289,10 @@ public class UserManager {
 		} finally {
 			DBConnection.close(con);
 		}
-
 	}
 
-	public List<User> findUsersByConditions(Boolean isBlocked, Role role, String searchValue) throws FindingUserException {
+	public List<User> findUsersByConditions(Boolean isBlocked, Role role, String searchValue)
+			throws FindingUserException {
 		logger.trace("enter");
 
 		Connection con = null;
@@ -307,7 +300,6 @@ public class UserManager {
 		try {
 			con = dao.getConnection();
 			users = dao.findAllByConditions(con, isBlocked, role, searchValue);
-
 		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new FindingUserException("Cannot find users by conditions: " + e.getMessage());
@@ -325,7 +317,6 @@ public class UserManager {
 			con = dao.getConnection();
 			user = dao.findById(con, user.getId());
 			user = dao.setUserCurrentLang(con, user, locale);
-
 		} catch (SQLException | ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 			throw new UpdatingUserException("Cannot set user locale" + e.getMessage());
@@ -333,5 +324,4 @@ public class UserManager {
 			DBConnection.close(con);
 		}
 	}
-
 }

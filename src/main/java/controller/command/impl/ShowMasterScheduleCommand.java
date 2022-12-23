@@ -31,17 +31,17 @@ public class ShowMasterScheduleCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowMasterScheduleCommand.class);
 	private UserManager userManager;
 	private AppointmentManager appointmentManager;
-	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(
-	        List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
+	public static final List<Role> ROLES_ALLOWED = new ArrayList<>(List.of(Role.ADMIN, Role.CLIENT, Role.HAIRDRESSER));
 	public static final boolean IS_GUEST_ALLOWED = false;
-	
- 	public ShowMasterScheduleCommand(UserManager userManager, AppointmentManager appointmentManager) {
+
+	public ShowMasterScheduleCommand(UserManager userManager, AppointmentManager appointmentManager) {
 		this.userManager = userManager;
 		this.appointmentManager = appointmentManager;
 	}
- 	public ShowMasterScheduleCommand() {
- 		this.userManager = UserManager.getInstance();
- 		this.appointmentManager = AppointmentManager.getInstance();
+
+	public ShowMasterScheduleCommand() {
+		this.userManager = UserManager.getInstance();
+		this.appointmentManager = AppointmentManager.getInstance();
 	}
 
 	@Override
@@ -50,24 +50,22 @@ public class ShowMasterScheduleCommand implements Command {
 
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		if (!commandIsAllowed(loggedUser, ROLES_ALLOWED, IS_GUEST_ALLOWED)) {
-			logger.info("Access denied.", loggedUser,
-					loggedUser == null ? "GUEST" : loggedUser.getRole());
-			
+			logger.info("Access denied.", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
 			request.setAttribute("error", "Access denied");
 			return "/error.jsp";
 		}
 		logger.trace("Access allowed", loggedUser, loggedUser == null ? "GUEST" : loggedUser.getRole());
-			int id = 0;
-			LocalDate date = null;
-			try {
-				id = ValidatorUtil.parseIntParameter(request.getParameter("id"));
-				date = ValidatorUtil.parseDateParameter(request.getParameter("date"));
-			} catch (IncorrectParamException e) {
-				logger.error(e.getMessage(), e);
-				request.setAttribute("error", e.getMessage());
-				return "/error.jsp";
-			}
-			try {
+		int id = 0;
+		LocalDate date = null;
+		try {
+			id = ValidatorUtil.parseIntParameter(request.getParameter("id"));
+			date = ValidatorUtil.parseDateParameter(request.getParameter("date"));
+		} catch (IncorrectParamException e) {
+			logger.error(e.getMessage(), e);
+			request.setAttribute("error", e.getMessage());
+			return "/error.jsp";
+		}
+		try {
 			User master = userManager.findUserbyID(id);
 			List<Appointment> appointments = appointmentManager.getMasterSchedule(date, master);
 			request.setAttribute("schedule", appointments);

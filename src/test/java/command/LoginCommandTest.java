@@ -43,17 +43,17 @@ public class LoginCommandTest {
 	@Before
 	public void setUp() {
 		this.dao = mock(UserDao.class);
-		this.request = mock(HttpServletRequest.class); 
+		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
 		this.session = mock(HttpSession.class);
 		this.userManager = new UserManager(dao);
 	}
-	
+
 	@Test
 	public void testLoginCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
 		User testUser = new User();
-		
+
 		testUser.setName("Ivan");
 		testUser.setSurname("Petrov");
 		testUser.setId(7);
@@ -66,10 +66,10 @@ public class LoginCommandTest {
 			fail();
 		}
 		when(dao.findByEmail(any(Connection.class), anyString())).thenReturn(testUser);
-		
+
 		when(request.getParameter("email")).thenReturn("aaa@aa.aa");
 		when(request.getParameter("password")).thenReturn("12345");
-		
+
 		when(request.getSession()).thenReturn(session);
 		when(request.getSession(true)).thenReturn(session);
 		when(dao.findByEmail(any(Connection.class), anyString())).thenReturn(testUser);

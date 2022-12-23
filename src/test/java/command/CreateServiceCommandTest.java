@@ -40,12 +40,12 @@ public class CreateServiceCommandTest {
 	@Before
 	public void setUp() {
 		this.dao = mock(ServiceDao.class);
-		this.request = mock(HttpServletRequest.class); 
+		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
 		this.session = mock(HttpSession.class);
 		this.serviceManager = new ServiceManager(dao);
 	}
-	
+
 	@Test
 	public void testCreateServiceCommand() throws ClassNotFoundException, CreatingUserException, SQLException {
 		when(dao.getConnection()).thenReturn(mock(Connection.class));
