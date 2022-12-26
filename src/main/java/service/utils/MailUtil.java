@@ -20,12 +20,12 @@ public class MailUtil {
 
 	public static void sendMessage(String address, String subject, String body)
 			throws AddressException, MessagingException {
-		String username = "yevheniia.kov@ukr.net";
-		String password = "jS4gAP9k7ZdQ4toP";
+		String username = PropertiesService.getProperty("mailusername");
+		String password = PropertiesService.getProperty("mailpassword");;
 		Properties props = getProps();
 		Session session = Session.getInstance(props);
 		MimeMessage msg = new MimeMessage(session);
-		msg.setFrom(new InternetAddress("yevheniia.kov@ukr.net"));
+		msg.setFrom(new InternetAddress(username));
 		msg.setRecipient(Message.RecipientType.TO, new InternetAddress(address));
 		msg.setSubject(subject);
 		msg.setText(body);
